@@ -70,4 +70,13 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **Not covered / NOT RUN:** persistence, export (CSV), ModeEvent/ShotMedia/ClubProfile/UserSettings/entitlement entities (later items), synthetic-shot rejection at repository boundary (T13, needs 0.4).
 - **Verdict:** VERIFIED.
 
+### 0.4 Persistence protocols + in-memory fake  (PLAN item 0.4)
+- **Status:** VERIFIED (package + app gate). Physical device: not applicable.
+- **Date / commit:** 2026-10-11, see git log for `0.4:`.
+- **Automated:** `scripts/verify.sh` -> VERIFY OK; `swift test` in `Packages/Persistence` -> 15 tests in 2 suites, all pass.
+- **Acceptance mapping:** T02 duplicate/concurrent commit (20 parallel commits -> 1 shot, 1 credit); T03 in-memory part (injected fault after shot staged / after ledger staged -> nothing stored, retry commits once); T09 exclude/restore/delete keep ledger, session delete cascades shots only; T13 production store rejects synthetic shots; invalid references, sequence collision, ledger mismatch, conflicting duplicate all rejected with no partial write.
+- **Rubber duck:** (1) atomicity test could pass vacuously: mutation (write shot straight to live state) -> 17 issues, restored; (2) synthetic guard test: first mutation did not apply (formatter had wrapped the line), caught by noticing the run still passed; redone, 3 issues, restored; (3) concurrency: actor + 20-task group test; (4) deletion giving free credits: tested ledger survives shot and session delete.
+- **NOT RUN:** real crash/kill atomicity and migrations (need the real store, item 2.1); media files and orphan recovery; Club repository (F08).
+- **Verdict:** VERIFIED.
+
 (Further records are appended here, newest last.)

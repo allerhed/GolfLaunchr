@@ -15,6 +15,7 @@ settings:
 packages:
   Domain: { path: Packages/Domain }
   Analytics: { path: Packages/Analytics }
+  Persistence: { path: Packages/Persistence }
 targets:
   GolfLaunchr:
     type: application
@@ -23,6 +24,8 @@ targets:
     dependencies:
       - package: Domain
       - package: Analytics
+      - package: Persistence
+      # PersistenceTestSupport (in-memory fake) is deliberately NOT linked into the app.
     info:
       path: App/Info.plist
       properties:
