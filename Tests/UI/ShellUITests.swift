@@ -175,6 +175,21 @@ final class ShellScreenshotTests: XCTestCase {
         app.buttons["settings.done"].tap()
     }
 
+    func testHarnessScreens() throws {
+        for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+            XCUIDevice.shared.orientation = orientation
+            let app = XCUIApplication()
+            app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_GB", "-uiTestResetSettings"]
+            app.launch()
+            app.buttons["nav.settings"].firstMatch.tap()
+            app.buttons["settings.openHarness"].tap()
+            _ = app.staticTexts["harness.banner"].waitForExistence(timeout: 5)
+            try shot("harness-\(orientation.isLandscape ? "land" : "port")")
+            app.terminate()
+        }
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     func testEnLightPortrait() throws {
         try run("en", style: "light", orientation: .portrait)
     }
@@ -189,5 +204,45 @@ final class ShellScreenshotTests: XCTestCase {
 
     func testSvDarkLandscape() throws {
         try run("sv", style: "dark", orientation: .landscapeLeft)
+    }
+}
+
+/// Debug capture harness (G1). The simulator has no camera, so this covers layout, labelling and the no-camera state only.
+/// Capture itself is NOT RUN here: it needs a physical iPhone.
+final class HarnessUITests: XCTestCase {
+    func open() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_GB", "-uiTestResetSettings"]
+        app.launch()
+        app.buttons["nav.settings"].firstMatch.tap()
+        let entry = app.buttons["settings.openHarness"]
+        XCTAssertTrue(entry.waitForExistence(timeout: 5), "Debug builds expose the harness entry")
+        entry.tap()
+        return app
+    }
+
+    func testHarnessIsLabelledAndHandlesNoCamera() {
+        let app = open()
+        XCTAssertTrue(app.staticTexts["harness.banner"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["harness.banner"].label.contains("Not shipped"))
+        XCTAssertTrue(app.navigationBars["DEBUG HARNESS"].exists)
+        XCTAssertTrue(app.staticTexts["harness.phase"].label.contains("No camera"))
+        let start = app.buttons["harness.start"]
+        for _ in 0 ..< 6 where !start.exists {
+            app.swipeUp()
+        } // lazy form: scroll the row into the hierarchy
+        XCTAssertTrue(start.exists)
+        XCTAssertFalse(start.isEnabled, "cannot start without a camera format")
+        XCTAssertTrue(app.staticTexts["harness.previewState"].exists)
+    }
+
+    func testHarnessClosesBackToSettingsAndWorksInLandscape() {
+        let app = open()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(app.staticTexts["harness.banner"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["harness.close"].isHittable)
+        app.buttons["harness.close"].tap()
+        XCTAssertTrue(app.buttons["settings.done"].waitForExistence(timeout: 5))
+        XCUIDevice.shared.orientation = .portrait
     }
 }

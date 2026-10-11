@@ -31,6 +31,9 @@ xcodebuild test -project GolfLaunchr.xcodeproj -scheme "$SCHEME" -destination "$
   -derivedDataPath "$DERIVED" -skipPackagePluginValidation \
   -only-testing:GolfLaunchrTests >>"$LOG" 2>&1 || fail "unit tests"
 
+step "harness separation (Release has no debug harness)"
+scripts/check-harness-separation.sh >>"$LOG" 2>&1 || { tail -5 "$LOG"; fail "harness separation"; }
+
 if [ $UI = 1 ]; then
   step "UI tests"
   xcodebuild test -project GolfLaunchr.xcodeproj -scheme "$SCHEME" -destination "$DEST" \

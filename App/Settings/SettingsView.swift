@@ -5,6 +5,9 @@ struct SettingsView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
+    #if CAPTURE_HARNESS
+        @State private var showingHarness = false
+    #endif
 
     private var formatter: MetricFormatter {
         MetricFormatter(units: settings.units, locale: locale)
@@ -50,16 +53,25 @@ struct SettingsView: View {
                 .listRowBackground(Tokens.surface.color)
             }
             .scrollContentBackground(.hidden)
-            .background(Tokens.background.color)
-            .navigationTitle(Text("settings.title", comment: "Settings screen title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("settings.done") { dismiss() }
-                        .frame(minHeight: Spacing.minTarget)
-                        .accessibilityIdentifier("settings.done")
+            #if CAPTURE_HARNESS
+                .safeAreaInset(edge: .bottom) {
+                    Button { showingHarness = true } label: { Text(verbatim: "Open capture harness (DEBUG)") }
+                        .buttonStyle(.bordered)
+                        .padding()
+                        .accessibilityIdentifier("settings.openHarness")
                 }
-            }
+                .fullScreenCover(isPresented: $showingHarness) { HarnessView() }
+            #endif
+                .background(Tokens.background.color)
+                .navigationTitle(Text("settings.title", comment: "Settings screen title"))
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("settings.done") { dismiss() }
+                            .frame(minHeight: Spacing.minTarget)
+                            .accessibilityIdentifier("settings.done")
+                    }
+                }
         }
         .accessibilityIdentifier("settings.root")
     }

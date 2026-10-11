@@ -101,4 +101,13 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **NOT RUN:** everything on a physical iPhone: format enumeration on real devices, 240 fps hold, drop-reason attachment strings, stabilisation off, rotation angle, permission flow, memory/thermal (F23), harness UI (1.3).
 - **Verdict:** partial. Do not report capture as working.
 
+### 1.3 Debug capture harness  (PLAN item 1.3; F04/F23 groundwork) - PARTIAL
+- **Status:** simulator-verified for layout, labelling, no-camera handling and build separation. **Recording, encoding, clip writing and the live readouts have never run on a camera: NOT RUN.** The app (Debug) was built, signed and installed on the owner's iPhone 17 Pro Max; launch was refused because the phone was locked, so no on-device result exists. Item 1.3 stays unchecked until D1 passes.
+- **Automated:** `scripts/verify.sh --ui` passes: Capture package 44 tests (motion detector incl. inclusive threshold boundary, cooldown, size change; manifest builder incl. window-filtered exposure and incomplete flag; clip naming), harness UI tests (banner "Not shipped", no-camera state, Start disabled, works in landscape, closes back to Settings), release separation check.
+- **Separation proof:** Debug app contains 32 harness strings, Release 0. Negative control: a Release build forced with `CAPTURE_HARNESS` showed 14 hits, so the check can fail. The Debug positive control is built into the script.
+- **Visual review:** simulator screenshots (portrait and landscape, gitignored). Found nothing to fix beyond the fixes already made (a lint pass, a lazy-list scroll in the UI test).
+- **Rubber duck:** (1) harness leaking into Release: separation check with positive and negative control; (2) raw buffers starving the capture pool: design holds only compressed frames, but this is an argument, not a measurement; real-time all-intra HEVC at 240 fps is unproven on-device; (3) clip cannot start with a key frame: all-intra by construction, unproven; (4) the harness could be mistaken for the product: banner on screen, no Shot/credit/measurement created, UI tests assert the label; (5) simulator cannot show any of the camera path.
+- **NOT RUN:** D1 smoke recording, encoder throughput, drop behaviour under load, passthrough writer output, manifest exposure/thermal content from a real device, memory over time, share sheet, permission denial flow on device.
+- **Verdict:** partial. Do not report capture as working.
+
 (Further records are appended here, newest last.)

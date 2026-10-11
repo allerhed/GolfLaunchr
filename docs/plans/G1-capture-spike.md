@@ -142,6 +142,15 @@ U = unit (Capture package, no camera), A = analysis tooling, D = physical device
 4. **1.5 (Sonnet):** analysis tooling A1/A2 and the report generator for section 6.
 5. **1.6 (Opus):** evaluate P1-P10, write the report, propose the envelope for owner sign-off.
 
+**D1 smoke test on the phone (owner, ~10 minutes, needed before 1.2/1.3 can be ticked):**
+1. Unlock the phone, open GolfLaunchr (Debug build), Settings (gear) > "Open capture harness (DEBUG)".
+2. Allow camera access. Pick the first format in the list (highest fps), trigger = manual, Start. Check the live panel: FPS (capture clock) should read near the format rate, dropped/gaps/missing near 0, thermal nominal or fair.
+3. Hold the phone steady, wave a ball or hand through the view, tap "Save last 2 s now". A "Saved ..." message appears and the clip is listed.
+4. Repeat with trigger = motion (move something in view; adjust the threshold using the live message count).
+5. Use "Share clip + manifest" to AirDrop/Files the `.mov` and `.json`, or copy them with `xcrun devicectl device copy from --device <id> --domain-type appDataContainer --domain-identifier com.allerhed.golflaunchr --source Documents/G1 --destination <folder>` (Claude can run this).
+6. Report: format chosen, FPS reading, whether the clip plays with all frames, any error text.
+Pass for D1: clip plays, PTS monotonic, manifest complete with real exposure/thermal data, requested fps held.
+
 **Owner recording checklist (1.4):** charge the phone and keep it cool (no case, out of direct sun between runs); disable Low Power Mode; fixed tripod; tape the setup distance and photograph the setup; lay the scale bar and record the calibration clip first; one stationary-ball clip before each series; note club and lighting out loud at the start of each series; record misses; run the negatives for 30 minutes; do not delete anything.
 
 ## 11. Rubber duck: how this plan could be wrong

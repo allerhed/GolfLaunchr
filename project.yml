@@ -46,6 +46,10 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.allerhed.golflaunchr
         GENERATE_INFOPLIST_FILE: NO
         SWIFT_EMIT_LOC_STRINGS: YES
+      configs:
+        # Debug-only capture harness (G1). Release must contain none of it: scripts/check-harness-separation.sh.
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) CAPTURE_HARNESS"
   GolfLaunchrTests:
     type: bundle.unit-test
     platform: iOS

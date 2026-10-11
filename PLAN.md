@@ -26,6 +26,7 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [ ] 1.2 (S, Dev) `Capture` package: AVFoundation session, format selection, PTS-timestamped ring buffer, dropped-frame accounting, thermal + exposure logging (F04, F23)
   - Progress 2026-10-11: pure logic done and tested (`Packages/Capture`: format catalogue, PTS frame clock, bounded ring buffer, trigger window assembler, pipeline, telemetry, `g1-manifest/1`); AVFoundation adapter `CaptureAV` compiles for iOS but has **never run** (NOT RUN: needs D1 on a physical iPhone). Tick when D1 passes.
 - [ ] 1.3 (S, Dev) Debug-only capture harness screen: record raw impact windows to files + manifest for offline analysis (compile-time separated from production)
+  - Progress 2026-10-11: harness built (`App/Harness`, behind `CAPTURE_HARNESS`, Debug only; real-time all-intra HEVC ring buffer, manual + motion trigger, manifest + clip writer, Release-separation check in `verify.sh`). Simulator verified: layout, labelling, no-camera state. **Recording has never run on a device** (NOT RUN). Tick when D1 passes.
 - [ ] 1.4 **You**: record real shots on device across lighting/speeds/clubs (indoors + range); copy to `Validation/DeviceReports/`
 - [ ] 1.5 (S) Offline analysis tooling (Swift CLI/test target) to run detectors against recorded clips
 - [ ] 1.6 (O) G1 review: do recordings contain enough trajectory evidence? Declare initial speed/light envelope and supported device profiles, or stop/re-scope. **Decision point for the owner**

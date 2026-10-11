@@ -67,21 +67,21 @@
         case permissionDenied
     }
 
-    /// Live camera frames as `Frame` values with presentation timestamps, plus dropped-frame reasons.
+    /// Live camera frames with presentation timestamps (via `onFrame`), plus dropped-frame reasons.
     /// BEHAVIOUR NOT RUN: compile-checked only. Needs a physical iPhone (G1, plan items 1.3/1.4).
     public final class AVCaptureFrameSource: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, @unchecked Sendable {
         public let session = AVCaptureSession()
-        public let frames: AsyncStream<Frame<SampleBufferBox>>
         public let drops: AsyncStream<DroppedFrameReason>
-        private let frameContinuation: AsyncStream<Frame<SampleBufferBox>>.Continuation
         private let dropContinuation: AsyncStream<DroppedFrameReason>.Continuation
         private let queue = DispatchQueue(label: "golflaunchr.capture.frames", qos: .userInitiated)
         private let device: AVCaptureDevice
         private var nextIndex = 0
+        /// Called on the capture queue for every delivered frame. The pixel buffer is only valid for the call unless retained:
+        /// hand it to an encoder at once, because holding raw buffers starves the camera's buffer pool.
+        public var onFrame: (@Sendable (CVPixelBuffer, Double, Int) -> Void)?
 
         public init(device: AVCaptureDevice) {
             self.device = device
-            (frames, frameContinuation) = AsyncStream.makeStream(bufferingPolicy: .unbounded)
             (drops, dropContinuation) = AsyncStream.makeStream(bufferingPolicy: .unbounded)
             super.init()
         }
@@ -96,6 +96,7 @@
             session.addInput(input)
             let output = AVCaptureVideoDataOutput()
             output.alwaysDiscardsLateVideoFrames = true
+            output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
             output.setSampleBufferDelegate(self, queue: queue)
             guard session.canAddOutput(output) else { throw CaptureAVError.cannotAddOutput }
             session.addOutput(output)
@@ -125,18 +126,15 @@
 
         public func stop() {
             session.stopRunning()
-            frameContinuation.finish()
             dropContinuation.finish()
         }
 
         public func captureOutput(_: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
+            guard let pixels = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
             let pts = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
-            let frame = Frame(
-                index: nextIndex, pts: pts, byteCost: CMSampleBufferGetTotalSampleSize(sampleBuffer),
-                payload: SampleBufferBox(buffer: sampleBuffer)
-            )
+            let index = nextIndex
             nextIndex += 1
-            frameContinuation.yield(frame)
+            onFrame?(pixels, pts, index)
         }
 
         public func captureOutput(_: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
