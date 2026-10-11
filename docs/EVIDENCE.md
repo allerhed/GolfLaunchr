@@ -110,4 +110,22 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **NOT RUN:** D1 smoke recording, encoder throughput, drop behaviour under load, passthrough writer output, manifest exposure/thermal content from a real device, memory over time, share sheet, permission denial flow on device.
 - **Verdict:** partial. Do not report capture as working.
 
+### D1 smoke recording on device  (G1 plan D1; closes the device part of 1.2 and 1.3)
+- **Status:** D1 **PASSED** (owner recorded 11 clips on an iPhone 17 Pro Max, iOS 27.0.1, Debug harness; analysed 2026-10-11). Clips and manifests: `Validation/DeviceReports/D1-smoke-2026-10-11/` (videos git-ignored, checksum index committed). This is smoke data from one device, one lens, one indoor scene with a ball resting on a laptop. **It is not a G1 result and not accuracy evidence.**
+- **What was measured (probe tool reading the saved files with AVAssetReader, plus manifests):**
+  - Format: ultra-wide, 1920x1080, 240 fps, FOV 106.2 deg (platform-reported), binned. All 11 files decode, size 1920x1080, every frame an HEVC key frame (all-intra confirmed), PTS monotonic.
+  - Manifest vs file: frame counts, gap events and missing-frame counts agree exactly for all 11 clips. The manifests can be trusted.
+  - Rate held: manual clips 239.9 fps over 1.997 s (480 frames), 0 gaps, 100% of intervals within +/-10%. Clip size ~25 MB per 2 s, so the encoder met ~100 Mbit/s on average.
+  - Thermal: nominal throughout (short runs; says nothing about 30-minute behaviour, P2).
+  - Exposure (auto, living-room light): median 1/253 s at ISO ~746. At that exposure a 45 m/s ball moves ~18 cm (about 4 ball diameters) during one frame. **H2 confirmed in the real device: indoor auto-exposure is unusable for ball tracking; fixed short exposure and much more light are required.**
+- **Defects found (tracked as 1.3a):**
+  1. Motion trigger fires right after Start: 4 of 8 motion clips are short (~1.3 s, only ~0.05 s pre-roll) and each has a 10-13 frame gap exactly at the trigger, which is stream start-up, not shot activity.
+  2. Steady-state drops: isolated single missing frames roughly every 1-2 s (`frameWasLate`), e.g. 1 gap in each of three otherwise full 2 s motion clips. Of 11 clips only the 3 manual ones were gap-free (P1 would fail at ~27%). Cause unproven: suspect per-frame callback work (device property reads, luma grid) and encoder backpressure; frame sizes vary 45 KB to 470 KB under all-intra.
+  3. Manifest `droppedByReason` is a run total, not per window (misleading).
+  4. Orientation: the saved scene is rotated 90 deg (phone held in portrait), and the manifest only says "sensor-landscapeRight". Capture must be landscape (spec F22); record device orientation.
+  5. The video container starts with an empty sample (0 bytes) and a few extra samples compared with keyframes; harmless for analysis but note for the analysis tool.
+- **Rubber duck:** (1) is the data real? frames viewed from two clips show the actual room; (2) does the manifest lie? cross-checked against the files; (3) is 239.9 fps the whole story? only for manual windows, motion clips show drops, so "held 240 fps" is true only within those limits; (4) are 11 clips enough? no: one scene, one lens, no strike.
+- **NOT RUN:** any real golf strike, outdoor/range, other lenses and formats, left-handed setup, 30-minute run, flicker analysis, TrackMan pairing.
+- **Verdict:** D1 passed with defects; 1.2 and 1.3 ticked. Do the 1.3a fixes before the TrackMan sessions (1.4).
+
 (Further records are appended here, newest last.)

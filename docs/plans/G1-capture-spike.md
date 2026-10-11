@@ -29,6 +29,8 @@ Motion blur = speed x exposure. 45 m/s: 4.5 cm @1/1000 s, 2.2 cm @1/2000, 1.1 cm
 
 Other hypotheses: **H3** 240 fps is available at usable resolution only on some formats and lenses, and may be throttled by heat. **H4** indoor LED/fluorescent flicker (100 Hz in Sweden) creates brightness banding at high frame rates. **H5** clubhead is visible for enough pre-impact frames to support club speed (otherwise club speed stays unavailable, consistent with `CLAIMS.md`). **H6** a simple frame-difference trigger finds strikes and rejects practice swings, ball placement and nearby movement well enough to be a baseline. **H7** timestamps (PTS) are reliable and drops are detectable. **H8** a 0.6-0.9 m setup is physically workable (clearance, tripod stability). Distance 0.7-0.8 m is a vendor suggestion (spec S2), not a requirement for us.
 
+**First real data (D1, 2026-10-11, one iPhone 17 Pro Max, ultra-wide 1080p240):** 239.9 fps held in clean windows; indoor auto-exposure chose 1/253 s at ISO ~746, which confirms H2 (blur ~18 cm at 45 m/s). Steady-state frame drops of about one per 1-2 s appeared under load and must be fixed or explained before P1 can be judged. See `docs/EVIDENCE.md`.
+
 ## 3. Variables and experiment matrix
 
 | Factor | Levels (initial) | Notes |

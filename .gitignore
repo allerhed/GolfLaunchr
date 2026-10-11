@@ -9,3 +9,4 @@ xcuserdata/
 .swiftpm/
 Validation/Screens/**/*.png
 .claude/settings.local.json
+Validation/DeviceReports/**/*.mov
