@@ -10,7 +10,7 @@ settings:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: 6S7W5L2V33
     CODE_SIGN_STYLE: Automatic
 packages:
   Domain: { path: Packages/Domain }
