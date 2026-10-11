@@ -16,7 +16,7 @@ Gates (spec 08): G0 requirements, G1 capture feasibility, G2 measurement qualifi
 - [x] SwiftLint + SwiftFormat installed
 - [x] 0.1 (S) Add `.swiftlint.yml` and `.swiftformat` (Swift 6, sensible limits); make `verify.sh` run `swiftlint --strict` and fail on warnings; fix findings
 - [x] 0.2 (O) G0: `docs/CLAIMS.md` (capability/claim list: what we may and may not claim), `docs/EVIDENCE.md` (template for evidence per feature ID), provenance/clean-room statement (`docs/CLAIMS.md`, `docs/EVIDENCE.md`, `docs/PROVENANCE.md`; owner sign-off on the attestation still pending)
-- [ ] 0.3 (S) Data-model contracts from spec 06 as typed Swift in `Domain` (Shot, Measurement w/ provenance, Club, Session, CalibrationRecord, ledger entry, ids as UUID); JSON shot contract + round-trip tests. Planner resolves the Club contract question from F08 plan (brand/model, sortOrder, label vs name)
+- [x] 0.3 (S) Data-model contracts from spec 06 as typed Swift in `Domain` (Shot, Measurement w/ provenance, Club, Session, CalibrationRecord, ledger entry, ids as UUID); JSON shot contract + round-trip tests. Planner resolves the Club contract question from F08 plan (brand/model, sortOrder, label vs name)
 - [ ] 0.4 (S) `Persistence` package: repository protocols + in-memory fake for tests (real store in 2.1)
 - [ ] 0.5 (S) App shell: navigation (portrait tab bar, landscape rail), design tokens, dark/light theme, Dynamic Type, shared formatting layer (units m/yd, m/s/km/h/mph; en/sv locale; Swedish decimal comma) - F22, F18 formatting part
 

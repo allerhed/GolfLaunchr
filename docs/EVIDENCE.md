@@ -60,4 +60,14 @@ Phase 0 (foundation, tooling; no feature IDs):
 ### 0.1 SwiftLint strict + SwiftFormat lint in verify gate
 - **Status:** VERIFIED (tooling). Commit `30f1adf`. Physical-device: not applicable.
 
+### 0.3 Domain data-model contracts  (PLAN item 0.3)
+- **Status:** VERIFIED (package + app gate). Physical device: not applicable (pure data types).
+- **Date / commit:** 2026-10-11, see git log for `0.3:`.
+- **Spec:** `docs/spec/06-data-model.md`; tests T02/T04/T08/T14/T16 groundwork only (no repository/export yet).
+- **Automated:** `scripts/verify.sh` -> VERIFY OK; `swift test` in `Packages/Domain` -> 32 tests in 4 suites, all pass.
+- **Acceptance mapping:** spec JSON example decodes and round-trips (ShotContractTests); encoded keys equal the fixture's keys; missing metric stays nil not 0; NaN/inf, negative speeds/distances, unit/provenance mismatch, unknown metric/mode/schema, bad UUID, sequence 0, bad convention, bad environment all rejected (14 table cases); Session/Calibration/Ledger/Club round-trip; ClubSnapshot is a value copy (T08 basis).
+- **Rubber duck:** (1) vacuous rejection cases: guard test asserts each substitution matches the fixture, and it caught one bad case, fixed; (2) tests could pass with validation removed: mutation (deleted the negative-value check) made 2 tests fail, then restored; (3) null vs omitted: encoding test asserts explicit `null` for value/uncertainty95/loftRad/mediaId; (4) fractional-second impact time lost by plain ISO-8601: custom coder, tested to <0.5 ms.
+- **Not covered / NOT RUN:** persistence, export (CSV), ModeEvent/ShotMedia/ClubProfile/UserSettings/entitlement entities (later items), synthetic-shot rejection at repository boundary (T13, needs 0.4).
+- **Verdict:** VERIFIED.
+
 (Further records are appended here, newest last.)

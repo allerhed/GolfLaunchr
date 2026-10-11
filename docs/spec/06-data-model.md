@@ -5,7 +5,7 @@
 | Entity | Required fields / invariants |
 |---|---|
 | UserSettings | units, swingHandedness (right/left; no automatic inference), appLanguage (system/en/sv), optional regionOverride, audio, media retention, atmosphere mode, schemaVersion |
-| Club | UUID, category, label, optional loftRad, archivedAt; immutable ID |
+| Club | UUID, category, label, optional loftRad, archivedAt; immutable ID. Extension (DECISIONS.md 2026-10-11, pending owner confirmation): brand?, model?, sortOrder, loftRevision; shots store a `ClubSnapshot` (id, name, loftRad?, loftRevision) |
 | Calibration | UUID, deviceProfileID, format/lens/pose/scale/transform, quality, createdAt, calibrationVersion |
 | Session | UUID, mode, createdAt/endedAt, club/config snapshots, recovery state |
 | Shot | UUID, sessionID, sequence, clubID/name/loft snapshot, swingHandedness snapshot, calibrationID, impactTimeUTC, raw metrics, derived metrics, quality, versions, exclusion status |
