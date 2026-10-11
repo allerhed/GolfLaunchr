@@ -154,10 +154,32 @@ U = unit (Capture package, no camera), A = analysis tooling, D = physical device
 6. **A single lens or speed dominates.** Check: the matrix is per stratum with a minimum count, and strata that fail are reported.
 7. **Spec contradiction:** F01 says unvalidated devices cannot be "certified". Check: G1 only declares profiles as *candidate*; certification needs G2.
 
-## 12. Open questions for the owner (non-blocking for this plan)
+## 12. Using the TrackMan bay (added 2026-10-11)
+
+Owner has TrackMan bay access. This gives an independent reference for every strike, which makes the characterisation tier double as **G2 pilot data** (the G2 protocol in spec 08 needs same-strike ground truth). It does not change G1 pass criteria, which stay camera-evidence based.
+
+**Reference record per strike** (extends section 4): TrackMan unit model, firmware/software version, mode (indoor/outdoor, and whether the bay uses Combine/indoor simulation), session id, and the metrics it reports: ball speed, launch angle, launch direction, club speed, smash, attack angle, spin rate, carry, total. Record TrackMan's metric definitions and its stated uncertainty. **Do not treat TrackMan carry in an indoor bay as measured landing**: the ball stops at a screen/net, so carry is extrapolated by TrackMan's model (spec 08: reference estimated carry is not direct landing truth). Use ball speed, launch angle and launch direction as the primary reference; use spin, club speed and carry as secondary.
+
+**Strike synchronisation (critical, otherwise pairs are wrong):**
+1. Pair by order and by time, not by order alone: log the phone clock (UTC) at each save and the TrackMan shot timestamp from its export; check the offset is stable.
+2. Start each series with a visible/audible marker in the clip (a hand clap or phone flash) and note the TrackMan shot number of the first real strike.
+3. Record misses and strikes TrackMan did not register; an unpaired strike is kept and labelled, never dropped (spec 08: report every attempt).
+4. Export the TrackMan session (CSV or report) after each session and store it beside the clips; do not retype numbers.
+
+**Placement in the bay (physical):** the phone goes on the opposite side of the ball from the golfer (spec 14), perpendicular to the target line, which is also where radar/camera sensors and screens often sit. Check clearance before hitting: the phone must not be in the ball path, not block TrackMan's view of the ball or club, and not be in the swing arc. Prefer a weighted tripod, and a ball-height lens axis. Log the exact positions; if the bay forces a different distance, that is a finding.
+
+**What the bay cannot cover:** outdoor sunlight strata (P-matrix rows "outdoor sun/overcast"), real flight beyond the net, and some lighting variety (bay lighting is usually fixed and bright). Keep outdoor characterisation as a separate range session, or declare the envelope "indoor bay lighting only" at item 1.6. Indoor LED flicker (P9) can be measured here.
+
+**Terms:** check the bay operator's/TrackMan's terms before copying session data out or using it in accuracy claims; ownership of the dataset and any naming of TrackMan in published material is the owner's call. `CLAIMS.md` still forbids accuracy claims before G2, and never name the reference in marketing without permission.
+
+**Effect on tiers:** strikes in the bay satisfy the "characterisation" tier for indoor strata and allow per-stratum bias/MAE pilot numbers against TrackMan for ball speed and launch angle. These are pilot figures on one golfer/session group, not G2 results (G2 needs held-out data, at least ten golfers where possible, spec 08).
+
+## 13. Open questions for the owner (non-blocking for this plan)
 
 - Q1 Which iPhone models can you use, and do you have an ultra-wide model? (determines profiles)
-- Q2 Access to a range or protected indoor bay, and netting? Reference launch monitor available (even a borrowed one) for G2 prep?
+- Q2 **Answered 2026-10-11: the owner has access to a TrackMan bay** (indoor, TrackMan reference). Still open: a range for outdoor strata, and which TrackMan model/firmware (see section 12).
 - Q3 Who records and who annotates? Annotation of about 30 frames per stratum is needed for P4.
 - Q4 Approve the proposed thresholds in section 6 (they are engineering proposals, spec 08 says owner approval before G2).
 - Q5 HEVC at ~80 Mbit/s as the default storage, with raw only as a fallback experiment: acceptable?
+- Q6 Which TrackMan model and software version does the bay run, and may session exports be copied out and used for our own validation?
+- Q7 How many different golfers can take part in bay sessions? (G2 aims for at least ten; G1 needs only a few.)
