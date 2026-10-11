@@ -185,6 +185,17 @@ Owner has TrackMan bay access. This gives an independent reference for every str
 
 **Effect on tiers:** strikes in the bay satisfy the "characterisation" tier for indoor strata and allow per-stratum bias/MAE pilot numbers against TrackMan for ball speed and launch angle. These are pilot figures on one golfer/session group, not G2 results (G2 needs held-out data, at least ten golfers where possible, spec 08).
 
+### Limited bay access: session protocol (added 2026-10-11)
+
+The owner has the TrackMan app (full shot data available) but must drive to the bay, so visits are scarce. Rules:
+1. **Do not go until the harness is ready.** Gate: item 1.3a done and a home rehearsal (steps below) shows no defects. A visit wasted on a harness bug costs more than a week of delay.
+2. **Home rehearsal (30 min):** record a 10-minute continuous run at the intended exposure; expect zero gaps in clean windows, correct landscape orientation in the manifest, no spurious startup triggers, thermal not above fair; drop a ball from 30 cm for a fast-moving test target if desired. Check storage: a 2 s clip is about 25 MB, so 150 strikes is about 4 GB; free at least 10 GB before leaving.
+3. **Bring:** phone with Low Power Mode off and a full battery plus a charger/cable (the phone gets warm), weighted tripod or clamp, tape measure, scale bar (1 m ruler), a second phone or watch for the clock check, balls (white and yellow if possible), notebook.
+4. **Per visit, a fixed script** (about 60-90 min), most important first so a short visit still delivers: (a) setup measurement, scale-bar clip, clock sync clap clip; (b) **exposure sweep** with the same strikes type: fixed 1/1000, 1/2000, 1/4000 s (ISO capped), 10 strikes each, 7 iron (the key unknown is whether short exposures are bright enough in the bay); (c) driver and wedge series at the best exposure, 10 strikes each; (d) one left-handed series if the bay allows; (e) 5 minutes of non-strike activity (practice swings, ball placement) for the false-trigger baseline.
+5. **TrackMan data:** after each series open the TrackMan app, confirm the shot count matches your strike count, export the session (or screenshot the shot table if export is not offered) and keep the session id/date and shot numbers. Note any shot TrackMan did not register or you hit but did not save. Record in the manifest/notes which TrackMan shot number pairs with which clip (or at least the first shot of each series).
+6. **Manual trigger is the safety net:** use motion trigger for convenience but also tap "Save last 2 s" after every strike you suspect was missed; a missed strike cannot be recovered, a spurious clip can be deleted.
+7. **After the visit:** copy clips off the phone the same day (`devicectl` or share), index them, and write the findings into `docs/EVIDENCE.md` before the next visit so the next script can adapt.
+
 ## 13. Open questions for the owner (non-blocking for this plan)
 
 - Q1 Which iPhone models can you use, and do you have an ultra-wide model? (determines profiles)
@@ -192,5 +203,5 @@ Owner has TrackMan bay access. This gives an independent reference for every str
 - Q3 Who records and who annotates? Annotation of about 30 frames per stratum is needed for P4.
 - Q4 Approve the proposed thresholds in section 6 (they are engineering proposals, spec 08 says owner approval before G2).
 - Q5 HEVC at ~80 Mbit/s as the default storage, with raw only as a fallback experiment: acceptable?
-- Q6 Which TrackMan model and software version does the bay run, and may session exports be copied out and used for our own validation?
+- Q6 (partly answered: the owner has the TrackMan app, so shot data can be read out) Which TrackMan model and software version does the bay run, and may session exports be copied out and used for our own validation?
 - Q7 How many different golfers can take part in bay sessions? (G2 aims for at least ten; G1 needs only a few.)
