@@ -1,0 +1,32 @@
+included:
+  - App
+  - Packages
+  - Tests
+excluded:
+  - "**/.build"
+  - build
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+  - explicit_init
+  - first_where
+  - force_unwrapping
+  - sorted_imports
+disabled_rules:
+  - trailing_comma
+force_cast: error
+force_try: error
+force_unwrapping: error
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+function_body_length:
+  warning: 60
+type_body_length:
+  warning: 300
+file_length:
+  warning: 500
+identifier_name:
+  min_length: 1
+  excluded: [id]

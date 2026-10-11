@@ -1,9 +1,9 @@
-import Testing
-import Domain
 import Analytics
+import Domain
 @testable import GolfLaunchr
+import Testing
 
-@Suite struct SmokeTests {
+struct SmokeTests {
     @Test func appLinksPackages() {
         #expect(Statistics.mean([1, 3]) == 2)
         #expect(Gapping.table([]).isEmpty)

@@ -9,6 +9,10 @@ LOG=build/verify.log; mkdir -p build; : > "$LOG"
 step(){ echo "== $1"; }
 fail(){ echo "VERIFY FAILED at: $1"; echo "--- last errors (full log: $LOG) ---"; grep -E "error:|failed|Fatal|✘|Issue" "$LOG" | sort -u | head -30; exit 1; }
 
+step "lint + format"
+swiftformat --lint . >>"$LOG" 2>&1 || { echo "Formatting violations (fix: swiftformat .)"; grep -E "error|warning" "$LOG" | head -10; fail "swiftformat --lint"; }
+swiftlint --strict --quiet >>"$LOG" 2>&1 || fail "swiftlint"
+
 step "package tests"
 for p in Packages/*/; do
   [ -f "$p/Package.swift" ] || continue

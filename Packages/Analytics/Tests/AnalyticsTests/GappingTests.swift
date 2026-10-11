@@ -1,8 +1,8 @@
-import Testing
 @testable import Analytics
+import Testing
 
-// Fixture from spec F10a: means 224/160/130/110 m -> gaps 64/30/20; 5 iron + 7 iron selected -> 30.
-@Suite struct GappingTests {
+/// Fixture from spec F10a: means 224/160/130/110 m -> gaps 64/30/20; 5 iron + 7 iron selected -> 30.
+struct GappingTests {
     func bag() -> [ClubDistances] {
         [("Driver", 224.0), ("5i", 160), ("7i", 130), ("PW", 110)].map { ClubDistances(clubID: $0.0, distancesM: [$0.1]) }
     }
@@ -23,9 +23,11 @@ import Testing
     }
 
     @Test func noDataRowBreaksComparison() {
-        let rows = Gapping.table([ClubDistances(clubID: "a", distancesM: [150]),
-                                  ClubDistances(clubID: "b", distancesM: [nil, .nan]),
-                                  ClubDistances(clubID: "c", distancesM: [130])])
+        let rows = Gapping.table([
+            ClubDistances(clubID: "a", distancesM: [150]),
+            ClubDistances(clubID: "b", distancesM: [nil, .nan]),
+            ClubDistances(clubID: "c", distancesM: [130])
+        ])
         #expect(rows[0].gapToNextM == nil)
         #expect(rows[1].meanM == nil && rows[1].gapToNextM == nil)
     }

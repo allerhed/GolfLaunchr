@@ -12,7 +12,7 @@ Native iOS 18+ SwiftUI golf launch monitor (iPhone camera, side-on, landscape ca
 ## Commands
 ```bash
 scripts/doctor.sh          # toolchain check
-scripts/verify.sh          # THE GATE: package tests, l10n parity, build, unit tests (quiet output)
+scripts/verify.sh          # THE GATE: swiftlint --strict, swiftformat --lint, package tests, l10n parity, build, unit tests (quiet output)
 scripts/verify.sh --ui     # + UI tests (run for any UI change)
 scripts/screenshot.sh name # simulator screenshot -> Validation/Screens/ (gitignored)
 cd Packages/X && swift test   # fast loop while developing logic
