@@ -89,4 +89,9 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **NOT RUN / out of scope:** language override System/English/Svenska (F25), handedness (F18), Dynamic Type visual check beyond the XXXL navigation test, Reduce Motion, pseudo-localisation, native Swedish review, real Home content, capture shell (no rail during capture), physical device.
 - **Verdict:** VERIFIED (simulator).
 
+### 1.1 G1 capture spike plan  (PLAN item 1.1; document only)
+- **Status:** plan written (`docs/plans/G1-capture-spike.md`). Nothing recorded or measured: G1 stays **NOT RUN**.
+- **Checked:** feasibility numbers recomputed with a script (view width, travel per frame, blur); every spec reference and item number in the plan exists; hypotheses H1-H8 and criteria P1-P10 are labelled proposals needing owner approval.
+- **Verdict:** planned, not executed. Items 1.2-1.6 follow; 1.4 needs you and a physical iPhone.
+
 (Further records are appended here, newest last.)

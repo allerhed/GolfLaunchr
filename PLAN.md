@@ -22,7 +22,7 @@ Gates (spec 08): G0 requirements, G1 capture feasibility, G2 measurement qualifi
 
 ## Phase 1 - Capture feasibility spike (G1) - start in parallel with Phase 0.3+
 Research-grade; physical iPhone required. Opus plans each experiment; Sonnet builds harnesses; **You** run them and attach traces.
-- [ ] 1.1 (O) Plan spike: candidate formats (240/120 fps, lens, exposure), side-on geometry per spec 14, data to record, pass criteria (`docs/plans/G1-capture-spike.md`)
+- [x] 1.1 (O) Plan spike: candidate formats (240/120 fps, lens, exposure), side-on geometry per spec 14, data to record, pass criteria (`docs/plans/G1-capture-spike.md`)
 - [ ] 1.2 (S, Dev) `Capture` package: AVFoundation session, format selection, PTS-timestamped ring buffer, dropped-frame accounting, thermal + exposure logging (F04, F23)
 - [ ] 1.3 (S, Dev) Debug-only capture harness screen: record raw impact windows to files + manifest for offline analysis (compile-time separated from production)
 - [ ] 1.4 **You**: record real shots on device across lighting/speeds/clubs (indoors + range); copy to `Validation/DeviceReports/`
