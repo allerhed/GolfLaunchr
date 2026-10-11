@@ -79,4 +79,14 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **NOT RUN:** real crash/kill atomicity and migrations (need the real store, item 2.1); media files and orphan recovery; Club repository (F08).
 - **Verdict:** VERIFIED.
 
+### 0.5 App shell, design tokens, formatting layer  (PLAN item 0.5; F22, F18 formatting, F25 numbers)
+- **Status:** VERIFIED on iPhone 17 simulator (iOS, Xcode.app). Physical device: NOT RUN. VoiceOver walkthrough on device: NOT RUN.
+- **Date / commit:** 2026-10-11, see git log for `0.5:`.
+- **Automated:** `scripts/verify.sh --ui` -> VERIFY OK. `Packages/Formatting` 14 tests (conversion round trip T01 for all 13 metrics x 3 unit sets, known values, sv decimal comma, grouping, nil-never-zero, parse incl. U+2212 minus, garbage rejected). App unit tests: WCAG AA contrast >= 4.5:1 for every text token pair in light and dark, settings persistence/reset/corrupt fallback, navigation state. UI tests (10 incl. 2 pre-existing): portrait tab bar en/sv, landscape rail replaces tab bar, rotation keeps selected tab both ways, rail targets >= 44 pt, unit change updates examples (en `109 yd`, `67.1 mph`; sv `67,1 mph`), settings persist across relaunch, largest accessibility text keeps nav and Done hittable in both orientations.
+- **Visual review (simulator screenshots, `Validation/Screens/0.5/`, gitignored):** en light and sv dark, portrait and landscape, Home/Bag/Settings. Findings fixed during review: example values were oversized (font), Settings sheet used system grey instead of the palette (now themed per section). Mockups not compared pixel for pixel: this item is shell only, Home content is a skeleton.
+- **Rubber duck:** (1) mutated unit factor (yd 0.9144 -> 0.9) and the minus-sign code point: tests failed both times, restored; (2) first Swedish UI expectation was wrong (`108 km/h` vs `108,0 km/h`): the formatter is right (speed 1 decimal), test corrected; (3) rotation could reset tab: UI test rotates twice and checks content; (4) landscape screenshots come out rotated from XCUIScreen: rotated for review only.
+- **Tooling note:** the iOS Simulator MCP tool was unusable (xcode-select points at CLT; needs sudo); verification used XCUITest on the simulator via `xcodebuild`, with screenshots captured by a skipped-by-default test.
+- **NOT RUN / out of scope:** language override System/English/Svenska (F25), handedness (F18), Dynamic Type visual check beyond the XXXL navigation test, Reduce Motion, pseudo-localisation, native Swedish review, real Home content, capture shell (no rail during capture), physical device.
+- **Verdict:** VERIFIED (simulator).
+
 (Further records are appended here, newest last.)

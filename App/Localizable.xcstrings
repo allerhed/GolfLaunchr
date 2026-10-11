@@ -1,20 +1,431 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "home.subtitle" : {
-      "comment" : "Short product description under the app name",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Golf launch monitor" } },
-        "sv" : { "stringUnit" : { "state" : "translated", "value" : "Slagmätare för golf" } }
+  "sourceLanguage": "en",
+  "strings": {
+    "appearance.dark": {
+      "comment": "Theme option: dark",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mörkt"
+          }
+        }
       }
     },
-    "home.title" : {
-      "comment" : "App name on the Home screen",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "GolfLaunchr" } },
-        "sv" : { "stringUnit" : { "state" : "translated", "value" : "GolfLaunchr" } }
+    "appearance.light": {
+      "comment": "Theme option: light",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ljust"
+          }
+        }
+      }
+    },
+    "appearance.system": {
+      "comment": "Theme option: follow the system",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "bag.placeholder": {
+      "comment": "Empty state on the Bag screen until clubs are built",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your clubs will appear here."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina klubbor visas här."
+          }
+        }
+      }
+    },
+    "home.subtitle": {
+      "comment": "Short product description under the app name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Golf launch monitor"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slagmätare för golf"
+          }
+        }
+      }
+    },
+    "home.title": {
+      "comment": "App name on the Home screen",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr"
+          }
+        }
+      }
+    },
+    "nav.bag": {
+      "comment": "Primary navigation: golf bag / clubs tab",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bag"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bag"
+          }
+        }
+      }
+    },
+    "nav.home": {
+      "comment": "Primary navigation: Home tab",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hem"
+          }
+        }
+      }
+    },
+    "nav.progress": {
+      "comment": "Primary navigation: progress and trends tab",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Framsteg"
+          }
+        }
+      }
+    },
+    "nav.settings": {
+      "comment": "Settings button, VoiceOver label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inställningar"
+          }
+        }
+      }
+    },
+    "progress.placeholder": {
+      "comment": "Empty state on the Progress screen until trends are built",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your trends will appear here."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina trender visas här."
+          }
+        }
+      }
+    },
+    "settings.appearance": {
+      "comment": "Section header and label for light/dark theme",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utseende"
+          }
+        }
+      }
+    },
+    "settings.distance": {
+      "comment": "Row label: distance unit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avstånd"
+          }
+        }
+      }
+    },
+    "settings.done": {
+      "comment": "Button that closes Settings",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klar"
+          }
+        }
+      }
+    },
+    "settings.example.distance": {
+      "comment": "Label for a fixed example distance of 100 metres shown in the chosen unit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: 100 m"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exempel: 100 m"
+          }
+        }
+      }
+    },
+    "settings.example.speed": {
+      "comment": "Label for a fixed example speed of 30 metres per second shown in the chosen unit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example: 30 m/s"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exempel: 30 m/s"
+          }
+        }
+      }
+    },
+    "settings.speed": {
+      "comment": "Row label: speed unit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hastighet"
+          }
+        }
+      }
+    },
+    "settings.title": {
+      "comment": "Settings screen title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inställningar"
+          }
+        }
+      }
+    },
+    "settings.units": {
+      "comment": "Section header for distance and speed units",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Units"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enheter"
+          }
+        }
+      }
+    },
+    "settings.units.footer": {
+      "comment": "Footer explaining that units are display-only",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Units only change how values are shown. Saved data and scores do not change."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enheter ändrar bara hur värden visas. Sparad data och poäng påverkas inte."
+          }
+        }
+      }
+    },
+    "unit.kmh": {
+      "comment": "Speed unit option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilometres per hour (km/h)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilometer i timmen (km/h)"
+          }
+        }
+      }
+    },
+    "unit.metres": {
+      "comment": "Distance unit option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metres (m)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meter (m)"
+          }
+        }
+      }
+    },
+    "unit.mph": {
+      "comment": "Speed unit option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miles per hour (mph)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miles i timmen (mph)"
+          }
+        }
+      }
+    },
+    "unit.mps": {
+      "comment": "Speed unit option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metres per second (m/s)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meter per sekund (m/s)"
+          }
+        }
+      }
+    },
+    "unit.yards": {
+      "comment": "Distance unit option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yards (yd)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yards (yd)"
+          }
+        }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

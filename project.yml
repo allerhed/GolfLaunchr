@@ -16,6 +16,7 @@ packages:
   Domain: { path: Packages/Domain }
   Analytics: { path: Packages/Analytics }
   Persistence: { path: Packages/Persistence }
+  Formatting: { path: Packages/Formatting }
 targets:
   GolfLaunchr:
     type: application
@@ -25,6 +26,7 @@ targets:
       - package: Domain
       - package: Analytics
       - package: Persistence
+      - package: Formatting
       # PersistenceTestSupport (in-memory fake) is deliberately NOT linked into the app.
     info:
       path: App/Info.plist
