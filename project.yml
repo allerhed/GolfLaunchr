@@ -17,6 +17,7 @@ packages:
   Analytics: { path: Packages/Analytics }
   Persistence: { path: Packages/Persistence }
   Formatting: { path: Packages/Formatting }
+  Capture: { path: Packages/Capture }
 targets:
   GolfLaunchr:
     type: application
@@ -27,6 +28,9 @@ targets:
       - package: Analytics
       - package: Persistence
       - package: Formatting
+      - package: Capture
+      - package: Capture
+        product: CaptureAV
       # PersistenceTestSupport (in-memory fake) is deliberately NOT linked into the app.
     info:
       path: App/Info.plist

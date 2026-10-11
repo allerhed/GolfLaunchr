@@ -94,4 +94,11 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **Checked:** feasibility numbers recomputed with a script (view width, travel per frame, blur); every spec reference and item number in the plan exists; hypotheses H1-H8 and criteria P1-P10 are labelled proposals needing owner approval.
 - **Verdict:** planned, not executed. Items 1.2-1.6 follow; 1.4 needs you and a physical iPhone.
 
+### 1.2 Capture package  (PLAN item 1.2; F04, F23) - PARTIAL
+- **Status:** logic VERIFIED (macOS `swift test`, 34 tests in 6 suites + full `scripts/verify.sh`). AVFoundation adapter (`CaptureAV`): **IMPLEMENTED, compile-checked only (iOS simulator build). NOT RUN on a device.** Plan item 1.2 stays unchecked until D1 (smoke recording) passes.
+- **Covered (G1 plan U1-U5):** format ranking/rejection incl. 120 fps boundary and unknown FOV; frame clock (perfect pacing, 1 and 3 missing frames, +/-10% jitter, 1.5x boundary, repeated/backwards PTS, unknown-vs-perfect); dropped frames counted by reason, never as frames; ring buffer by count and bytes, oversized frame refused, 8-producer concurrent stress; trigger window pre/post in PTS order, gaps inside window visible, pause => incomplete window, resume is a new timing reference, bounded over 5000 frames; manifest round trip with unknowns staying nil; thermal log stores changes only; exposure log bounded.
+- **Rubber duck:** (1) gap threshold mutated 1.5 -> 2.5: 6 failures, restored; (2) non-monotonic guard removed: first attempt did not apply (formatter had reflowed the line, test still passed so I checked), redone: failure, restored; (3) two initial test failures were test mistakes (JSON escapes `/`; byte limit arithmetic), not code defects; (4) AV adapter correctness cannot be argued from compilation: real session setup, applied-format lock, drop reasons and sample-buffer delivery are unproven.
+- **NOT RUN:** everything on a physical iPhone: format enumeration on real devices, 240 fps hold, drop-reason attachment strings, stabilisation off, rotation angle, permission flow, memory/thermal (F23), harness UI (1.3).
+- **Verdict:** partial. Do not report capture as working.
+
 (Further records are appended here, newest last.)
