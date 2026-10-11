@@ -7,5 +7,5 @@ xcuserdata/
 *.xcresult
 .build/
 .swiftpm/
-Validation/Screens/*.png
+Validation/Screens/**/*.png
 .claude/settings.local.json
