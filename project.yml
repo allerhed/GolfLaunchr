@@ -1,0 +1,58 @@
+name: GolfLaunchr
+options:
+  bundleIdPrefix: com.allerhed
+  deploymentTarget:
+    iOS: "18.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+packages:
+  Domain: { path: Packages/Domain }
+  Analytics: { path: Packages/Analytics }
+targets:
+  GolfLaunchr:
+    type: application
+    platform: iOS
+    sources: [App]
+    dependencies:
+      - package: Domain
+      - package: Analytics
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: GolfLaunchr
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UIRequiredDeviceCapabilities: [arm64]
+        CFBundleLocalizations: [en, sv]
+        NSCameraUsageDescription: Camera is used to detect and measure your golf shots.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.allerhed.golflaunchr
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_EMIT_LOC_STRINGS: YES
+  GolfLaunchrTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests/Unit]
+    dependencies: [{ target: GolfLaunchr }]
+    settings:
+      base: { GENERATE_INFOPLIST_FILE: YES }
+  GolfLaunchrUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests/UI]
+    dependencies: [{ target: GolfLaunchr }]
+    settings:
+      base: { GENERATE_INFOPLIST_FILE: YES }
+schemes:
+  GolfLaunchr:
+    build: { targets: { GolfLaunchr: all } }
+    test:
+      targets: [GolfLaunchrTests, GolfLaunchrUITests]

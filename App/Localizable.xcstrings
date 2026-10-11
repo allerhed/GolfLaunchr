@@ -1,0 +1,20 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "home.subtitle" : {
+      "comment" : "Short product description under the app name",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Golf launch monitor" } },
+        "sv" : { "stringUnit" : { "state" : "translated", "value" : "Slagmätare för golf" } }
+      }
+    },
+    "home.title" : {
+      "comment" : "App name on the Home screen",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "GolfLaunchr" } },
+        "sv" : { "stringUnit" : { "state" : "translated", "value" : "GolfLaunchr" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

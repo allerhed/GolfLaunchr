@@ -1,0 +1,11 @@
+.DS_Store
+DerivedData/
+build/
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+*.xcresult
+.build/
+.swiftpm/
+Validation/Screens/*.png
+.claude/settings.local.json

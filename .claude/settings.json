@@ -1,0 +1,45 @@
+{
+  "model": "sonnet",
+  "permissions": {
+    "allow": [
+      "Bash(scripts/*)",
+      "Bash(xcodegen*)",
+      "Bash(xcodebuild*)",
+      "Bash(xcrun simctl*)",
+      "Bash(swift test*)",
+      "Bash(swift build*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push)",
+      "Bash(git push origin main)",
+      "Bash(grep*)",
+      "Bash(ls*)",
+      "mcp__Claude_Code_iOS_Simulator__control"
+    ],
+    "deny": [
+      "Bash(rm -rf*)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(sudo*)",
+      "Read(./build/DerivedData/**)",
+      "Read(./docs/spec/_full.md)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.swift) command -v swiftformat >/dev/null && swiftformat --quiet \"$f\" 2>/dev/null; true;; esac; true"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+## 12. Handover validation performed
+
+On 11 October 2026, the document was reviewed against the current public mode inventory and the retrieved release history. The review checked that recent capabilities—impact replay, multiple voice metrics, fused ball placement, handedness, atmospheric handling, challenges, skill tracking and external integrations—were represented or explicitly gated. Historical review-only metrics are labelled H rather than promoted to current first-party guarantees.
+
+An executable structural check of version 1.1 confirmed 25 contiguous feature headings (F01–F25), all 20 test IDs and all seven gate IDs. It parsed the embedded JSON successfully and confirmed its synthetic flag and permitted metric provenance values. Independent arithmetic checks passed for the mean/sample-SD examples, illustrative high-speed frame displacement and rad/s-to-rpm conversion. Markdown code fences are balanced. This checks specification structure and examples, not the proposed application's runtime.
+
+Human-style desk review walked through first use, failed permission, poor setup, valid strike, rejected strike, trial exhaustion, exclusion/deletion, interruption, bag remapping, replay loss, drill reconstruction and virtual-round recovery. The resulting safeguards are explicit in the feature requirements. This was a document walkthrough; it was not a physical-device usability or measurement test. No unexecuted acceptance test is recorded as passed.
+### Version 1.1 change record
+
+Replaced the working brand with the recommendation GolfLaunchr following current app naming research; added English/Swedish metadata proposals and preliminary collision-screen limitations. Changed multilingual support from optional readiness to mandatory launch delivery: F25, UserSettings language fields, WP10, T17–T20, bilingual human verification and G3/G6 release inclusion. Technical handover prose remains English. No app localisation runtime or native Swedish reviewer test has been executed at specification stage.
