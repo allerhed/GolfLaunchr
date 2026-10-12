@@ -91,7 +91,8 @@ public struct TimingSummary: Codable, Sendable, Equatable {
     /// Drops reported while this clip's frames were being captured.
     public let droppedByReason: [String: Int]
     /// Drops for the whole recording run, for context.
-    public let runDroppedByReason: [String: Int]
+    /// nil in manifests written before 2026-10-12 (they only had a run total in `droppedByReason`).
+    public let runDroppedByReason: [String: Int]?
     public let triggerPTS: Double?
 
     public init(

@@ -11,12 +11,17 @@
     /// Writes already-compressed HEVC samples to a .mov without re-encoding (passthrough), preserving every PTS.
     /// BEHAVIOUR NOT RUN: compile-checked only.
     public enum ClipWriter {
+        static let timescale: CMTimeScale = 240_000
+
         public static func write(_ frames: [Frame<CompressedBox>], to url: URL) async throws {
             guard let first = frames.first else { throw ClipWriterError.noFrames }
             let hint = CMSampleBufferGetFormatDescription(first.payload.sample)
             let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
             let input = AVAssetWriterInput(mediaType: .video, outputSettings: nil, sourceFormatHint: hint)
             input.expectsMediaDataInRealTime = false
+            // The default timescale (600) quantises 240 fps timestamps to alternating 3.3/5 ms steps. Keep them to ~4 us.
+            writer.movieTimeScale = Self.timescale
+            input.mediaTimeScale = Self.timescale
             guard writer.canAdd(input) else { throw ClipWriterError.cannotStart }
             writer.add(input)
             guard writer.startWriting() else { throw ClipWriterError.failed(writer.error?.localizedDescription ?? "startWriting") }

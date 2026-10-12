@@ -60,6 +60,27 @@ struct ManifestTests {
         #expect(t.frameCount == 9)
     }
 
+    /// Real D1 manifests were written before `runDroppedByReason`, `deviceOrientation`, `exposureSetting`, `callbackTiming` and
+    /// `frameBytes` existed. They must stay readable.
+    @Test func manifestsFromBeforeTheNewFieldsStillDecode() throws {
+        let enc = JSONEncoder()
+        enc.dateEncodingStrategy = .iso8601
+        let data = try enc.encode(manifest())
+        var object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        for key in ["deviceOrientation", "exposureSetting", "callbackTiming", "frameBytes"] {
+            object[key] = nil
+        }
+        var timing = try #require(object["timing"] as? [String: Any])
+        timing["runDroppedByReason"] = nil
+        object["timing"] = timing
+        let dec = JSONDecoder()
+        dec.dateDecodingStrategy = .iso8601
+        let old = try dec.decode(CaptureManifest.self, from: JSONSerialization.data(withJSONObject: object))
+        #expect(old.timing.runDroppedByReason == nil)
+        #expect(old.deviceOrientation == nil && old.exposureSetting == nil && old.callbackTiming == nil && old.frameBytes == nil)
+        #expect(old.timing.droppedByReason == ["frameWasLate": 1])
+    }
+
     @Test func schemaIsVersioned() throws {
         #expect(manifest().schema == "g1-manifest/1")
         let enc = JSONEncoder()
