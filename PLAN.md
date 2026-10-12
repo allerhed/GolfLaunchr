@@ -62,7 +62,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-12 on the simulator with test doubles; real-device camera/permission check NOT RUN. Evidence: `docs/EVIDENCE.md` 4.1.
 - [x] 4.2 F02 Setup tutorial + environment checks (top-down diagrams, brightness/blur/flicker, test setup without credit)
   - Done 2026-10-12 on the simulator with fake scenes; the live camera observer and all thresholds are NOT RUN on a device. Calibration itself (3.2) does not exist yet, so the calibration blockers act on a placeholder state. Evidence: `docs/EVIDENCE.md` 4.2.
-- [ ] 4.3 F05 Home, mode chooser, Standard practice, QuickShot (mockups 03, 20), landscape capture layout and rotate-gate
+- [x] 4.3 F05 Home, mode chooser, Standard practice, QuickShot (mockups 03, 20), landscape capture layout and rotate-gate
+  - Done 2026-10-12 as fixtures-first UI: no production shot source exists yet (5.3), so only Debug demo shots can be accepted; target carry and shot goal are in the state machine but have no UI. Evidence: `docs/EVIDENCE.md` 4.3.
 - [ ] 4.4 F07 Spoken feedback (AVSpeechSynthesizer, en/sv voices, bounded queue)
 - [ ] 4.5 F18 Settings: language, handedness, units, voice, atmosphere, privacy
 - [ ] 4.6 F10a screens: shot detail, club averages, club profile, gapping, dispersion, filter sheet (portrait + landscape)

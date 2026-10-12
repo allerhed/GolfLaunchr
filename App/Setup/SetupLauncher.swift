@@ -15,4 +15,9 @@ final class SetupLauncher {
     func open() {
         model = make()
     }
+
+    /// A model for another screen (practice) that needs the same live checks.
+    func makeModel() -> SetupModel {
+        make()
+    }
 }

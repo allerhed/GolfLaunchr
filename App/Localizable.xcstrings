@@ -1436,6 +1436,278 @@
         }
       }
     },
+    "home.headline": {
+      "comment": "Home headline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready for the range?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redo för rangen?"
+          }
+        }
+      }
+    },
+    "home.last": {
+      "comment": "Home section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latest session"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senaste passet"
+          }
+        }
+      }
+    },
+    "home.mode.ladder": {
+      "comment": "Mode name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ladder"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stege"
+          }
+        }
+      }
+    },
+    "home.mode.ladder.text": {
+      "comment": "Mode text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build precision and control"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bygg precision och kontroll"
+          }
+        }
+      }
+    },
+    "home.mode.soon": {
+      "comment": "Label on a mode that is not available yet",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coming soon"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kommer snart"
+          }
+        }
+      }
+    },
+    "home.mode.target": {
+      "comment": "Mode name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mål"
+          }
+        }
+      }
+    },
+    "home.mode.target.text": {
+      "comment": "Mode text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hit specific distances"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träffa bestämda längder"
+          }
+        }
+      }
+    },
+    "home.mode.virtual": {
+      "comment": "Mode name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Virtual Golf"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Virtuell golf"
+          }
+        }
+      }
+    },
+    "home.mode.virtual.text": {
+      "comment": "Mode text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play original virtual courses"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spela originalbanor virtuellt"
+          }
+        }
+      }
+    },
+    "home.modes": {
+      "comment": "Home section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice modes"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träningslägen"
+          }
+        }
+      }
+    },
+    "home.quickshot.subtitle": {
+      "comment": "Home row text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A fast reading in one tap."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En snabb mätning med ett tryck."
+          }
+        }
+      }
+    },
+    "home.quickshot.title": {
+      "comment": "Home row title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QuickShot"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QuickShot"
+          }
+        }
+      }
+    },
+    "home.start.failed": {
+      "comment": "Shown when starting a session failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not start a session. Please try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunde inte starta ett pass. Försök igen."
+          }
+        }
+      }
+    },
+    "home.start.noClubs": {
+      "comment": "Shown when practice cannot start without clubs",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a club in My Bag first."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lägg först till en klubba i Min bag."
+          }
+        }
+      }
+    },
+    "home.start.subtitle": {
+      "comment": "Home primary card text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record shots and see your data instantly."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spela in slag och se din data direkt."
+          }
+        }
+      }
+    },
+    "home.start.title": {
+      "comment": "Home primary card title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start practice"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starta träning"
+          }
+        }
+      }
+    },
     "home.subtitle": {
       "comment": "Short product description under the app name",
       "localizations": {
@@ -2214,6 +2486,278 @@
           "stringUnit": {
             "state": "translated",
             "value": "Välkommen till GolfLaunchr"
+          }
+        }
+      }
+    },
+    "practice.arm": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arm next shot"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gör redo för nästa slag"
+          }
+        }
+      }
+    },
+    "practice.card.waiting": {
+      "comment": "Metric card note",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for a shot"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Väntar på ett slag"
+          }
+        }
+      }
+    },
+    "practice.club.nextShot": {
+      "comment": "Note while armed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club change applies to the next shot"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klubbbytet gäller nästa slag"
+          }
+        }
+      }
+    },
+    "practice.end": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End session"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avsluta passet"
+          }
+        }
+      }
+    },
+    "practice.end.confirm": {
+      "comment": "Dialog button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End session"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avsluta passet"
+          }
+        }
+      }
+    },
+    "practice.end.message": {
+      "comment": "Dialog message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your shots are kept. A session without shots is not saved."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina slag sparas. Ett pass utan slag sparas inte."
+          }
+        }
+      }
+    },
+    "practice.end.title": {
+      "comment": "Dialog title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End this session?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avsluta passet?"
+          }
+        }
+      }
+    },
+    "practice.pause": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausa"
+          }
+        }
+      }
+    },
+    "practice.resume": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Återuppta"
+          }
+        }
+      }
+    },
+    "practice.rotate.body": {
+      "comment": "Rotate prompt text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture works in landscape. Turn the phone sideways to continue."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspelning fungerar i liggande läge. Vrid telefonen för att fortsätta."
+          }
+        }
+      }
+    },
+    "practice.rotate.title": {
+      "comment": "Rotate prompt title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rotate your iPhone"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vrid din iPhone"
+          }
+        }
+      }
+    },
+    "practice.shots %lld": {
+      "comment": "Shot counter",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shots: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slag: %lld"
+          }
+        }
+      }
+    },
+    "practice.status.armed": {
+      "comment": "Status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Armed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redo"
+          }
+        }
+      }
+    },
+    "practice.status.ended": {
+      "comment": "Status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ended"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avslutat"
+          }
+        }
+      }
+    },
+    "practice.status.idle": {
+      "comment": "Status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not armed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte redo"
+          }
+        }
+      }
+    },
+    "practice.status.paused": {
+      "comment": "Status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausad"
           }
         }
       }

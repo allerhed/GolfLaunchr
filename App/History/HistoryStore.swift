@@ -97,6 +97,12 @@ final class HistoryStore {
         loadTask = nil
     }
 
+    /// Reads everything again from the database (after a session started, a shot was committed or a session ended elsewhere).
+    func refresh() async {
+        guard let backend else { return }
+        await reload(from: backend)
+    }
+
     private var isFailed: Bool {
         if case .failed = loadState {
             return true

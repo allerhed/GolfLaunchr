@@ -19,6 +19,7 @@ packages:
   Formatting: { path: Packages/Formatting }
   Capture: { path: Packages/Capture }
   Export: { path: Packages/Export }
+  Modes: { path: Packages/Modes }
 targets:
   GolfLaunchr:
     type: application
@@ -30,6 +31,7 @@ targets:
       - package: Persistence
       - package: Formatting
       - package: Export
+      - package: Modes
       - package: Capture
       - package: Capture
         product: CaptureAV

@@ -42,3 +42,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Flight (3.5) built before 3.1 with generic coefficients and an explicit unvalidated version; total distance not produced; unknown spin gives a lower bound that is not stored as carry | Needs no G1 data and unblocks analytics; avoids inventing spin or runout numbers (F06). |
 | 2026-10-12 | Setup diagram puts a right-handed golfer on the far side when the target is on the right | Target must be on the golfer's left; mockup 04 shows the opposite (spec text wins). |
 | 2026-10-12 | Unmeasured checks show Not checked and block arming only when nothing at all is measured | Never present absence of data as Good (F02, F06 spirit). |
+| 2026-10-12 | A practice session with zero accepted shots is not saved (dropped at End and at crash recovery) | F05: no misleading empty sessions or averages in history. |
+| 2026-10-12 | Unavailable modes on Home are labelled Coming soon and are not buttons | No dead ends and no pretending a mode exists. |

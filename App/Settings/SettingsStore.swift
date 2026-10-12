@@ -38,6 +38,7 @@ final class SettingsStore {
         static let appearance = "settings.appearance"
         static let handedness = "settings.swingHandedness"
         static let onboarding = "settings.onboardingCompleted"
+        static let lastClub = "settings.lastClubID"
     }
 
     private let defaults: UserDefaults
@@ -58,6 +59,11 @@ final class SettingsStore {
         didSet { defaults.set(swingHandedness?.rawValue, forKey: Key.handedness) }
     }
 
+    /// The club used last, so QuickShot can start from it. Display preference only.
+    var lastClubID: UUID? {
+        didSet { defaults.set(lastClubID?.uuidString, forKey: Key.lastClub) }
+    }
+
     /// True once onboarding was finished or skipped. Repeating onboarding never touches credits or stored shots.
     var onboardingCompleted: Bool {
         didSet { defaults.set(onboardingCompleted, forKey: Key.onboarding) }
@@ -67,7 +73,7 @@ final class SettingsStore {
     init(defaults: UserDefaults = .standard, locale: Locale = .current, resetting: Bool = false) {
         self.defaults = defaults
         if resetting {
-            [Key.distance, Key.speed, Key.appearance, Key.handedness, Key.onboarding].forEach(defaults.removeObject(forKey:))
+            [Key.distance, Key.speed, Key.appearance, Key.handedness, Key.onboarding, Key.lastClub].forEach(defaults.removeObject(forKey:))
         }
         let regional = DisplayUnits.defaults(for: locale)
         units = DisplayUnits(
@@ -77,5 +83,6 @@ final class SettingsStore {
         appearance = defaults.string(forKey: Key.appearance).flatMap(Appearance.init(rawValue:)) ?? .system
         swingHandedness = defaults.string(forKey: Key.handedness).flatMap(SwingHandedness.init(rawValue:))
         onboardingCompleted = defaults.bool(forKey: Key.onboarding)
+        lastClubID = defaults.string(forKey: Key.lastClub).flatMap(UUID.init(uuidString:))
     }
 }

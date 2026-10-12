@@ -7,6 +7,7 @@ struct RootView: View {
     @Environment(BagStore.self) private var bagStore
     @Environment(HistoryStore.self) private var historyStore
     @Environment(SetupLauncher.self) private var setup
+    @Environment(PracticeLauncher.self) private var practice
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -32,6 +33,7 @@ struct RootView: View {
         }
         .background(Tokens.background.color.ignoresSafeArea())
         .task {
+            await practice.recoverInterrupted()
             await bagStore.load()
             await historyStore.load()
         }
@@ -51,6 +53,16 @@ struct RootView: View {
             })) {
                 if let model = setup.model {
                     SetupView().environment(model).preferredColorScheme(settings.appearance.colorScheme)
+                }
+            }
+            .fullScreenCover(isPresented: Binding(get: { practice.store != nil }, set: {
+                if !$0 {
+                    practice.store = nil
+                }
+            })) {
+                if let store = practice.store, let model = practice.setupModel {
+                    PracticeView(store: store, setup: model)
+                        .preferredColorScheme(settings.appearance.colorScheme)
                 }
             }
             .sheet(isPresented: $navigation.showingSettings) {

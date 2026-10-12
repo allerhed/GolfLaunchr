@@ -11,6 +11,7 @@ struct GolfLaunchrApp: App {
     @State private var historyStore: HistoryStore
     @State private var onboarding: OnboardingStore
     @State private var setupLauncher: SetupLauncher
+    @State private var practiceLauncher: PracticeLauncher
 
     init() {
         let arguments = CommandLine.arguments
@@ -23,7 +24,8 @@ struct GolfLaunchrApp: App {
         }
         _settings = State(initialValue: settingsStore)
         _onboarding = State(initialValue: Self.makeOnboarding(settingsStore, arguments: arguments))
-        _setupLauncher = State(initialValue: Self.makeSetupLauncher(settingsStore, arguments: arguments))
+        let launcher = Self.makeSetupLauncher(settingsStore, arguments: arguments)
+        _setupLauncher = State(initialValue: launcher)
         let testFile = arguments.firstIndex(of: "-uiTestStoreFile").flatMap { arguments.indices.contains($0 + 1) ? arguments[$0 + 1] : nil }
         // Demo data can be requested in Debug builds only: the flag is not even parsed in Release.
         #if DEBUG
@@ -34,6 +36,9 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
+        _practiceLauncher = State(initialValue: PracticeLauncher(
+            bagStore: stores.bag, settings: settingsStore, backend: stores.backend, makeSetup: { launcher.makeModel() }
+        ))
     }
 
     /// Setup screen model factory. Debug builds started with `-uiTestSetupScene <scene>` use a fake scene instead of the camera, and
@@ -73,8 +78,14 @@ struct GolfLaunchrApp: App {
         return OnboardingStore(settings: settings, camera: LiveCameraAccess(), inspector: LiveDeviceInspector())
     }
 
+    private struct AppStores {
+        let bag: BagStore
+        let history: HistoryStore
+        let backend: SQLiteStore?
+    }
+
     /// One database serves the bag and the history. A database that cannot be opened is reported, never replaced by a new empty one.
-    private static func makeStores(testFile: String?, seedDemo: Bool) -> (bag: BagStore, history: HistoryStore) {
+    private static func makeStores(testFile: String?, seedDemo: Bool) -> AppStores {
         do {
             let url = try testFile.map { URL(fileURLWithPath: $0) } ?? defaultStoreURL()
             // Synthetic (demo) shots are accepted only in Debug builds started with the test launch argument.
@@ -90,14 +101,14 @@ struct GolfLaunchrApp: App {
                     prepare = { await HistoryFixtures.seedIfEmpty(store) }
                 }
             #endif
-            return (
-                BagStore(repository: store, seedName: BagSeedNames.localized),
-                HistoryStore(backend: store, prepare: prepare)
+            return AppStores(
+                bag: BagStore(repository: store, seedName: BagSeedNames.localized),
+                history: HistoryStore(backend: store, prepare: prepare), backend: store
             )
         } catch {
-            return (
-                BagStore(repository: nil, failureMessage: "\(error)", seedName: BagSeedNames.localized),
-                HistoryStore(backend: nil, failureMessage: "\(error)")
+            return AppStores(
+                bag: BagStore(repository: nil, failureMessage: "\(error)", seedName: BagSeedNames.localized),
+                history: HistoryStore(backend: nil, failureMessage: "\(error)"), backend: nil
             )
         }
     }
@@ -116,6 +127,7 @@ struct GolfLaunchrApp: App {
                 .environment(historyStore)
                 .environment(onboarding)
                 .environment(setupLauncher)
+                .environment(practiceLauncher)
         }
     }
 }
