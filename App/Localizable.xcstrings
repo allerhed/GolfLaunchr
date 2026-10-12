@@ -2813,6 +2813,839 @@
         }
       }
     },
+    "setup.blocked.title": {
+      "comment": "Heading above the reasons",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not ready yet"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte redo än"
+          }
+        }
+      }
+    },
+    "setup.blocker.calibrationLost.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrate again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibrera om."
+          }
+        }
+      }
+    },
+    "setup.blocker.calibrationLost.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The calibration is no longer valid."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibreringen gäller inte längre."
+          }
+        }
+      }
+    },
+    "setup.blocker.cameraNotRunning.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wait a moment and check that camera access is on."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänta en stund och kontrollera att kameraåtkomst är på."
+          }
+        }
+      }
+    },
+    "setup.blocker.cameraNotRunning.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera is not delivering images yet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kameran levererar inga bilder än."
+          }
+        }
+      }
+    },
+    "setup.blocker.deviceMoving.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fix the phone on a stable tripod and keep people out of view."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fäst telefonen på ett stabilt stativ och håll personer utanför bild."
+          }
+        }
+      }
+    },
+    "setup.blocker.deviceMoving.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The picture is moving."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilden rör sig."
+          }
+        }
+      }
+    },
+    "setup.blocker.exposureTooLong.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add light so a faster shutter can be used."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillför ljus så att en snabbare slutartid kan användas."
+          }
+        }
+      }
+    },
+    "setup.blocker.exposureTooLong.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shutter is too slow for sharp shots."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slutartiden är för lång för skarpa slag."
+          }
+        }
+      }
+    },
+    "setup.blocker.flickerLikely.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch to steady light, such as daylight or a flicker-free lamp."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byt till jämnt ljus, till exempel dagsljus eller en flimmerfri lampa."
+          }
+        }
+      }
+    },
+    "setup.blocker.flickerLikely.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The light flickers."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ljuset flimrar."
+          }
+        }
+      }
+    },
+    "setup.blocker.handednessMissing.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose right- or left-handed above."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj höger- eller vänstersving ovan."
+          }
+        }
+      }
+    },
+    "setup.blocker.handednessMissing.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swing side is not chosen."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Svingsida är inte vald."
+          }
+        }
+      }
+    },
+    "setup.blocker.notCalibrated.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibrate, or try a test setup first."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalibrera, eller testa uppställningen först."
+          }
+        }
+      }
+    },
+    "setup.blocker.notCalibrated.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The setup is not calibrated yet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uppställningen är inte kalibrerad än."
+          }
+        }
+      }
+    },
+    "setup.blocker.overexposed.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avoid direct sun or bright lamps in view."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undvik direkt sol eller starka lampor i bild."
+          }
+        }
+      }
+    },
+    "setup.blocker.overexposed.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too much of the picture is blown out."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För mycket av bilden är överexponerad."
+          }
+        }
+      }
+    },
+    "setup.blocker.tooDark.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add light or move to a brighter spot."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillför ljus eller flytta till en ljusare plats."
+          }
+        }
+      }
+    },
+    "setup.blocker.tooDark.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It is too dark."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det är för mörkt."
+          }
+        }
+      }
+    },
+    "setup.blocker.unsupportedDevice.action": {
+      "comment": "What to do about it",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can still look at your history."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kan fortfarande titta på din historik."
+          }
+        }
+      }
+    },
+    "setup.blocker.unsupportedDevice.reason": {
+      "comment": "Why capture is blocked",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone cannot record shots."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den här iPhonen kan inte spela in slag."
+          }
+        }
+      }
+    },
+    "setup.check.camera": {
+      "comment": "Checklist row",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
+          }
+        }
+      }
+    },
+    "setup.check.flicker": {
+      "comment": "Checklist row",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light flicker"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ljusflimmer"
+          }
+        }
+      }
+    },
+    "setup.check.light": {
+      "comment": "Checklist row",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighting"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ljus"
+          }
+        }
+      }
+    },
+    "setup.check.shutter": {
+      "comment": "Checklist row",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shutter speed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slutartid"
+          }
+        }
+      }
+    },
+    "setup.check.stable": {
+      "comment": "Checklist row",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phone steady"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonen står stilla"
+          }
+        }
+      }
+    },
+    "setup.diagram.a11y.golferFar": {
+      "comment": "VoiceOver description of the diagram, right-handed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top view. The target line runs to the right. The golfer stands above the ball and the phone below it."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vy uppifrån. Mållinjen går åt höger. Golfaren står ovanför bollen och telefonen under den."
+          }
+        }
+      }
+    },
+    "setup.diagram.a11y.golferNear": {
+      "comment": "VoiceOver description of the diagram, left-handed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Top view. The target line runs to the right. The golfer stands below the ball and the phone above it."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vy uppifrån. Mållinjen går åt höger. Golfaren står under bollen och telefonen ovanför den."
+          }
+        }
+      }
+    },
+    "setup.diagram.ball": {
+      "comment": "Diagram label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boll"
+          }
+        }
+      }
+    },
+    "setup.diagram.golfer": {
+      "comment": "Diagram label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Golfer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Golfare"
+          }
+        }
+      }
+    },
+    "setup.diagram.phone": {
+      "comment": "Diagram label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phone"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefon"
+          }
+        }
+      }
+    },
+    "setup.diagram.target": {
+      "comment": "Diagram label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mål"
+          }
+        }
+      }
+    },
+    "setup.handedness": {
+      "comment": "Section label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swing handedness"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Svingsida"
+          }
+        }
+      }
+    },
+    "setup.handedness.confirm.change": {
+      "comment": "Dialog button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change and recalibrate"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byt och kalibrera om"
+          }
+        }
+      }
+    },
+    "setup.handedness.confirm.message": {
+      "comment": "Dialog message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your calibration belongs to the current side. You will need to calibrate again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Din kalibrering hör till den nuvarande sidan. Du måste kalibrera om."
+          }
+        }
+      }
+    },
+    "setup.handedness.confirm.title": {
+      "comment": "Dialog title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change swing side?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byta svingsida?"
+          }
+        }
+      }
+    },
+    "setup.ready": {
+      "comment": "Primary button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to capture"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redo att spela in"
+          }
+        }
+      }
+    },
+    "setup.state.check": {
+      "comment": "Check result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontrollera"
+          }
+        }
+      }
+    },
+    "setup.state.good": {
+      "comment": "Check result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bra"
+          }
+        }
+      }
+    },
+    "setup.state.problem": {
+      "comment": "Check result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problem"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problem"
+          }
+        }
+      }
+    },
+    "setup.state.unknown": {
+      "comment": "Check result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not checked"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ej kontrollerad"
+          }
+        }
+      }
+    },
+    "setup.subtitle": {
+      "comment": "Setup screen",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Place your iPhone across the ball from you, sideways to the target line."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placera iPhonen mitt emot dig, på andra sidan bollen och i rät vinkel mot mållinjen."
+          }
+        }
+      }
+    },
+    "setup.test.banner": {
+      "comment": "Banner",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test setup: shots are not scored and use no credit."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testuppställning: slag poängsätts inte och kostar inget."
+          }
+        }
+      }
+    },
+    "setup.test.button": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a test setup (no credit)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testa uppställningen (kostar inget)"
+          }
+        }
+      }
+    },
+    "setup.test.exit": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to a scored setup"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillbaka till poängsatt uppställning"
+          }
+        }
+      }
+    },
+    "setup.title": {
+      "comment": "Setup screen title and Home button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up your iPhone"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ställ upp din iPhone"
+          }
+        }
+      }
+    },
+    "setup.warning.exposureLong.reason": {
+      "comment": "Warning",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shutter is slower than ideal."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slutartiden är längre än idealt."
+          }
+        }
+      }
+    },
+    "setup.warning.flickerNotChecked.reason": {
+      "comment": "Warning",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flicker has not been checked yet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flimmer har inte kontrollerats än."
+          }
+        }
+      }
+    },
+    "setup.warning.flickerPossible.reason": {
+      "comment": "Warning",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The light may flicker."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ljuset kan flimra."
+          }
+        }
+      }
+    },
     "shot.club": {
       "comment": "Shot detail row: club used",
       "localizations": {

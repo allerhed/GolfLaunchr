@@ -6,6 +6,7 @@ struct RootView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(BagStore.self) private var bagStore
     @Environment(HistoryStore.self) private var historyStore
+    @Environment(SetupLauncher.self) private var setup
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -43,6 +44,15 @@ struct RootView: View {
         #if CAPTURE_HARNESS
             .fullScreenCover(isPresented: .constant(HarnessAutorunConfig.current != nil)) { HarnessView() }
         #endif
+            .fullScreenCover(isPresented: Binding(get: { setup.model != nil }, set: {
+                if !$0 {
+                    setup.model = nil
+                }
+            })) {
+                if let model = setup.model {
+                    SetupView().environment(model).preferredColorScheme(settings.appearance.colorScheme)
+                }
+            }
             .sheet(isPresented: $navigation.showingSettings) {
                 SettingsView()
                     .environment(settings)

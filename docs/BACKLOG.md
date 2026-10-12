@@ -79,6 +79,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E11 | Export UI: share sheet, include notes/media prompt, export-before-delete, aggregate/analysis content and filters in exports, optional display units in CSV; open one exported CSV in Numbers/Excel and Sheets to confirm columns and the apostrophe escape look right | 2.5 |
 | E12 | Fit and validate flight coefficients (Cd, Cl vs spin parameter, spin decay) against TrackMan carry/apex pairs from the bay; add runout/surface model for total distance; wire Flight into Standardised conditions | 3.5 |
 | E13 | Onboarding on the real phone: permission prompt, Settings round trip, actual capability report (formats, free storage), VoiceOver, Dynamic Type; add handedness to Settings (4.5) and a way to re-run onboarding | 4.1 |
+| E14 | Setup on the real phone: live observer (frames, exposure, thermal), tune thresholds from bay clips, add CoreMotion steadiness and ball detection, check the flicker row under real lamps, wire Calibrate (3.2) and Ready (4.3) | 4.2 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
 
 ## 7. Gates still NOT RUN

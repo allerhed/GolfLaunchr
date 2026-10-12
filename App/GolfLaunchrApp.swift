@@ -1,3 +1,4 @@
+import Capture
 import Domain
 import Persistence
 import SwiftUI
@@ -9,6 +10,7 @@ struct GolfLaunchrApp: App {
     @State private var bagStore: BagStore
     @State private var historyStore: HistoryStore
     @State private var onboarding: OnboardingStore
+    @State private var setupLauncher: SetupLauncher
 
     init() {
         let arguments = CommandLine.arguments
@@ -21,6 +23,7 @@ struct GolfLaunchrApp: App {
         }
         _settings = State(initialValue: settingsStore)
         _onboarding = State(initialValue: Self.makeOnboarding(settingsStore, arguments: arguments))
+        _setupLauncher = State(initialValue: Self.makeSetupLauncher(settingsStore, arguments: arguments))
         let testFile = arguments.firstIndex(of: "-uiTestStoreFile").flatMap { arguments.indices.contains($0 + 1) ? arguments[$0 + 1] : nil }
         // Demo data can be requested in Debug builds only: the flag is not even parsed in Release.
         #if DEBUG
@@ -31,6 +34,29 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
+    }
+
+    /// Setup screen model factory. Debug builds started with `-uiTestSetupScene <scene>` use a fake scene instead of the camera, and
+    /// `-uiTestSetupCalibrated` starts with a valid calibration.
+    private static func makeSetupLauncher(_ settings: SettingsStore, arguments: [String]) -> SetupLauncher {
+        var observer: any EnvironmentObserving = LiveEnvironmentObserver()
+        var inspector: any DeviceInspecting = LiveDeviceInspector()
+        var calibration = CalibrationState.none
+        #if DEBUG
+            if let index = arguments.firstIndex(of: "-uiTestSetupScene"), arguments.indices.contains(index + 1) {
+                observer = FakeEnvironmentObserver(scene: arguments[index + 1])
+                inspector = FakeDeviceInspector(hasCamera: true)
+            }
+            if arguments.contains("-uiTestSetupCalibrated") {
+                calibration = .valid
+            }
+        #endif
+        return SetupLauncher {
+            SetupModel(
+                settings: settings, observer: observer, capability: CapabilityQualifier.qualify(inspector.facts()).status,
+                calibration: calibration
+            )
+        }
     }
 
     /// Live camera services; Debug builds started with `-uiTestFakeCamera authorized|denied|none` use doubles (no system prompt).
@@ -89,6 +115,7 @@ struct GolfLaunchrApp: App {
                 .environment(bagStore)
                 .environment(historyStore)
                 .environment(onboarding)
+                .environment(setupLauncher)
         }
     }
 }
