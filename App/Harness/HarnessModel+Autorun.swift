@@ -87,6 +87,7 @@
             loadFormats()
             exposurePreset = config.exposure
             maxMbit = config.maxMbit
+            discardLateFrames = config.discardLate
             if let lens = config.lens, let choice = formats.first(where: { $0.descriptor.lens.rawValue == lens }) {
                 selectedFormatID = choice.id
             }
@@ -98,7 +99,7 @@
                     exposureMode: config.exposure.rawValue,
                     exposurePlan: nil, trigger: config.trigger.rawValue, frames: 0, gapEvents: 0, missingFrames: 0, droppedByReason: [:],
                     callbackMeanMs: nil, callbackP99Ms: nil, callbackMaxMs: 0, callbackOverBudgetFraction: nil, encoderMaxBacklog: 0,
-                    meanFrameKB: nil, maxFrameKB: 0, maxMbitCap: config.maxMbit, meanMbit: nil,
+                    meanFrameKB: nil, maxFrameKB: 0, maxMbitCap: config.maxMbit, discardLate: config.discardLate, meanMbit: nil,
                     encodeCallMeanMs: nil, encodeCallP99Ms: nil, encodeCallMaxMs: 0,
                     worstThermal: nil, clipsSaved: 0, deviceOrientation: Self.orientationName(), error: "\(phase)"
                 ))
@@ -138,7 +139,7 @@
                 callbackMeanMs: m?.timing.meanMilliseconds, callbackP99Ms: m?.timing.p99Milliseconds,
                 callbackMaxMs: m?.timing.maxMilliseconds ?? 0, callbackOverBudgetFraction: m?.timing.overBudgetFraction,
                 encoderMaxBacklog: m?.maxBacklog ?? 0, meanFrameKB: m?.meanFrameBytes.map { $0 / 1000 },
-                maxFrameKB: Double(m?.maxFrameBytes ?? 0) / 1000, maxMbitCap: config.maxMbit,
+                maxFrameKB: Double(m?.maxFrameBytes ?? 0) / 1000, maxMbitCap: config.maxMbit, discardLate: config.discardLate,
                 meanMbit: m?.meanFrameBytes
                     .map { $0 * 8 * (formats.first { $0.id == selectedFormatID }?.descriptor.maxFrameRate ?? 240) / 1e6 },
                 encodeCallMeanMs: m?.encodeTiming.meanMilliseconds,

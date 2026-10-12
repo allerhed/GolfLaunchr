@@ -105,6 +105,8 @@ A criterion is evaluated per **(device profile, lens/format, exposure mode, ligh
 | P9 | Flicker | if banding amplitude exceeds an agreed threshold under a light type, that light type is excluded or an exposure-lock mitigation is shown to work |
 | P10 | Spin visibility (informational) | record whether any ball marking/dimple structure is resolvable in >= 2 consecutive post-impact frames. The default expectation is **no**, and spin stays "Estimated" (spec 05). |
 
+**Proposed P1 revision (2026-10-12, needs owner approval):** see `docs/EVIDENCE.md` (1.3a closed): P1a PTS present and ordered; P1b no missing frame within about 0.15 s of impact in at least 95% of valid strikes (missing frames flagged); P1c steady-state loss under 0.1% after a 10 s warm-up. The original P1 wording above is kept until approved.
+
 **G1 passes** only if at least one device profile has at least one stratum per speed band the owner wants to support that passes P1-P4 and P5, with the envelope written down. If only slow/medium bands pass, declare that narrower envelope. If nothing passes P4, stop or re-scope (see section 7).
 
 ## 7. Decision tree for item 1.6

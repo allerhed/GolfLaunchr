@@ -56,6 +56,7 @@
         var motionThreshold = 6.0
         var exposurePreset = ExposurePreset.auto
         var maxMbit: Int?
+        var discardLateFrames = false
         var callbackText = "-"
         var orientationText = "-"
         var exposurePlanText: String?
@@ -189,7 +190,7 @@
                 metrics: metrics
             )
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-            let applied = try source.start(format: format, frameRate: rate)
+            let applied = try source.start(format: format, frameRate: rate, discardLateFrames: discardLateFrames)
             if abs(applied.activeFrameRate - rate) > 1 {
                 message = "Requested \(Int(rate)) fps but the device runs \(Int(applied.activeFrameRate)) fps."
             }

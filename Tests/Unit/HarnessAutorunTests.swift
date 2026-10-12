@@ -7,16 +7,33 @@
             let c = HarnessAutorunConfig.parse(
                 ["app", "-harnessAutorun", "60", "-harnessExposure", "2000", "-harnessTrigger", "motion", "-harnessSaveEvery", "5"]
             )
-            #expect(c == HarnessAutorunConfig(seconds: 60, exposure: .ms2000, trigger: .motion, saveEvery: 5, lens: nil, maxMbit: nil))
+            #expect(c == HarnessAutorunConfig(
+                seconds: 60,
+                exposure: .ms2000,
+                trigger: .motion,
+                saveEvery: 5,
+                lens: nil,
+                maxMbit: nil,
+                discardLate: false
+            ))
             let d = HarnessAutorunConfig.parse(["app", "-harnessAutorun", "9", "-harnessLens", "wide", "-harnessMaxMbit", "150"])
-            #expect(d?.lens == "wide" && d?.maxMbit == 150)
+            #expect(d?.lens == "wide" && d?.maxMbit == 150 && d?.discardLate == false)
+            #expect(HarnessAutorunConfig.parse(["app", "-harnessAutorun", "9", "-harnessDiscard"])?.discardLate == true)
             #expect(HarnessAutorunConfig.parse(["app", "-harnessAutorun", "9", "-harnessMaxMbit", "0"])?.maxMbit == nil)
         }
 
         @Test func defaultsAndMissingFlag() {
             #expect(HarnessAutorunConfig.parse(["app"]) == nil)
             let c = HarnessAutorunConfig.parse(["app", "-harnessAutorun", "30"])
-            #expect(c == HarnessAutorunConfig(seconds: 30, exposure: .auto, trigger: .manual, saveEvery: 10, lens: nil, maxMbit: nil))
+            #expect(c == HarnessAutorunConfig(
+                seconds: 30,
+                exposure: .auto,
+                trigger: .manual,
+                saveEvery: 10,
+                lens: nil,
+                maxMbit: nil,
+                discardLate: false
+            ))
         }
 
         @Test(arguments: [

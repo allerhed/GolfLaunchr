@@ -151,4 +151,23 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **Checked:** output is 1024x1024 with no alpha channel; `assetutil` finds `AppIcon` at 1024 px in the built `Assets.car`; simulator home screen screenshot shows the masked icon next to system icons (first version at 74% looked small, enlarged to 86%); `scripts/verify.sh` passes.
 - **Open:** owner to confirm rights and origin of the artwork (PROVENANCE); optional dark and tinted icon variants (iOS 18) not made; legibility at small sizes (Settings, Spotlight) not reviewed.
 
+### 1.3a closed: late-frame queueing, lens comparison (device, 2026-10-12)
+- **Table (40-48 s unattended runs, four 2 s windows each; "missing" = frames absent from the PTS sequence):**
+
+  | run | whole run missing | windows missing / frames |
+  |---|---|---|
+  | ultra-wide, auto, discard late | 18 and 22 | 1/1919 and 3/1917 |
+  | ultra-wide, fixed 1/2000, discard late | 69 | 5/1923 |
+  | wide, auto, discard late | 35 and 54 | 7/1913 and 1/1919 |
+  | wide, fixed 1/2000, discard late | 61 | 14/1914 |
+  | **wide, auto, queue late (no discard)** | **5** | **0/1920** |
+  | **wide, fixed 1/2000, queue late** | **14 (one start-up gap)** | **0/1928** |
+
+- **Finding:** callback spikes of ~19 ms (the encode call stalls occasionally) became lost frames because the camera was set to discard frames that arrive while the callback is busy. Queueing them absorbs the spike (callback max rose to 60 ms with nothing lost, encoder backlog max 9). Remaining loss is the stream start-up gap (10-14 frames), irrelevant to a recording that runs for minutes. Run-to-run noise is large (two identical wide-auto discard runs: 7 and 1 missing in windows), so lens and exposure effects cannot be ranked from these runs; the queueing effect is large (0 of 3,848 windowed frames) and consistent.
+- **Light (decisive for the bay visit):** ultra-wide 1080p240 tops out at ISO about 750; the wide (main) lens at 1080p240 at ISO about 2160 with 75 deg field of view. In the living room auto exposure already sat at the ISO ceiling at about 1/250 s, so 1/2000 s is 3.0 stops darker than a normal exposure on both lenses; the wide lens image is about 1.5 stops brighter than the ultra-wide at the same shutter (mean luma 0.19 at 1/2000 s ISO 2160). Whether this is enough depends entirely on bay lighting, which is unmeasured.
+- **Proposed change to criterion P1 (needs owner approval):** the current wording (whole 2 s window gap-free in 95% of captures) is dominated by irrelevant frames and by start-up. Proposed: P1a every frame has a PTS and no frame is out of order; P1b no missing frame in the impact-critical window (about 0.15 s either side of impact) in at least 95% of valid strikes, and any missing frame is flagged; P1c steady-state loss after a 10 s warm-up under 0.1% of frames. Rationale: every frame carries its own timestamp, so a missing frame removes one observation but does not corrupt timing (F23 asks for zero loss in the required window, which P1b tests directly).
+- **Decision:** the harness queues late frames by default (`-harnessDiscard` restores the old behaviour).
+- **NOT RUN:** 10-minute run, motion trigger on the device after the warm-up fix, effect of touching the screen during recording, indoor bay light, outdoor light.
+- **Verdict:** 1.3a closed. G1 is still NOT RUN: no strike has been recorded.
+
 (Further records are appended here, newest last.)

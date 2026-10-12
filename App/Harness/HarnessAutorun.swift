@@ -13,6 +13,8 @@
         var lens: String?
         /// Encoder hard cap in Mbit/s, nil for none.
         var maxMbit: Int?
+        /// `-harnessDiscard`: drop late frames (old behaviour). The default queues them.
+        var discardLate: Bool
 
         static func parse(_ args: [String]) -> HarnessAutorunConfig? {
             func value(_ flag: String) -> String? {
@@ -26,7 +28,8 @@
             let saveEvery = value("-harnessSaveEvery").flatMap(Double.init) ?? 10
             return HarnessAutorunConfig(
                 seconds: seconds, exposure: exposure, trigger: trigger, saveEvery: max(saveEvery, 1),
-                lens: value("-harnessLens"), maxMbit: value("-harnessMaxMbit").flatMap(Int.init).flatMap { $0 > 0 ? $0 : nil }
+                lens: value("-harnessLens"), maxMbit: value("-harnessMaxMbit").flatMap(Int.init).flatMap { $0 > 0 ? $0 : nil },
+                discardLate: args.contains("-harnessDiscard")
             )
         }
 
@@ -55,6 +58,7 @@
         var meanFrameKB: Double?
         var maxFrameKB: Double
         var maxMbitCap: Int?
+        var discardLate: Bool
         var meanMbit: Double?
         var encodeCallMeanMs: Double?
         var encodeCallP99Ms: Double?

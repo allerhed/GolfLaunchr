@@ -87,7 +87,13 @@
         }
 
         /// Selects `format` at `frameRate` (locked min = max duration) and starts delivery. Returns what was actually applied.
-        public func start(format: AVCaptureDevice.Format, frameRate: Double) throws -> AppliedCaptureSettings {
+        /// - Parameter discardLateFrames: true (default) drops a frame when the previous callback is still running; false queues frames
+        ///   so a brief callback spike delays frames instead of losing them, until the camera's buffer pool is exhausted.
+        public func start(
+            format: AVCaptureDevice.Format,
+            frameRate: Double,
+            discardLateFrames: Bool = true
+        ) throws -> AppliedCaptureSettings {
             guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { throw CaptureAVError.permissionDenied }
             session.beginConfiguration()
             session.sessionPreset = .inputPriority
@@ -95,7 +101,7 @@
             guard session.canAddInput(input) else { throw CaptureAVError.cannotAddInput }
             session.addInput(input)
             let output = AVCaptureVideoDataOutput()
-            output.alwaysDiscardsLateVideoFrames = true
+            output.alwaysDiscardsLateVideoFrames = discardLateFrames
             output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
             output.setSampleBufferDelegate(self, queue: queue)
             guard session.canAddOutput(output) else { throw CaptureAVError.cannotAddOutput }
