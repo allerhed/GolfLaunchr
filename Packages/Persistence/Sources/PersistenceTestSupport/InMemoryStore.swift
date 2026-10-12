@@ -10,12 +10,13 @@ public enum FaultPoint: Sendable {
 
 /// In-memory fake of every repository protocol, for tests and previews only. Real store arrives in plan item 2.1.
 /// Mutations are staged on a copy and published in one assignment, so a failure leaves nothing half-written.
-public actor InMemoryStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository {
+public actor InMemoryStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository, ClubRepository {
     private struct State {
         var sessions: [UUID: Session] = [:]
         var calibrations: [UUID: CalibrationRecord] = [:]
         var shots: [UUID: Shot] = [:]
         var ledger: [UUID: LedgerEntry] = [:]
+        var bag: Bag?
     }
 
     private var state = State()
@@ -115,6 +116,16 @@ public actor InMemoryStore: SessionRepository, CalibrationRepository, ShotReposi
     public func deleteShot(id: UUID) throws {
         guard state.shots[id] != nil else { throw PersistenceError.notFound("shot \(id)") }
         state.shots[id] = nil // ledger entry stays
+    }
+
+    // MARK: ClubRepository
+
+    public func loadBag() -> Bag? {
+        state.bag
+    }
+
+    public func saveBag(_ bag: Bag) {
+        state.bag = bag
     }
 
     // MARK: LedgerRepository

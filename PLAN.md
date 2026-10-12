@@ -36,7 +36,7 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 
 ## Phase 2 - Data and domain core (fixtures, no camera) - WP04
 - [x] 2.1 F20 Persistence, ledger, recovery: real store (SwiftData or SQLite), atomic accepted-shot + ledger write, migrations, orphan-file recovery
-- [ ] 2.2 F08 My Bag (plan exists: `docs/plans/F08-my-bag.md`)
+- [x] 2.2 F08 My Bag (plan exists: `docs/plans/F08-my-bag.md`)
 - [ ] 2.3 F10 Sessions and history: list, filters, exclusion/restore, confirmed delete, transactional recompute
 - [ ] 2.4 F09 + F10a analytics in `Analytics`: mean/median/SD/P10/P90, club averages, gapping, dispersion maths, multi-club filter contract (spec fixtures 224/160/130/110, 120/130/140)
 - [ ] 2.5 F17 Export: CSV (formula-escaped, SI) and JSON v1, round-trip tests

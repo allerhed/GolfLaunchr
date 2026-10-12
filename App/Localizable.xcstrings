@@ -52,19 +52,512 @@
         }
       }
     },
-    "bag.placeholder": {
-      "comment": "Empty state on the Bag screen until clubs are built",
+    "bag.add": {
+      "comment": "Button and VoiceOver label: add a club",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your clubs will appear here."
+            "value": "Add club"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dina klubbor visas här."
+            "value": "Lägg till klubba"
+          }
+        }
+      }
+    },
+    "bag.archive": {
+      "comment": "Swipe action: archive a club (kept for history, not deleted)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archive"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arkivera"
+          }
+        }
+      }
+    },
+    "bag.archived": {
+      "comment": "Section: clubs the golfer has archived",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archived"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arkiverade"
+          }
+        }
+      }
+    },
+    "bag.empty": {
+      "comment": "Empty state when there are no active clubs",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No clubs in your bag. Tap + to add one."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga klubbor i bagen. Tryck på + för att lägga till."
+          }
+        }
+      }
+    },
+    "bag.loadError": {
+      "comment": "Error shown when the stored bag cannot be read",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your bag could not be loaded. Your saved data has not been changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagen kunde inte läsas in. Din sparade data har inte ändrats."
+          }
+        }
+      }
+    },
+    "bag.restore": {
+      "comment": "Swipe action: bring an archived club back",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Återställ"
+          }
+        }
+      }
+    },
+    "bag.saveError": {
+      "comment": "Error shown when saving the bag failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The change could not be saved. Nothing was changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ändringen kunde inte sparas. Inget ändrades."
+          }
+        }
+      }
+    },
+    "bag.title": {
+      "comment": "Screen title: the golfer's clubs",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My Bag"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Min bag"
+          }
+        }
+      }
+    },
+    "club.category.driver": {
+      "comment": "Club category: Driver",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Driver"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Driver"
+          }
+        }
+      }
+    },
+    "club.category.hybrid": {
+      "comment": "Club category: Hybrid",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hybrid"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hybrid"
+          }
+        }
+      }
+    },
+    "club.category.iron": {
+      "comment": "Club category: Iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn"
+          }
+        }
+      }
+    },
+    "club.category.other": {
+      "comment": "Club category: Other",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Övrigt"
+          }
+        }
+      }
+    },
+    "club.category.putter": {
+      "comment": "Club category: Putter",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Putter"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Putter"
+          }
+        }
+      }
+    },
+    "club.category.wedge": {
+      "comment": "Club category: Wedge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wedge"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wedge"
+          }
+        }
+      }
+    },
+    "club.category.wood": {
+      "comment": "Club category: Wood",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wood"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trä"
+          }
+        }
+      }
+    },
+    "clubEdit.brand": {
+      "comment": "Field label: brand, optional",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Märke"
+          }
+        }
+      }
+    },
+    "clubEdit.cancel": {
+      "comment": "Button: close the editor without saving",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt"
+          }
+        }
+      }
+    },
+    "clubEdit.category": {
+      "comment": "Field label: club category",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategori"
+          }
+        }
+      }
+    },
+    "clubEdit.error.duplicateName": {
+      "comment": "Validation: duplicate club name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An active club already has this name."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En aktiv klubba har redan det namnet."
+          }
+        }
+      }
+    },
+    "clubEdit.error.emptyName": {
+      "comment": "Validation: name is empty",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter a name."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange ett namn."
+          }
+        }
+      }
+    },
+    "clubEdit.error.loftNotFinite": {
+      "comment": "Validation: loft is not a number",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the loft as a number."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange loften som ett tal."
+          }
+        }
+      }
+    },
+    "clubEdit.error.loftOutOfRange": {
+      "comment": "Validation: loft out of range",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loft must be between 1° and 70°."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loften måste vara mellan 1° och 70°."
+          }
+        }
+      }
+    },
+    "clubEdit.error.nameTooLong": {
+      "comment": "Validation: name too long",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The name can be at most 40 characters."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namnet får vara högst 40 tecken."
+          }
+        }
+      }
+    },
+    "clubEdit.loft": {
+      "comment": "Field label: loft in degrees",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loft (°)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loft (°)"
+          }
+        }
+      }
+    },
+    "clubEdit.loft.hint": {
+      "comment": "Hint under the loft field",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional, 1–70°"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valfritt, 1–70°"
+          }
+        }
+      }
+    },
+    "clubEdit.model": {
+      "comment": "Field label: model, optional",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modell"
+          }
+        }
+      }
+    },
+    "clubEdit.name": {
+      "comment": "Field label: club name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namn"
+          }
+        }
+      }
+    },
+    "clubEdit.save": {
+      "comment": "Button: save the club",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spara"
+          }
+        }
+      }
+    },
+    "clubEdit.title.edit": {
+      "comment": "Editor title for an existing club",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit club"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redigera klubba"
+          }
+        }
+      }
+    },
+    "clubEdit.title.new": {
+      "comment": "Editor title for a new club",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New club"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ny klubba"
           }
         }
       }
@@ -184,6 +677,227 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dina trender visas här."
+          }
+        }
+      }
+    },
+    "seed.club.driver": {
+      "comment": "Name given to the seeded club when the bag is first created: Driver",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Driver"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Driver"
+          }
+        }
+      }
+    },
+    "seed.club.gw": {
+      "comment": "Name given to the seeded club when the bag is first created: Gap wedge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gap wedge"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gap wedge"
+          }
+        }
+      }
+    },
+    "seed.club.hybrid4": {
+      "comment": "Name given to the seeded club when the bag is first created: 4 hybrid",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 hybrid"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hybrid 4"
+          }
+        }
+      }
+    },
+    "seed.club.iron5": {
+      "comment": "Name given to the seeded club when the bag is first created: 5 iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn 5"
+          }
+        }
+      }
+    },
+    "seed.club.iron6": {
+      "comment": "Name given to the seeded club when the bag is first created: 6 iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn 6"
+          }
+        }
+      }
+    },
+    "seed.club.iron7": {
+      "comment": "Name given to the seeded club when the bag is first created: 7 iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn 7"
+          }
+        }
+      }
+    },
+    "seed.club.iron8": {
+      "comment": "Name given to the seeded club when the bag is first created: 8 iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn 8"
+          }
+        }
+      }
+    },
+    "seed.club.iron9": {
+      "comment": "Name given to the seeded club when the bag is first created: 9 iron",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "9 iron"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järn 9"
+          }
+        }
+      }
+    },
+    "seed.club.lw": {
+      "comment": "Name given to the seeded club when the bag is first created: Lob wedge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lob wedge"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lob wedge"
+          }
+        }
+      }
+    },
+    "seed.club.putter": {
+      "comment": "Name given to the seeded club when the bag is first created: Putter",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Putter"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Putter"
+          }
+        }
+      }
+    },
+    "seed.club.pw": {
+      "comment": "Name given to the seeded club when the bag is first created: Pitching wedge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pitching wedge"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pitching wedge"
+          }
+        }
+      }
+    },
+    "seed.club.sw": {
+      "comment": "Name given to the seeded club when the bag is first created: Sand wedge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sand wedge"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sand wedge"
+          }
+        }
+      }
+    },
+    "seed.club.wood3": {
+      "comment": "Name given to the seeded club when the bag is first created: 3 wood",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 wood"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trä 3"
           }
         }
       }

@@ -4,6 +4,7 @@ import SwiftUI
 struct RootView: View {
     @Environment(AppNavigation.self) private var navigation
     @Environment(SettingsStore.self) private var settings
+    @Environment(BagStore.self) private var bagStore
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -28,6 +29,7 @@ struct RootView: View {
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .background(Tokens.background.color.ignoresSafeArea())
+        .task { await bagStore.load() }
         .tint(Tokens.accent.color)
         .preferredColorScheme(settings.appearance.colorScheme)
         #if CAPTURE_HARNESS
@@ -52,7 +54,7 @@ struct TabRoot: View {
             screen
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Tokens.background.color)
-                .navigationTitle(tab.titleKey)
+                .navigationTitle(tab.screenTitleKey)
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     if showsSettingsButton {
@@ -72,7 +74,7 @@ struct TabRoot: View {
     @ViewBuilder private var screen: some View {
         switch tab {
         case .home: HomeView()
-        case .bag: PlaceholderView(symbol: "bag", message: "bag.placeholder")
+        case .bag: BagView()
         case .progress: PlaceholderView(symbol: "chart.line.uptrend.xyaxis", message: "progress.placeholder")
         }
     }

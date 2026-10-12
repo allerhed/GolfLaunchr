@@ -55,7 +55,9 @@ targets:
     type: bundle.unit-test
     platform: iOS
     sources: [Tests/Unit]
-    dependencies: [{ target: GolfLaunchr }]
+    dependencies:
+      - { target: GolfLaunchr }
+      - { package: Persistence, product: PersistenceTestSupport }
     settings:
       base: { GENERATE_INFOPLIST_FILE: YES }
   GolfLaunchrUITests:

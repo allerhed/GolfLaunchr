@@ -43,7 +43,12 @@ public enum SQLMigrations {
         "CREATE TABLE migrations (version INTEGER PRIMARY KEY, name TEXT NOT NULL, applied_at REAL NOT NULL)",
     ])
 
-    public static let all: [SQLMigration] = [v1]
+    /// Version 2: the golfer's bag (F08), one JSON document in a single-row table.
+    public static let v2 = SQLMigration(version: 2, name: "bag", statements: [
+        "CREATE TABLE bag (id INTEGER PRIMARY KEY CHECK (id = 1), json TEXT NOT NULL)",
+    ])
+
+    public static let all: [SQLMigration] = [v1, v2]
 }
 
 extension SQLiteDatabase {

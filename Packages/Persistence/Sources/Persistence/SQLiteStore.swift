@@ -15,7 +15,7 @@ public enum FaultAction: String, Sendable {
 
 /// The real local store (spec F20): SQLite in write-ahead-log mode with full synchronous commits.
 /// A shot and its ledger entry are written in one transaction; a crash leaves both or neither.
-public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository {
+public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository, ClubRepository {
     private let database: SQLiteDatabase
     private let allowsSynthetic: Bool
     private let encoder = ContractJSON.encoder()
@@ -211,6 +211,24 @@ public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotReposito
     public func creditsSpent(kind: AllowanceKind) throws -> Int {
         try Int(database.query("SELECT COALESCE(SUM(credit_cost), 0) FROM ledger WHERE kind = ?", [.text(kind.rawValue)]) { $0.int(0) }
             .first ?? 0)
+    }
+
+    // MARK: ClubRepository
+
+    public func loadBag() throws -> Bag? {
+        guard let text = try database.query("SELECT json FROM bag WHERE id = 1", map: { $0.text(0) }).first else { return nil }
+        let envelope = try decode(BagEnvelope.self, text)
+        guard envelope.schemaVersion <= BagEnvelope.currentSchemaVersion else {
+            throw PersistenceError.schemaTooNew(found: envelope.schemaVersion, supported: BagEnvelope.currentSchemaVersion)
+        }
+        return envelope.bag
+    }
+
+    public func saveBag(_ bag: Bag) throws {
+        try database.run(
+            "INSERT INTO bag (id, json) VALUES (1, ?) ON CONFLICT(id) DO UPDATE SET json = excluded.json",
+            [.text(json(BagEnvelope(bag: bag)))]
+        )
     }
 
     // MARK: helpers

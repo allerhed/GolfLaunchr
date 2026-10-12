@@ -17,6 +17,15 @@ enum AppTab: String, CaseIterable, Identifiable {
         }
     }
 
+    /// Screen title; the Bag tab's screen is called "My Bag" (spec 13) while its tab label stays short.
+    var screenTitleKey: LocalizedStringKey {
+        switch self {
+        case .home: "nav.home"
+        case .bag: "bag.title"
+        case .progress: "nav.progress"
+        }
+    }
+
     var symbol: String {
         switch self {
         case .home: "house"

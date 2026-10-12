@@ -29,7 +29,8 @@ final class ShellUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["home.title"].exists)
         app.tabBars.buttons["Bag"].tap()
-        XCTAssertTrue(app.staticTexts["Your clubs will appear here."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.otherElements["bag.list"].waitForExistence(timeout: 5) || app.collectionViews["bag.list"]
+            .waitForExistence(timeout: 5))
         app.tabBars.buttons["Progress"].tap()
         XCTAssertTrue(app.staticTexts["Your trends will appear here."].waitForExistence(timeout: 3))
         app.tabBars.buttons["Home"].tap()
@@ -41,7 +42,7 @@ final class ShellUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons["Hem"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.tabBars.buttons["Framsteg"].exists)
         app.tabBars.buttons["Bag"].tap()
-        XCTAssertTrue(app.staticTexts["Dina klubbor visas här."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.navigationBars["Min bag"].waitForExistence(timeout: 5))
     }
 
     func testLandscapeShowsRailNotTabBarAndRotationKeepsSelection() {
@@ -57,11 +58,12 @@ final class ShellUITests: XCTestCase {
         XCTAssertTrue(app.buttons["nav.progress"].isSelected)
 
         app.buttons["nav.bag"].tap()
-        XCTAssertTrue(app.staticTexts["Your clubs will appear here."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.otherElements["bag.list"].waitForExistence(timeout: 5) || app.collectionViews["bag.list"]
+            .waitForExistence(timeout: 5))
 
         XCUIDevice.shared.orientation = .portrait
         XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Your clubs will appear here."].exists, "selection survives rotating back")
+        XCTAssertTrue(app.otherElements["bag.list"].exists || app.collectionViews["bag.list"].exists, "selection survives rotating back")
     }
 
     func testRailTargetsAreAtLeast44Points() {
@@ -128,7 +130,8 @@ final class ShellUITests: XCTestCase {
         XCTAssertTrue(app.buttons["nav.bag"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["nav.bag"].isHittable)
         app.buttons["nav.bag"].tap()
-        XCTAssertTrue(app.staticTexts["Your clubs will appear here."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.otherElements["bag.list"].waitForExistence(timeout: 5) || app.collectionViews["bag.list"]
+            .waitForExistence(timeout: 5))
     }
 }
 
@@ -183,6 +186,47 @@ final class ShellScreenshotTests: XCTestCase {
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         _ = springboard.icons["GolfLaunchr"].waitForExistence(timeout: 5)
         try shot("home-screen-icon")
+    }
+
+    func testBagScreens() throws {
+        for (lang, dark, orientation) in [("en", false, UIDeviceOrientation.portrait), ("sv", true, .landscapeLeft)] {
+            XCUIDevice.shared.orientation = orientation
+            let app = XCUIApplication()
+            let store = NSTemporaryDirectory() + "shot-\(UUID().uuidString)/store.sqlite"
+            app.launchArguments = [
+                "-AppleLanguages",
+                "(\(lang))",
+                "-AppleLocale",
+                lang == "sv" ? "sv_SE" : "en_GB",
+                "-uiTestResetSettings",
+                "-uiTestStoreFile",
+                store
+            ]
+            app.launch()
+            let o = orientation.isLandscape ? "land" : "port"
+            if orientation.isLandscape {
+                app.buttons["nav.bag"].tap()
+            } else {
+                app.tabBars.buttons.element(boundBy: 1).tap()
+            }
+            _ = app.buttons["bag.add"].waitForExistence(timeout: 8)
+            if dark {
+                app.buttons["nav.settings"].firstMatch.tap()
+                app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch.tap()
+                app.buttons["settings.done"].tap()
+            }
+            try shot("bag-\(lang)-\(o)-list")
+            app.buttons["bag.add"].tap()
+            let name = app.textFields["clubEdit.name"]
+            _ = name.waitForExistence(timeout: 5)
+            name.tap()
+            name.typeText(lang == "sv" ? "Min wedge" : "Test wedge")
+            app.textFields["clubEdit.loft"].tap()
+            app.textFields["clubEdit.loft"].typeText(lang == "sv" ? "56,5" : "56.5")
+            try shot("bag-\(lang)-\(o)-editor")
+            app.terminate()
+        }
+        XCUIDevice.shared.orientation = .portrait
     }
 
     func testHarnessScreens() throws {

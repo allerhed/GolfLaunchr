@@ -69,5 +69,25 @@ public protocol LedgerRepository: Sendable {
     func creditsSpent(kind: AllowanceKind) async throws -> Int
 }
 
+/// The golfer's bag (F08). One document: the bag is small and always read and written whole.
+public protocol ClubRepository: Sendable {
+    /// nil when no bag has ever been saved (first launch). A bag that exists but cannot be read is an error, never nil:
+    /// the app must not re-seed over data it failed to read.
+    func loadBag() async throws -> Bag?
+    func saveBag(_ bag: Bag) async throws
+}
+
+/// What is stored: the bag plus the version of this wrapper, so a future app can migrate it and an old app can refuse it.
+public struct BagEnvelope: Codable, Sendable, Equatable {
+    public static let currentSchemaVersion = 1
+    public let schemaVersion: Int
+    public let bag: Bag
+
+    public init(bag: Bag, schemaVersion: Int = BagEnvelope.currentSchemaVersion) {
+        self.schemaVersion = schemaVersion
+        self.bag = bag
+    }
+}
+
 /// Everything the app needs from persistence in one type (the in-memory fake and the SQLite store both conform).
-public typealias PersistenceStore = CalibrationRepository & LedgerRepository & SessionRepository & ShotRepository
+public typealias PersistenceStore = CalibrationRepository & ClubRepository & LedgerRepository & SessionRepository & ShotRepository
