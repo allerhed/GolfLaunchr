@@ -52,7 +52,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [ ] 3.2 F03 Calibration + ball-lock state machine (`Capture`/`Measurement` packages), versioned calibration records, invalidation on movement/format change
 - [ ] 3.3 F04 Strike detection, single accepted shot, rejection reasons, state machine from spec 07
 - [ ] 3.4 Measurement pipeline: ball speed, launch angles with uncertainty, provenance labels; unavailable metrics stay unavailable (F06)
-- [ ] 3.5 `Flight` package: deterministic carry/total/apex model, standard + pressure-adjusted atmosphere, versioned (F06, F18 environment)
+- [x] 3.5 `Flight` package: deterministic carry/total/apex model, standard + pressure-adjusted atmosphere, versioned (F06, F18 environment)
+  - Done 2026-10-12 as unvalidated engineering (`flight-0.1-unvalidated`), done ahead of 3.1 because it needs no G1 data. Coefficients are generic; G2 must fit/validate them. Total distance deliberately not produced. Evidence: `docs/EVIDENCE.md` 3.5.
 - [ ] 3.6 **You**: collect paired reference data (calibrated launch monitor) per spec 08 scientific validation design; store in `Validation/AccuracyReports/`
 - [ ] 3.7 (O) G2 report: held-out evaluation, per-metric pass/fail. Failed metrics ship as unavailable or labelled Experimental. **Decision point**
 

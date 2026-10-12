@@ -39,3 +39,4 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Spread ellipse is 1 SD of the covariance, drawn only with 3+ non-collinear lateral points | F10a forbids implying 68/95% coverage; legend must say 1 SD. |
 | 2026-10-12 | Exports exclude demo shots, device identifiers and media links by default; excluded shots are kept with their flag | Privacy-preserving defaults (F17) while keeping analysis reproducible. |
 | 2026-10-12 | CSV formula escape is an apostrophe prefix on text cells only; numbers are never escaped | Negative numbers must stay numeric; OWASP-style neutralisation for user text such as club names. |
+| 2026-10-12 | Flight (3.5) built before 3.1 with generic coefficients and an explicit unvalidated version; total distance not produced; unknown spin gives a lower bound that is not stored as carry | Needs no G1 data and unblocks analytics; avoids inventing spin or runout numbers (F06). |
