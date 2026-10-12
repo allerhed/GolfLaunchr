@@ -86,6 +86,10 @@
             autorunStarted = started
             loadFormats()
             exposurePreset = config.exposure
+            maxMbit = config.maxMbit
+            if let lens = config.lens, let choice = formats.first(where: { $0.descriptor.lens.rawValue == lens }) {
+                selectedFormatID = choice.id
+            }
             trigger = config.trigger
             await start()
             guard phase == .running else {
@@ -94,6 +98,7 @@
                     exposureMode: config.exposure.rawValue,
                     exposurePlan: nil, trigger: config.trigger.rawValue, frames: 0, gapEvents: 0, missingFrames: 0, droppedByReason: [:],
                     callbackMeanMs: nil, callbackP99Ms: nil, callbackMaxMs: 0, callbackOverBudgetFraction: nil, encoderMaxBacklog: 0,
+                    meanFrameKB: nil, maxFrameKB: 0, maxMbitCap: config.maxMbit, meanMbit: nil,
                     encodeCallMeanMs: nil, encodeCallP99Ms: nil, encodeCallMaxMs: 0,
                     worstThermal: nil, clipsSaved: 0, deviceOrientation: Self.orientationName(), error: "\(phase)"
                 ))
@@ -132,7 +137,11 @@
                 missingFrames: snap?.status.clock.missingFrames ?? 0, droppedByReason: dropped,
                 callbackMeanMs: m?.timing.meanMilliseconds, callbackP99Ms: m?.timing.p99Milliseconds,
                 callbackMaxMs: m?.timing.maxMilliseconds ?? 0, callbackOverBudgetFraction: m?.timing.overBudgetFraction,
-                encoderMaxBacklog: m?.maxBacklog ?? 0, encodeCallMeanMs: m?.encodeTiming.meanMilliseconds,
+                encoderMaxBacklog: m?.maxBacklog ?? 0, meanFrameKB: m?.meanFrameBytes.map { $0 / 1000 },
+                maxFrameKB: Double(m?.maxFrameBytes ?? 0) / 1000, maxMbitCap: config.maxMbit,
+                meanMbit: m?.meanFrameBytes
+                    .map { $0 * 8 * (formats.first { $0.id == selectedFormatID }?.descriptor.maxFrameRate ?? 240) / 1e6 },
+                encodeCallMeanMs: m?.encodeTiming.meanMilliseconds,
                 encodeCallP99Ms: m?.encodeTiming.p99Milliseconds, encodeCallMaxMs: m?.encodeTiming.maxMilliseconds ?? 0,
                 worstThermal: snap?.telemetry.worstThermalLevel?.rawValue,
                 clipsSaved: clips.count, deviceOrientation: Self.orientationName(), error: nil

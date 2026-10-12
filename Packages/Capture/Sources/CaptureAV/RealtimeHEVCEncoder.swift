@@ -22,7 +22,9 @@
         public var onSample: (@Sendable (CompressedBox, Int, Double) -> Void)?
         private let frameRate: Double
 
-        public init(width: Int, height: Int, frameRate: Double, bitRate: Int) throws {
+        /// - Parameter maxBitRate: hard cap over a one-second window (bits/s). Noisy dark scenes make all-intra frames huge; without a cap
+        ///   the encoder can burst to ~10x the average bit rate and fall behind the camera.
+        public init(width: Int, height: Int, frameRate: Double, bitRate: Int, maxBitRate: Int? = nil) throws {
             self.frameRate = frameRate
             var created: VTCompressionSession?
             let spec: [CFString: Any] = [kVTVideoEncoderSpecification_EnableHardwareAcceleratedVideoEncoder: true]
@@ -33,7 +35,7 @@
             )
             guard status == noErr, let created else { throw EncoderError.sessionCreateFailed(status) }
             session = created
-            let properties: [(CFString, CFTypeRef)] = [
+            var properties: [(CFString, CFTypeRef)] = [
                 (kVTCompressionPropertyKey_RealTime, kCFBooleanTrue),
                 (kVTCompressionPropertyKey_AllowFrameReordering, kCFBooleanFalse),
                 (kVTCompressionPropertyKey_MaxKeyFrameInterval, 1 as CFNumber),
@@ -41,6 +43,10 @@
                 (kVTCompressionPropertyKey_AverageBitRate, bitRate as CFNumber),
                 (kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_HEVC_Main_AutoLevel),
             ]
+            if let maxBitRate {
+                // [bytes, seconds]
+                properties.append((kVTCompressionPropertyKey_DataRateLimits, [maxBitRate / 8, 1] as CFArray))
+            }
             for (key, value) in properties {
                 let result = VTSessionSetProperty(created, key: key, value: value)
                 guard result == noErr else { throw EncoderError.propertyFailed(result) }

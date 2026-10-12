@@ -9,6 +9,10 @@
         var exposure: ExposurePreset
         var trigger: TriggerMode
         var saveEvery: Double
+        /// "wide", "ultraWide" or nil for the first ranked format.
+        var lens: String?
+        /// Encoder hard cap in Mbit/s, nil for none.
+        var maxMbit: Int?
 
         static func parse(_ args: [String]) -> HarnessAutorunConfig? {
             func value(_ flag: String) -> String? {
@@ -20,7 +24,10 @@
                 .flatMap { name in ExposurePreset.allCases.first { $0.rawValue.hasSuffix(name) } } ?? .auto
             let trigger = value("-harnessTrigger").flatMap(TriggerMode.init(rawValue:)) ?? .manual
             let saveEvery = value("-harnessSaveEvery").flatMap(Double.init) ?? 10
-            return HarnessAutorunConfig(seconds: seconds, exposure: exposure, trigger: trigger, saveEvery: max(saveEvery, 1))
+            return HarnessAutorunConfig(
+                seconds: seconds, exposure: exposure, trigger: trigger, saveEvery: max(saveEvery, 1),
+                lens: value("-harnessLens"), maxMbit: value("-harnessMaxMbit").flatMap(Int.init).flatMap { $0 > 0 ? $0 : nil }
+            )
         }
 
         static var current: HarnessAutorunConfig? {
@@ -45,6 +52,10 @@
         var callbackMaxMs: Double
         var callbackOverBudgetFraction: Double?
         var encoderMaxBacklog: Int
+        var meanFrameKB: Double?
+        var maxFrameKB: Double
+        var maxMbitCap: Int?
+        var meanMbit: Double?
         var encodeCallMeanMs: Double?
         var encodeCallP99Ms: Double?
         var encodeCallMaxMs: Double

@@ -26,6 +26,8 @@
         let encodeTiming: CallbackTimingSummary
         let backlog: Int
         let maxBacklog: Int
+        let meanFrameBytes: Double?
+        let maxFrameBytes: Int
     }
 
     /// Counters shared between the capture queue and the encoder thread. DEBUG HARNESS ONLY.
@@ -36,6 +38,8 @@
         private var submitted = 0
         private var completed = 0
         private var maxBacklog = 0
+        private var bytesTotal = 0
+        private var maxFrameBytes = 0
 
         init(frameRate: Double) {
             timing = TimingAccumulator(budget: 1 / frameRate)
@@ -57,8 +61,12 @@
             }
         }
 
-        func noteCompleted() {
-            lock.withLock { completed += 1 }
+        func noteCompleted(bytes: Int) {
+            lock.withLock {
+                completed += 1
+                bytesTotal += bytes
+                maxFrameBytes = max(maxFrameBytes, bytes)
+            }
         }
 
         func snapshot() -> MetricsSnapshot {
@@ -66,7 +74,9 @@
                 timing: timing.summary,
                 encodeTiming: encode.summary,
                 backlog: submitted - completed,
-                maxBacklog: maxBacklog
+                maxBacklog: maxBacklog,
+                meanFrameBytes: completed == 0 ? nil : Double(bytesTotal) / Double(completed),
+                maxFrameBytes: maxFrameBytes
             ) }
         }
     }

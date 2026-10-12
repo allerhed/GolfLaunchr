@@ -31,7 +31,6 @@
     actor HarnessEngine {
         private let pipeline: CapturePipeline<CompressedBox>
         private var telemetry = TelemetryLog()
-        private var dropped = DroppedFrameLog()
         private var lastPTS: Double?
         private var lastExposure: ExposureSample?
 
@@ -48,15 +47,14 @@
             case let .frame(frame):
                 lastPTS = frame.pts
                 guard let window = await pipeline.ingest(frame) else { return nil }
-                return FinishedClip(window: window, dropped: dropped, telemetry: telemetry)
+                return await FinishedClip(window: window, dropped: pipeline.status().dropped, telemetry: telemetry)
             case let .exposure(sample):
                 telemetry.record(sample)
                 lastExposure = sample
             case let .trigger(pts):
                 await pipeline.trigger(at: pts)
             case let .drop(reason):
-                dropped.record(reason)
-                await pipeline.recordDrop(reason)
+                await pipeline.recordDrop(reason) // the pipeline stamps it with the newest frame time
             case let .thermal(level, time):
                 telemetry.record(thermal: level, at: time)
             case .encoderFailed:
@@ -72,7 +70,7 @@
         /// Stops the run. A window in progress comes back flagged incomplete.
         func stop(reason: PauseReason) async -> FinishedClip? {
             guard let window = await pipeline.pause(reason) else { return nil }
-            return FinishedClip(window: window, dropped: dropped, telemetry: telemetry)
+            return await FinishedClip(window: window, dropped: pipeline.status().dropped, telemetry: telemetry)
         }
 
         func snapshot() async -> HarnessSnapshot {

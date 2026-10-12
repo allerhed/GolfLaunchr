@@ -55,6 +55,7 @@
         var trigger = TriggerMode.manual
         var motionThreshold = 6.0
         var exposurePreset = ExposurePreset.auto
+        var maxMbit: Int?
         var callbackText = "-"
         var orientationText = "-"
         var exposurePlanText: String?
@@ -169,12 +170,14 @@
                 width: descriptor.width,
                 height: descriptor.height,
                 frameRate: rate,
-                bitRate: Self.bitRate
+                bitRate: Self.bitRate,
+                maxBitRate: maxMbit.map { $0 * 1_000_000 }
             )
             let metrics = HarnessMetrics(frameRate: rate)
             encoder.onSample = { box, index, pts in
-                metrics.noteCompleted()
-                let frame = Frame(index: index, pts: pts, byteCost: CMSampleBufferGetTotalSampleSize(box.sample), payload: box)
+                let bytes = CMSampleBufferGetTotalSampleSize(box.sample)
+                metrics.noteCompleted(bytes: bytes)
+                let frame = Frame(index: index, pts: pts, byteCost: bytes, payload: box)
                 continuation.yield(.frame(frame))
             }
             source.onFrame = HarnessFrameHandler.make(
