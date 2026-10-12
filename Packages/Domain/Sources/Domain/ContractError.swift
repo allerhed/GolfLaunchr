@@ -49,7 +49,16 @@ public enum ContractJSON {
         return dec
     }
 
+    /// Built once: creating an ISO8601DateFormatter per value made reading thousands of shots slow. ISO8601DateFormatter is
+    /// documented as thread-safe and is never mutated after creation.
+    private nonisolated(unsafe) static let fractionalFormatter = makeFormatter(fractional: true)
+    private nonisolated(unsafe) static let plainFormatter = makeFormatter(fractional: false)
+
     private static func formatter(fractional: Bool) -> ISO8601DateFormatter {
+        fractional ? fractionalFormatter : plainFormatter
+    }
+
+    private static func makeFormatter(fractional: Bool) -> ISO8601DateFormatter {
         let f = ISO8601DateFormatter()
         f.formatOptions = fractional ? [.withInternetDateTime, .withFractionalSeconds] : [.withInternetDateTime]
         f.timeZone = TimeZone(secondsFromGMT: 0)

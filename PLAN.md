@@ -44,7 +44,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-12 (logic only; the Averages/Gapping/Dispersion screens and filter sheet are UI work, not yet in the plan as an item: see `docs/BACKLOG.md` E10). Evidence: `docs/EVIDENCE.md` 2.4.
 - [x] 2.5 F17 Export: CSV (formula-escaped, SI) and JSON v1, round-trip tests
   - Done 2026-10-12 (data layer only; the Export screen and share sheet are UI work, see `docs/BACKLOG.md` E11). Evidence: `docs/EVIDENCE.md` 2.5.
-- [ ] 2.6 **Milestone QA** (O): data layer review incl. crash/kill atomicity tests
+- [x] 2.6 **Milestone QA** (O): data layer review incl. crash/kill atomicity tests
+  - Done 2026-10-12 as a self-review (no separate Opus agent was spawned): see `docs/EVIDENCE.md` 2.6 for what was and was not independent.
 
 ## Phase 3 - Measurement and flight (G2) - WP03; depends on Phase 1 evidence
 - [ ] 3.1 (O) Plan measurement method from G1 findings: geometry, calibration math, uncertainty approach (`docs/plans/G2-measurement.md`)

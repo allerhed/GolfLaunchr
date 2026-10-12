@@ -249,3 +249,15 @@ Phase 0 (foundation, tooling; no feature IDs):
 `scripts/verify.sh`: VERIFY OK.
 
 **NOT RUN / open:** Export screen, share sheet, notes/media prompts and "export before delete" (UI, BACKLOG E11); aggregate/club-average and filter content in exports ("export reproduces analysis", spec F10a) is not included yet; a real spreadsheet (Excel/Numbers) was not opened with the CSV; display-unit option for CSV not built (SI only); clip export; large-history export timing.
+
+### 2.6 Milestone QA: data layer (2.1-2.5) — 2026-10-12
+
+**Method and honesty note:** performed by the same session that wrote the code, not by an independent reviewer or a separate agent, so it is weaker than the plan's intent. I tried to break the data layer with new adversarial tests rather than re-reading the old ones (`Packages/Persistence/Tests/PersistenceTests/MilestoneQATests.swift`).
+
+**Re-run, not trusted:** `scripts/verify.sh` VERIFY OK; the real-SIGKILL and fault-injection SQLite tests 12 of 12 consecutive passes; whole Persistence suite 6 of 6.
+
+**New probes (5, all pass):** 3,000 accepted shots (every commit durable, synchronous=FULL, WAL) read back complete and in order; two connections writing to one file at once lose nothing (80 of 80 shots and credits); extreme doubles (45.123456789012345, 5e-324), millisecond times, emoji/Swedish names survive reopen bit-exact; deleting a session leaves no orphan shots and keeps all credits; a byte copy of the db + WAL taken while the writer is still open (what a crash leaves) recovers on open.
+
+**Finding fixed:** reading 3,000 shots took 0.91 s and 3,000 commits 2.0 s because a new `ISO8601DateFormatter` was built for every date. Now two shared formatters: 0.26 s read, 0.68 s commit (3.5x/3x). A concurrency test (8 tasks x 1,500 round trips) guards the shared formatters.
+
+**Remaining risks (not executed):** power loss on a real device (process kill is tested, a power cut is not); iOS data-protection class and backup exclusion of the database; behaviour when the disk is full or the file is on low-storage devices; migration from a real released v1 file (none exists yet); history screens still reload every shot of every session after each change (fine at 3,000 shots, ~0.3 s; revisit past ~20,000); the export path was checked with Python's parsers but not opened in a spreadsheet; ledger/entitlement logic beyond storing entries belongs to Phase 7.
