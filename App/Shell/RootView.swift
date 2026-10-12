@@ -5,6 +5,7 @@ struct RootView: View {
     @Environment(AppNavigation.self) private var navigation
     @Environment(SettingsStore.self) private var settings
     @Environment(BagStore.self) private var bagStore
+    @Environment(HistoryStore.self) private var historyStore
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -29,7 +30,10 @@ struct RootView: View {
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .background(Tokens.background.color.ignoresSafeArea())
-        .task { await bagStore.load() }
+        .task {
+            await bagStore.load()
+            await historyStore.load()
+        }
         .tint(Tokens.accent.color)
         .preferredColorScheme(settings.appearance.colorScheme)
         #if CAPTURE_HARNESS
@@ -50,10 +54,11 @@ struct TabRoot: View {
     let showsSettingsButton: Bool
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: Binding(get: { navigation.paths[tab] ?? NavigationPath() }, set: { navigation.paths[tab] = $0 })) {
             screen
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Tokens.background.color)
+                .navigationDestination(for: SessionRoute.self) { SessionDetailView(sessionID: $0.id) }
                 .navigationTitle(tab.screenTitleKey)
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
@@ -75,7 +80,7 @@ struct TabRoot: View {
         switch tab {
         case .home: HomeView()
         case .bag: BagView()
-        case .progress: PlaceholderView(symbol: "chart.line.uptrend.xyaxis", message: "progress.placeholder")
+        case .progress: ProgressScreen()
         }
     }
 }

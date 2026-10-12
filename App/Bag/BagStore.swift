@@ -46,6 +46,7 @@ final class BagStore {
     var draft: ClubDraft?
     var showsArchived = false
 
+    private var loadTask: Task<Void, Never>?
     private let repository: (any ClubRepository)?
     private let seedName: (SeedClub) -> String
     private let now: () -> Date
@@ -70,6 +71,19 @@ final class BagStore {
     /// is left alone (never re-seeded over).
     func load() async {
         guard let repository, loadState == .idle || isFailed else { return }
+        // Concurrent callers wait for the load in flight: two loads that both found no bag would seed twice, and the second
+        // save would replace the first with clubs that have different IDs.
+        if let running = loadTask {
+            await running.value
+            return
+        }
+        let task = Task { @MainActor in await self.read(from: repository) }
+        loadTask = task
+        await task.value
+        loadTask = nil
+    }
+
+    private func read(from repository: any ClubRepository) async {
         do {
             if let stored = try await repository.loadBag() {
                 bag = stored

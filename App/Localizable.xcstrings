@@ -562,6 +562,659 @@
         }
       }
     },
+    "common.cancel": {
+      "comment": "Button: cancel",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt"
+          }
+        }
+      }
+    },
+    "delete.confirm": {
+      "comment": "Button: confirm permanent deletion",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort"
+          }
+        }
+      }
+    },
+    "delete.session.message": {
+      "comment": "Confirmation detail for deleting a session",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All its shots are removed. Your usage count is not changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alla dess slag tas bort. Din användning påverkas inte."
+          }
+        }
+      }
+    },
+    "delete.session.title": {
+      "comment": "Confirmation title for deleting a session",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this session permanently?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort sessionen permanent?"
+          }
+        }
+      }
+    },
+    "delete.shot.message": {
+      "comment": "Confirmation detail for deleting a shot",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Its measurements are removed. Your usage count is not changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slagets mätvärden tas bort. Din användning påverkas inte."
+          }
+        }
+      }
+    },
+    "delete.shot.title": {
+      "comment": "Confirmation title for deleting a shot",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this shot permanently?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort slaget permanent?"
+          }
+        }
+      }
+    },
+    "failure.ambiguousBall": {
+      "comment": "Why a value is unavailable: Ball unclear",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball unclear"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bollen otydlig"
+          }
+        }
+      }
+    },
+    "failure.blur": {
+      "comment": "Why a value is unavailable: Motion blur",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motion blur"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rörelseoskärpa"
+          }
+        }
+      }
+    },
+    "failure.calibrationInvalid": {
+      "comment": "Why a value is unavailable: Calibration invalid",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calibration invalid"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogiltig kalibrering"
+          }
+        }
+      }
+    },
+    "failure.frameGap": {
+      "comment": "Why a value is unavailable: Missing frames",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missing frames"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saknade bildrutor"
+          }
+        }
+      }
+    },
+    "failure.incompleteTrack": {
+      "comment": "Why a value is unavailable: Track incomplete",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track incomplete"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Banan ofullständig"
+          }
+        }
+      }
+    },
+    "failure.insufficientLight": {
+      "comment": "Why a value is unavailable: Not enough light",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough light"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För lite ljus"
+          }
+        }
+      }
+    },
+    "failure.occlusion": {
+      "comment": "Why a value is unavailable: Ball hidden",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball hidden"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bollen skymd"
+          }
+        }
+      }
+    },
+    "failure.storageFailure": {
+      "comment": "Why a value is unavailable: Storage problem",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage problem"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lagringsproblem"
+          }
+        }
+      }
+    },
+    "failure.thermalPause": {
+      "comment": "Why a value is unavailable: Paused: device too warm",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused: device too warm"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausad: enheten för varm"
+          }
+        }
+      }
+    },
+    "failure.unknown": {
+      "comment": "Why a value is unavailable: Unknown reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown reason"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okänd orsak"
+          }
+        }
+      }
+    },
+    "failure.unsupportedMetric": {
+      "comment": "Why a value is unavailable: Not supported",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not supported"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stöds inte"
+          }
+        }
+      }
+    },
+    "failure.unsupportedProfile": {
+      "comment": "Why a value is unavailable: Device profile not supported",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device profile not supported"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enhetsprofilen stöds inte"
+          }
+        }
+      }
+    },
+    "handedness.left": {
+      "comment": "Left-handed swing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left-handed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänstersving"
+          }
+        }
+      }
+    },
+    "handedness.right": {
+      "comment": "Right-handed swing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right-handed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Högersving"
+          }
+        }
+      }
+    },
+    "history.carry.mean": {
+      "comment": "Session summary label: mean carry, always an estimate",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average estimated carry"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genomsnittlig beräknad flyglängd"
+          }
+        }
+      }
+    },
+    "history.club.all": {
+      "comment": "History filter: any club",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All clubs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alla klubbor"
+          }
+        }
+      }
+    },
+    "history.demo": {
+      "comment": "Badge on sessions and shots made of demo data, not real recordings",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo data"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demodata"
+          }
+        }
+      }
+    },
+    "history.empty": {
+      "comment": "Empty state: no sessions stored",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sessions yet. Your practice sessions will appear here."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga sessioner än. Dina träningspass visas här."
+          }
+        }
+      }
+    },
+    "history.excludedCount %lld": {
+      "comment": "Number of excluded shots in a session",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld excluded"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld exkluderade"
+          }
+        }
+      }
+    },
+    "history.filter.clear": {
+      "comment": "Button: remove all history filters",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear filters"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rensa filter"
+          }
+        }
+      }
+    },
+    "history.included %lld %lld": {
+      "comment": "Session summary: included shots out of all shots",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld shots included"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld av %2$lld slag inkluderade"
+          }
+        }
+      }
+    },
+    "history.loadError": {
+      "comment": "Error when the stored history cannot be read",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your history could not be loaded. Your saved data has not been changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historiken kunde inte läsas in. Din sparade data har inte ändrats."
+          }
+        }
+      }
+    },
+    "history.mode.all": {
+      "comment": "History filter: any practice mode",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All modes"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alla lägen"
+          }
+        }
+      }
+    },
+    "history.noData": {
+      "comment": "Shown instead of a number when there is nothing to average",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No data"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga data"
+          }
+        }
+      }
+    },
+    "history.noMatches": {
+      "comment": "Empty state: filters match nothing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sessions match these filters."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga sessioner matchar filtren."
+          }
+        }
+      }
+    },
+    "history.range.allTime": {
+      "comment": "History filter: no date limit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All time"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hela tiden"
+          }
+        }
+      }
+    },
+    "history.range.last30Days": {
+      "comment": "History filter: sessions from the last 30 days",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 30 days"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senaste 30 dagarna"
+          }
+        }
+      }
+    },
+    "history.range.last7Days": {
+      "comment": "History filter: sessions from the last 7 days",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 7 days"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senaste 7 dagarna"
+          }
+        }
+      }
+    },
+    "history.saveError": {
+      "comment": "Error when a history change could not be saved",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The change could not be saved. Nothing was changed."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ändringen kunde inte sparas. Inget ändrades."
+          }
+        }
+      }
+    },
+    "history.shotCount %lld": {
+      "comment": "Number of shots in a session",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld shot"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld shots"
+                }
+              }
+            }
+          }
+        },
+        "sv": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slag"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slag"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "history.speed.mean": {
+      "comment": "Session summary label: mean ball speed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average ball speed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genomsnittlig bollhastighet"
+          }
+        }
+      }
+    },
     "home.subtitle": {
       "comment": "Short product description under the app name",
       "localizations": {
@@ -592,6 +1245,329 @@
           "stringUnit": {
             "state": "translated",
             "value": "GolfLaunchr"
+          }
+        }
+      }
+    },
+    "metric.apex": {
+      "comment": "Metric name: Apex",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apex"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Högsta punkt"
+          }
+        }
+      }
+    },
+    "metric.attackAngle": {
+      "comment": "Metric name: Attack angle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attack angle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anfallsvinkel"
+          }
+        }
+      }
+    },
+    "metric.ballSpeed": {
+      "comment": "Metric name: Ball speed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball speed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bollhastighet"
+          }
+        }
+      }
+    },
+    "metric.carry": {
+      "comment": "Metric name: Carry",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carry"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flyglängd"
+          }
+        }
+      }
+    },
+    "metric.clubSpeed": {
+      "comment": "Metric name: Club speed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club speed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klubbhastighet"
+          }
+        }
+      }
+    },
+    "metric.dynamicLoft": {
+      "comment": "Metric name: Dynamic loft",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamic loft"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamisk loft"
+          }
+        }
+      }
+    },
+    "metric.horizontalLaunch": {
+      "comment": "Metric name: Horizontal launch angle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontal launch angle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horisontell utgångsvinkel"
+          }
+        }
+      }
+    },
+    "metric.lateralLanding": {
+      "comment": "Metric name: Lateral landing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lateral landing"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sidoavvikelse vid landning"
+          }
+        }
+      }
+    },
+    "metric.smashFactor": {
+      "comment": "Metric name: Smash factor",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smash factor"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smash factor"
+          }
+        }
+      }
+    },
+    "metric.spinAxis": {
+      "comment": "Metric name: Spin axis",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin axis"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spinnaxel"
+          }
+        }
+      }
+    },
+    "metric.spinRate": {
+      "comment": "Metric name: Spin rate",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin rate"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spinn"
+          }
+        }
+      }
+    },
+    "metric.totalDistance": {
+      "comment": "Metric name: Total distance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total distance"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total slaglängd"
+          }
+        }
+      }
+    },
+    "metric.verticalLaunch": {
+      "comment": "Metric name: Vertical launch angle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertical launch angle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertikal utgångsvinkel"
+          }
+        }
+      }
+    },
+    "mode.bagMapping": {
+      "comment": "Practice mode name: Bag mapping",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bag mapping"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagkartläggning"
+          }
+        }
+      }
+    },
+    "mode.ladder": {
+      "comment": "Practice mode name: Ladder drill",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ladder drill"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stegövning"
+          }
+        }
+      }
+    },
+    "mode.practice": {
+      "comment": "Practice mode name: Practice",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träning"
+          }
+        }
+      }
+    },
+    "mode.quickShot": {
+      "comment": "Practice mode name: QuickShot",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QuickShot"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QuickShot"
+          }
+        }
+      }
+    },
+    "mode.round": {
+      "comment": "Practice mode name: Round",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Runda"
+          }
+        }
+      }
+    },
+    "mode.target": {
+      "comment": "Practice mode name: Target drill",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target drill"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Målövning"
           }
         }
       }
@@ -677,6 +1653,176 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dina trender visas här."
+          }
+        }
+      }
+    },
+    "progress.sessions": {
+      "comment": "Progress tab segment: session history",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessioner"
+          }
+        }
+      }
+    },
+    "progress.trends": {
+      "comment": "Progress tab segment: trends (not built yet)",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trends"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trender"
+          }
+        }
+      }
+    },
+    "provenance.derived": {
+      "comment": "How a value was obtained: Derived",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Derived"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Härledd"
+          }
+        }
+      }
+    },
+    "provenance.estimated": {
+      "comment": "How a value was obtained: Estimated",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beräknad"
+          }
+        }
+      }
+    },
+    "provenance.measured": {
+      "comment": "How a value was obtained: Measured",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measured"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uppmätt"
+          }
+        }
+      }
+    },
+    "provenance.unavailable": {
+      "comment": "How a value was obtained: Unavailable",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unavailable"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte tillgängligt"
+          }
+        }
+      }
+    },
+    "quality.invalid": {
+      "comment": "Measurement quality: Invalid",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogiltig"
+          }
+        }
+      }
+    },
+    "quality.provisional": {
+      "comment": "Measurement quality: Provisional",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provisional"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preliminär"
+          }
+        }
+      }
+    },
+    "quality.unsupported": {
+      "comment": "Measurement quality: Unsupported",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unsupported"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stöds inte"
+          }
+        }
+      }
+    },
+    "quality.valid": {
+      "comment": "Measurement quality: Valid",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giltig"
           }
         }
       }
@@ -902,6 +2048,40 @@
         }
       }
     },
+    "session.delete": {
+      "comment": "Button and VoiceOver label: delete the session permanently",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete session"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort session"
+          }
+        }
+      }
+    },
+    "session.shots": {
+      "comment": "Section header: the shots of a session",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shots"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slag"
+          }
+        }
+      }
+    },
     "settings.appearance": {
       "comment": "Section header and label for light/dark theme",
       "localizations": {
@@ -1051,6 +2231,210 @@
           "stringUnit": {
             "state": "translated",
             "value": "Enheter ändrar bara hur värden visas. Sparad data och poäng påverkas inte."
+          }
+        }
+      }
+    },
+    "shot.club": {
+      "comment": "Shot detail row: club used",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klubba"
+          }
+        }
+      }
+    },
+    "shot.delete": {
+      "comment": "Action: delete the shot permanently",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort"
+          }
+        }
+      }
+    },
+    "shot.exclude": {
+      "comment": "Action: leave this shot out of averages",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exclude"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exkludera"
+          }
+        }
+      }
+    },
+    "shot.excluded": {
+      "comment": "Tag on a shot excluded from averages",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exkluderat"
+          }
+        }
+      }
+    },
+    "shot.exclusion": {
+      "comment": "Shot detail row: whether the shot counts in averages",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Averages"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medelvärden"
+          }
+        }
+      }
+    },
+    "shot.handedness": {
+      "comment": "Shot detail row: swing handedness",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swing"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sving"
+          }
+        }
+      }
+    },
+    "shot.included": {
+      "comment": "Shot is counted in averages",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Included"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inkluderat"
+          }
+        }
+      }
+    },
+    "shot.number %lld": {
+      "comment": "Shot title with its number in the session",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shot %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slag %lld"
+          }
+        }
+      }
+    },
+    "shot.restore": {
+      "comment": "Action: count this shot in averages again",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Återställ"
+          }
+        }
+      }
+    },
+    "shot.section.context": {
+      "comment": "Section: when and how the shot was taken",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detaljer"
+          }
+        }
+      }
+    },
+    "shot.section.metrics": {
+      "comment": "Section: the shot's measurements",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measurements"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mätvärden"
+          }
+        }
+      }
+    },
+    "shot.time": {
+      "comment": "Shot detail row: time of impact",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impact time"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träfftid"
           }
         }
       }

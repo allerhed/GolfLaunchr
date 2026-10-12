@@ -32,7 +32,10 @@ final class ShellUITests: XCTestCase {
         XCTAssertTrue(app.otherElements["bag.list"].waitForExistence(timeout: 5) || app.collectionViews["bag.list"]
             .waitForExistence(timeout: 5))
         app.tabBars.buttons["Progress"].tap()
-        XCTAssertTrue(app.staticTexts["Your trends will appear here."].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            app.segmentedControls["progress.section"].waitForExistence(timeout: 5),
+            "the Progress tab shows its Sessions/Trends switch"
+        )
         app.tabBars.buttons["Home"].tap()
         XCTAssertTrue(app.staticTexts["home.subtitle"].waitForExistence(timeout: 3))
     }
@@ -49,12 +52,15 @@ final class ShellUITests: XCTestCase {
         let app = launch("en")
         XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 5))
         app.tabBars.buttons["Progress"].tap()
-        XCTAssertTrue(app.staticTexts["Your trends will appear here."].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            app.segmentedControls["progress.section"].waitForExistence(timeout: 5),
+            "the Progress tab shows its Sessions/Trends switch"
+        )
 
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.buttons["nav.home"].waitForExistence(timeout: 5), "rail should appear in landscape")
         XCTAssertFalse(app.tabBars.firstMatch.exists, "no bottom tab bar in landscape")
-        XCTAssertTrue(app.staticTexts["Your trends will appear here."].exists, "rotation must keep the selected tab")
+        XCTAssertTrue(app.segmentedControls["progress.section"].exists, "rotation must keep the selected tab")
         XCTAssertTrue(app.buttons["nav.progress"].isSelected)
 
         app.buttons["nav.bag"].tap()
@@ -224,6 +230,42 @@ final class ShellScreenshotTests: XCTestCase {
             app.textFields["clubEdit.loft"].tap()
             app.textFields["clubEdit.loft"].typeText(lang == "sv" ? "56,5" : "56.5")
             try shot("bag-\(lang)-\(o)-editor")
+            app.terminate()
+        }
+        XCUIDevice.shared.orientation = .portrait
+    }
+
+    func testHistoryScreens() throws {
+        for (lang, dark, orientation) in [("en", false, UIDeviceOrientation.portrait), ("sv", true, .landscapeLeft)] {
+            XCUIDevice.shared.orientation = orientation
+            let app = XCUIApplication()
+            let store = NSTemporaryDirectory() + "shot-\(UUID().uuidString)/store.sqlite"
+            app.launchArguments = [
+                "-AppleLanguages", "(\(lang))", "-AppleLocale", lang == "sv" ? "sv_SE" : "en_GB", "-uiTestResetSettings",
+                "-uiTestStoreFile", store, "-uiTestSeedHistory",
+            ]
+            app.launch()
+            let o = orientation.isLandscape ? "land" : "port"
+            if orientation.isLandscape {
+                app.buttons["nav.progress"].tap()
+            } else {
+                app.tabBars.buttons.element(boundBy: 2).tap()
+            }
+            _ = app.collectionViews["history.list"].waitForExistence(timeout: 8)
+            if dark {
+                app.buttons["nav.settings"].firstMatch.tap()
+                app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch.tap()
+                app.buttons["settings.done"].tap()
+            }
+            try shot("history-\(lang)-\(o)-list")
+            app.cells.element(boundBy: 0).tap()
+            _ = app.staticTexts["session.summary.included"].waitForExistence(timeout: 5)
+            try shot("history-\(lang)-\(o)-session")
+            if !orientation.isLandscape {
+                app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Shot 4")).firstMatch.tap()
+                _ = app.buttons["shotDetail.done"].waitForExistence(timeout: 5)
+                try shot("history-\(lang)-\(o)-shot")
+            }
             app.terminate()
         }
         XCUIDevice.shared.orientation = .portrait

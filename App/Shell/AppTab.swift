@@ -2,7 +2,7 @@ import Observation
 import SwiftUI
 
 /// Primary navigation (spec 13): Home, Bag, Progress. Settings is a gear, not a tab.
-enum AppTab: String, CaseIterable, Identifiable {
+enum AppTab: String, CaseIterable, Identifiable, Hashable {
     case home, bag, progress
 
     var id: String {
@@ -48,4 +48,7 @@ enum AppTab: String, CaseIterable, Identifiable {
 final class AppNavigation {
     var selection: AppTab = .home
     var showingSettings = false
+    /// Per-tab navigation, kept here so rotating the phone (which rebuilds the shell) keeps the open session.
+    /// Created up front so reading a path never fabricates a new one (an unstable path binding can make the stack rebuild its screens).
+    var paths: [AppTab: NavigationPath] = Dictionary(uniqueKeysWithValues: AppTab.allCases.map { ($0, NavigationPath()) })
 }

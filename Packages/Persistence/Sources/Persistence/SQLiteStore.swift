@@ -49,7 +49,13 @@ public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotReposito
             fault = nil
             switch armed.action {
             case .throwError: throw PersistenceError.storageFailure("injected fault \(point.rawValue)")
-            case .killProcess: kill(getpid(), SIGKILL)
+            case .killProcess:
+                kill(getpid(), SIGKILL)
+                // A signal sent to ourselves is not delivered instantly on a multithreaded process: without this wait the
+                // thread could run on to COMMIT before the kill lands, and the "crash before commit" would sometimes commit.
+                while true {
+                    pause()
+                }
             }
         #endif
     }
