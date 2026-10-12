@@ -179,4 +179,22 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **NOT RUN:** analysis of a real golf strike, any ball detection on real frames, blur measurement on a ball, human annotation (no annotator has used the template yet), the writer fix on a new clip.
 - **Verdict:** VERIFIED for tooling; says nothing about measurement feasibility (G1 still NOT RUN).
 
+### Writer timescale fix, proven on the device (follow-up to 1.5; 2026-10-12)
+- Two clips recorded by the fixed harness (wide lens, auto, 480 frames each) analysed with `g1-analyze`: **jitter 0, non-monotonic 0, 100.00% of intervals within tolerance, no quantisation note, manifest consistent**. The D1 clips (old writer) showed jitter on every interval from 1/600 s quantisation. Fix confirmed.
+
+### 2.1 Real persistence store  (PLAN item 2.1; F20; T03, T09, T13)
+- **Status:** VERIFIED (package + gate). The app does not use the store yet (features adopt it later), so nothing was run in the simulator or on the phone.
+- **Automated:** `Packages/Persistence` 36 tests pass; `scripts/verify.sh` passes (lint, all package tests, build, Release separation).
+- **Covered:**
+  - One repository contract (commit atomic and idempotent, concurrent duplicate commits, conflicting duplicates, invalid references, sequence uniqueness, synthetic rejection T13, exclude/restore/delete T09, ledger survives deletes, credits per kind, ordering) runs against **both** the in-memory fake and SQLite.
+  - **Real crash tests (T03):** a helper executable SIGKILLs itself mid-commit. Killed after the shot insert, or after the ledger insert but before commit: reopening shows **no shot and no ledger entry**, and the retry commits exactly once. Killed after commit: **exactly one shot and one ledger entry**, the retry is reported as already committed.
+  - Thrown failures mid-commit roll back; data and exclusions survive close/reopen; foreign keys enforced; an unreadable stored record is an error, never a fake record.
+  - Migrations: fresh DB at v1 with the step recorded; no re-apply; v1->v2 keeps every record and ID and the migration really ran; a failing step rolls back completely (still v1, no half-added column); a newer database is refused and not modified; non-contiguous lists rejected.
+  - Corrupt file (not a database): refused with `.corrupt`, bytes unchanged.
+  - `MediaDirectory`: staged -> atomic commit, never overwrites, SHA-256 checked against the known value for "abc", unsafe paths (`..`, absolute, empty parts) rejected, orphan scan and removal touch only orphans and staging leftovers, exact-case matching.
+- **Mutation check:** transactions removed (statements autocommit): the kill-mid-commit tests, the thrown-rollback tests and the failing-migration test all failed; restored. Another bug was found by a test, not by reading: the orphan scan mis-computed paths because of the macOS `/var` vs `/private/var` symlink.
+- **Human check:** opened a real test database with the independent `sqlite3` tool: WAL mode, `user_version` 1, five tables, migration row, one session/shot/ledger, shot stored as contract JSON.
+- **NOT RUN:** use from the app, OS-level power loss (process kill is tested, a device power cut is not), migrations of real user data (none exists yet), media tied to database records (ShotMedia contract is not in Domain yet), performance with large histories, encryption/data protection class on iOS, iCloud backup exclusion, low-storage behaviour, tests leave temporary folders behind.
+- **Verdict:** VERIFIED for the store; not yet integrated.
+
 (Further records are appended here, newest last.)

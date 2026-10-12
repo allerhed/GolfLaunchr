@@ -14,6 +14,10 @@ public enum PersistenceError: Error, Equatable, Sendable {
     /// Synthetic (fixture/demo) shots are refused by production stores (spec T13).
     case syntheticShotRejected(UUID)
     case storageFailure(String)
+    /// The file is not a readable database. It is left untouched; nothing is re-created over it.
+    case corrupt(String)
+    /// The database was written by a newer app version; it is not modified.
+    case schemaTooNew(found: Int, supported: Int)
 }
 
 /// Proof that an accepted shot and its ledger entry are durable. Feedback may be presented only after one of these exists.
@@ -64,3 +68,6 @@ public protocol LedgerRepository: Sendable {
     /// Sum of credit cost for one allowance kind.
     func creditsSpent(kind: AllowanceKind) async throws -> Int
 }
+
+/// Everything the app needs from persistence in one type (the in-memory fake and the SQLite store both conform).
+public typealias PersistenceStore = CalibrationRepository & LedgerRepository & SessionRepository & ShotRepository

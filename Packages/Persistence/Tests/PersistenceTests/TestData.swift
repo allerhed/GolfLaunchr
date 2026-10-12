@@ -1,16 +1,40 @@
 import Domain
 import Foundation
+import Persistence
 import PersistenceTestSupport
+import Testing
 
-/// Builders for in-memory tests. Shots are marked synthetic because they are fixtures.
+/// The same repository contract is run against every backend.
+enum Backend: String, CaseIterable, CustomTestStringConvertible {
+    case inMemory, sqlite
+    var testDescription: String {
+        rawValue
+    }
+}
+
+/// Builders for repository tests. Shots are marked synthetic because they are fixtures.
 struct World {
-    let store: InMemoryStore
+    let store: any PersistenceStore
+    /// Set only for the in-memory backend (its fault hook).
+    let memory: InMemoryStore?
+    /// Set only for the SQLite backend.
+    let sqlite: SQLiteStore?
+    let databaseURL: URL?
     let session: Session
     let calibration: CalibrationRecord
     let t0 = Date(timeIntervalSince1970: 1_791_716_400)
 
-    static func make(allowsSynthetic: Bool = true) async throws -> World {
-        let store = InMemoryStore(allowsSynthetic: allowsSynthetic)
+    static func make(allowsSynthetic: Bool = true, backend: Backend = .inMemory) async throws -> World {
+        let memory = backend == .inMemory ? InMemoryStore(allowsSynthetic: allowsSynthetic) : nil
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("golflaunchr-tests-\(UUID().uuidString)/store.sqlite")
+        let sqlite = backend == .sqlite ? try SQLiteStore(url: url, allowsSynthetic: allowsSynthetic) : nil
+        let store: any PersistenceStore = if let sqlite {
+            sqlite
+        } else if let memory {
+            memory
+        } else {
+            InMemoryStore()
+        }
         let session = try Session(mode: .practice, createdAt: Date(timeIntervalSince1970: 1_791_716_400))
         let calibration = try CalibrationRecord(
             deviceProfileID: "fixture-only",
@@ -19,9 +43,12 @@ struct World {
             cameraDistanceM: 0.75, cameraHeightM: 0.2, cameraHeadingRad: 0, quality: .good,
             createdAt: session.createdAt, calibrationVersion: 1
         )
-        await store.save(session)
-        await store.save(calibration)
-        return World(store: store, session: session, calibration: calibration)
+        try await store.save(session)
+        try await store.save(calibration)
+        return World(
+            store: store, memory: memory, sqlite: sqlite, databaseURL: backend == .sqlite ? url : nil, session: session,
+            calibration: calibration
+        )
     }
 
     func shot(

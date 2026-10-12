@@ -5,32 +5,32 @@ import PersistenceTestSupport
 import Testing
 
 struct CommitTests {
-    @Test func commitStoresShotAndLedgerTogether() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func commitStoresShotAndLedgerTogether(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let shot = try w.shot()
         let receipt = try await w.store.commitAccepted(shot, ledger: w.ledger(for: shot))
         #expect(receipt.shotID == shot.id)
         #expect(receipt.wasAlreadyCommitted == false)
-        #expect(await w.store.shot(id: shot.id) == shot)
-        #expect(await w.store.entry(forShot: shot.id)?.creditCost == 1)
+        #expect(try await w.store.shot(id: shot.id) == shot)
+        #expect(try await w.store.entry(forShot: shot.id)?.creditCost == 1)
     }
 
     /// T02: duplicate commit gives one shot and one credit.
-    @Test func retryingACommitIsIdempotent() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func retryingACommitIsIdempotent(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let shot = try w.shot()
         let ledger = try w.ledger(for: shot)
         let first = try await w.store.commitAccepted(shot, ledger: ledger)
         let second = try await w.store.commitAccepted(shot, ledger: ledger)
         #expect(second.wasAlreadyCommitted)
         #expect(second.ledgerEntry == first.ledgerEntry)
-        #expect(await w.store.shots(sessionID: w.session.id).count == 1)
-        #expect(await w.store.entries().count == 1)
-        #expect(await w.store.creditsSpent(kind: .introductory) == 1)
+        #expect(try await w.store.shots(sessionID: w.session.id).count == 1)
+        #expect(try await w.store.entries().count == 1)
+        #expect(try await w.store.creditsSpent(kind: .introductory) == 1)
     }
 
-    @Test func concurrentDuplicateCommitsCreateOneShotOneCredit() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func concurrentDuplicateCommitsCreateOneShotOneCredit(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let shot = try w.shot()
         let ledger = try w.ledger(for: shot)
         let store = w.store
@@ -42,12 +42,12 @@ struct CommitTests {
         }
         #expect(receipts.count == 20)
         #expect(receipts.filter { !$0.wasAlreadyCommitted }.count == 1)
-        #expect(await w.store.shots(sessionID: w.session.id).count == 1)
-        #expect(await w.store.creditsSpent(kind: .introductory) == 1)
+        #expect(try await w.store.shots(sessionID: w.session.id).count == 1)
+        #expect(try await w.store.creditsSpent(kind: .introductory) == 1)
     }
 
-    @Test func sameIDWithDifferentContentIsAConflictAndKeepsTheOriginal() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func sameIDWithDifferentContentIsAConflictAndKeepsTheOriginal(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let id = UUID()
         let original = try w.shot(id: id, ballSpeed: 45)
         _ = try await w.store.commitAccepted(original, ledger: w.ledger(for: original))
@@ -55,28 +55,29 @@ struct CommitTests {
         await #expect(throws: PersistenceError.conflictingDuplicate(id)) {
             try await w.store.commitAccepted(altered, ledger: w.ledger(for: altered))
         }
-        #expect(await w.store.shot(id: id)?.value(.ballSpeed) == 45)
-        #expect(await w.store.creditsSpent(kind: .introductory) == 1)
+        #expect(try await w.store.shot(id: id)?.value(.ballSpeed) == 45)
+        #expect(try await w.store.creditsSpent(kind: .introductory) == 1)
     }
 
     /// T03 (in-memory part): a failure mid-commit leaves neither shot nor ledger, and a retry then succeeds exactly once.
     @Test(arguments: [FaultPoint.afterShotStaged, .afterLedgerStaged])
     func failureMidCommitLeavesNothingHalfWritten(point: FaultPoint) async throws {
-        let w = try await World.make()
+        let w = try await World.make(backend: .inMemory)
         let shot = try w.shot()
         let ledger = try w.ledger(for: shot)
-        await w.store.armFault(point)
+        let memory = try #require(w.memory)
+        await memory.armFault(point)
         await #expect(throws: PersistenceError.self) { try await w.store.commitAccepted(shot, ledger: ledger) }
-        #expect(await w.store.shot(id: shot.id) == nil)
-        #expect(await w.store.entries().isEmpty)
+        #expect(try await w.store.shot(id: shot.id) == nil)
+        #expect(try await w.store.entries().isEmpty)
         let receipt = try await w.store.commitAccepted(shot, ledger: ledger)
         #expect(receipt.wasAlreadyCommitted == false)
-        #expect(await w.store.shots(sessionID: w.session.id).count == 1)
-        #expect(await w.store.entries().count == 1)
+        #expect(try await w.store.shots(sessionID: w.session.id).count == 1)
+        #expect(try await w.store.entries().count == 1)
     }
 
-    @Test func invalidReferencesAreRejectedAndWriteNothing() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func invalidReferencesAreRejectedAndWriteNothing(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let ghostSession = UUID(), ghostCalibration = UUID()
         let noSession = try w.shot(sessionID: ghostSession)
         await #expect(throws: PersistenceError.unknownSession(ghostSession)) {
@@ -91,31 +92,31 @@ struct CommitTests {
         await #expect(throws: PersistenceError.ledgerMismatch) {
             try await w.store.commitAccepted(shot, ledger: w.ledger(for: other))
         }
-        #expect(await w.store.entries().isEmpty)
-        #expect(await w.store.shot(id: shot.id) == nil)
+        #expect(try await w.store.entries().isEmpty)
+        #expect(try await w.store.shot(id: shot.id) == nil)
     }
 
-    @Test func sequenceNumbersAreUniquePerSession() async throws {
-        let w = try await World.make()
+    @Test(arguments: Backend.allCases) func sequenceNumbersAreUniquePerSession(backend: Backend) async throws {
+        let w = try await World.make(backend: backend)
         let a = try w.shot(sequence: 1)
         _ = try await w.store.commitAccepted(a, ledger: w.ledger(for: a))
         let b = try w.shot(sequence: 1)
         await #expect(throws: PersistenceError.duplicateSequence(sessionID: w.session.id, sequence: 1)) {
             try await w.store.commitAccepted(b, ledger: w.ledger(for: b))
         }
-        #expect(await w.store.entries().count == 1)
+        #expect(try await w.store.entries().count == 1)
     }
 
     /// T13: synthetic shots cannot enter a production store.
-    @Test func productionStoreRejectsSyntheticShots() async throws {
-        let w = try await World.make(allowsSynthetic: false)
+    @Test(arguments: Backend.allCases) func productionStoreRejectsSyntheticShots(backend: Backend) async throws {
+        let w = try await World.make(allowsSynthetic: false, backend: backend)
         let fake = try w.shot(synthetic: true)
         await #expect(throws: PersistenceError.syntheticShotRejected(fake.id)) {
             try await w.store.commitAccepted(fake, ledger: w.ledger(for: fake))
         }
-        #expect(await w.store.entries().isEmpty)
+        #expect(try await w.store.entries().isEmpty)
         let real = try w.shot(synthetic: false)
         _ = try await w.store.commitAccepted(real, ledger: w.ledger(for: real))
-        #expect(await w.store.entries().count == 1)
+        #expect(try await w.store.entries().count == 1)
     }
 }
