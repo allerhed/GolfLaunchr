@@ -33,3 +33,7 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Shot actions (Exclude/Restore/Delete) are a long-press menu plus VoiceOver actions, not swipe actions. Permanent deletes need a confirmation. | SwiftUI `swipeActions` on these rows made the third row of a freshly opened session disappear (see EVIDENCE 2.3); a menu is also easier to discover and works with VoiceOver. |
 | 2026-10-12 | `HistoryStore.load()` and `BagStore.load()` run once: concurrent callers wait for the load in flight. | Found by test: two overlapping loads would have seeded the bag twice with different club IDs and read a half-seeded history database. |
 
+
+| 2026-10-12 | Analysis selection is one pure function (`ShotSelection.select`) feeding profiles, gapping, dispersion and comparison | Guarantees list, averages and gaps use the same shot IDs (F10a). |
+| 2026-10-12 | Standardised conditions view returns no values without an injected standardiser | No validated flight model yet; recorded numbers must not appear under a Standardised label. |
+| 2026-10-12 | Spread ellipse is 1 SD of the covariance, drawn only with 3+ non-collinear lateral points | F10a forbids implying 68/95% coverage; legend must say 1 SD. |

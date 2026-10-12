@@ -224,3 +224,19 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **Verdict:** VERIFIED (simulator, demo data).
 
 (Further records are appended here, newest last.)
+
+### 2.4 F09 + F10a analytics (logic) — 2026-10-12
+
+**Implemented (`Packages/Analytics`):** `ShotAnalysis.swift` (ClubSelection All/Some with toggle and visible empty selection, `AnalysisFilter` with club OR / other AND, `AnalysisFilterEditor` draft/Apply/Cancel/Clear, `ShotSelection`, `ClubProfile` with n, mean, median, P10/P90, sample SD, range, lateral spread, per-metric means with coverage, `ShotCompare`), `ClubGapping.swift` (signed gaps from unrounded means, bag order kept, no bridging, Selected-clubs-only and mixed-conditions flags), `Dispersion.swift` (points plus a 1-SD covariance ellipse needing 3 non-collinear points).
+
+**Verified:**
+- 39 package tests (was 20 in Analytics), including the spec fixtures: means 224/160/130/110 give gaps 64/30/20; 5i+7i gives 30 with Selected clubs only; [120,130,140] gives mean 130, SD 10, range 120-140, P10/P90 122/138. Zero/one/two samples, nulls and invalid values omitted, pooled (not average-of-averages), exclude/restore, carry vs total, club OR / mode AND / session / date, duplicate names, archived (unknown) club ids, empty selection, apply/cancel/clear, inversions, no-data rows, shared eligible IDs across list/averages/dispersion/gapping, shot-to-average delta.
+- Independent reference: values from Python `statistics` (23 random values, inclusive quantiles) match to 1e-9.
+- Mutation checks: 6 deliberate bugs (gap sign, provisional threshold, ellipse collinearity guard, apply guard, standardised fallback, session scope) each made tests fail; the session-scope mutation initially survived, so a dedicated test was added and re-checked.
+- End to end: SQLite store -> HistoryStore -> Analytics over the demo data (PW pooled over two sessions mean 566/6, 7 iron ball-hidden shot omitted not zero).
+- Performance: 10,000 shots, 14 clubs, full select + profiles + gap table in well under the 2 s bound (whole 39-test run 0.2 s).
+- `scripts/verify.sh`: VERIFY OK.
+
+**Not UI:** no screen was changed, so there was nothing to check in the simulator. Rubber duck outcomes: wrong sign of gaps (caught by mutation), standardised view silently showing recorded numbers (test: zero coverage), 1D data drawing a meaningless ellipse (test), slow on big histories (measured).
+
+**NOT RUN / open:** the Averages, Gapping, Dispersion screens, filter sheet, persistence of applied filters across relaunch, entitlement gating (Pro) and export are not built; Standardised needs a validated flight model (none exists, so it reports zero coverage by design); the advisory gap/overlap heuristic and the "recommend more samples for unstable sets" rule are not implemented; Q-ellipse scale (1 SD) needs owner confirmation of wording.

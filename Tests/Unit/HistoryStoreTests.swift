@@ -240,6 +240,24 @@ struct DemoFixtureTests {
         #expect(store.summaries.map(\.shotCount).sorted() == [3, 4, 6])
         #expect(try await sqlite.entries().count == 13)
     }
+
+    /// End to end: SQLite -> HistoryStore -> Analytics. PW is pooled over two sessions; a hidden-ball shot never counts as 0.
+    @Test func analyticsOverTheStoredDemoData() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("fixtures-\(UUID().uuidString)/store.sqlite")
+        let sqlite = try SQLiteStore(url: url, allowsSynthetic: true)
+        await HistoryFixtures.seedIfEmpty(sqlite)
+        let store = HistoryStore(backend: sqlite)
+        await store.load()
+        let all = store.summaries.flatMap { store.shots(of: $0.sessionID) }
+        let filter = AnalysisFilter()
+        let selection = ShotSelection.select(all, filter: filter, now: Date())
+        let profiles = ClubAnalysis.profiles(selection.shots, filter: filter)
+        let pw = try #require(profiles.first { $0.name == "PW" })
+        #expect(try pw.shotCount == 6 && pw.distanceSamples == 6 && abs(#require(pw.mean) - 566.0 / 6) < 1e-9)
+        let seven = try #require(profiles.first { $0.name == "7 iron" })
+        #expect(seven.shotCount == 4 && seven.distanceSamples == 3 && seven.mean == 131) // the ball-hidden shot is omitted, not zero
+        #expect(profiles.count == 3)
+    }
 }
 
 /// Regression: two loads started together must not run the preparation/seeding twice.

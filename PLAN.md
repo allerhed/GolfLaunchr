@@ -1,5 +1,7 @@
 # GolfLaunchr delivery plan
 
+Deferred validation (device, bay, human reviews, owner decisions) is collected in `docs/BACKLOG.md`.
+
 Tick `[x]` only when the item is **verified** per CLAUDE.md Definition of Done (tests + simulator/device evidence, committed, pushed). `NOT RUN` items stay unchecked. Update this file in the same commit that completes an item.
 
 **Legend.** Model: **O** = Opus (planner/qa-reviewer), **S** = Sonnet (implementer). **Dev** = needs a physical iPhone. **You** = needs the owner (accounts, money, real-world action). Every feature slice runs the `new-feature` skill: planner -> swift-test-writer -> ios-implementer -> l10n-reviewer -> (milestone) qa-reviewer. Plan files: `docs/plans/<ID>-<slug>.md`.
@@ -38,7 +40,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [x] 2.1 F20 Persistence, ledger, recovery: real store (SwiftData or SQLite), atomic accepted-shot + ledger write, migrations, orphan-file recovery
 - [x] 2.2 F08 My Bag (plan exists: `docs/plans/F08-my-bag.md`)
 - [x] 2.3 F10 Sessions and history: list, filters, exclusion/restore, confirmed delete, transactional recompute
-- [ ] 2.4 F09 + F10a analytics in `Analytics`: mean/median/SD/P10/P90, club averages, gapping, dispersion maths, multi-club filter contract (spec fixtures 224/160/130/110, 120/130/140)
+- [x] 2.4 F09 + F10a analytics in `Analytics`: mean/median/SD/P10/P90, club averages, gapping, dispersion maths, multi-club filter contract (spec fixtures 224/160/130/110, 120/130/140)
+  - Done 2026-10-12 (logic only; the Averages/Gapping/Dispersion screens and filter sheet are UI work, not yet in the plan as an item: see `docs/BACKLOG.md` E10). Evidence: `docs/EVIDENCE.md` 2.4.
 - [ ] 2.5 F17 Export: CSV (formula-escaped, SI) and JSON v1, round-trip tests
 - [ ] 2.6 **Milestone QA** (O): data layer review incl. crash/kill atomicity tests
 
