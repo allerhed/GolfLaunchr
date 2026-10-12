@@ -3,7 +3,7 @@
 # Positive control: the same search must FIND it in Debug, otherwise the check proves nothing.
 cd "$(dirname "$0")/.." && source scripts/env.sh
 DEST="generic/platform=iOS Simulator"
-PATTERN='HistoryFixtures|-uiTestSeedHistory|HarnessModel|HarnessView|HarnessEngine|DEBUG HARNESS|CAPTURE_HARNESS|harness\.root|practice\.demoShot|Demo shot|uiTestFakeCamera|uiTestSetupScene|uiTestSetupCalibrated|FakeEnvironmentObserver|uiTestNoOrientationLock'
+PATTERN='HistoryFixtures|-uiTestSeedHistory|HarnessModel|HarnessView|HarnessEngine|DEBUG HARNESS|CAPTURE_HARNESS|harness\.root|practice\.demoShot|Demo shot|uiTestFakeCamera|uiTestSetupScene|uiTestSetupCalibrated|FakeEnvironmentObserver|uiTestNoOrientationLock|uiTestFakeVoice|RecordingSynthesizer'
 build() { # configuration, derived data dir
   xcodebuild build -project GolfLaunchr.xcodeproj -scheme "$SCHEME" -configuration "$1" -destination "$DEST" \
     -derivedDataPath "$2" CODE_SIGNING_ALLOWED=NO >"build/harness-$1.log" 2>&1 || { tail -5 "build/harness-$1.log"; echo "build $1 failed"; exit 2; }

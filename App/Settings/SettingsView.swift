@@ -1,13 +1,48 @@
 import Formatting
 import SwiftUI
+import Voice
 
 struct SettingsView: View {
     @Environment(SettingsStore.self) private var settings
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
+    @Environment(VoiceController.self) private var voiceController
     #if CAPTURE_HARNESS
         @State private var showingHarness = false
     #endif
+
+    private var voiceSection: some View {
+        @Bindable var settings = settings
+        return Section {
+            Toggle("settings.voice.enabled", isOn: Binding(
+                get: { settings.voice.enabled },
+                set: { settings.voice.enabled = $0; voiceController.apply(settings.voice) }
+            ))
+            .accessibilityIdentifier("settings.voice.enabled")
+            ForEach(SpokenMetric.allCases, id: \.rawValue) { metric in
+                Toggle(metric.titleKey, isOn: Binding(
+                    get: { settings.voice.metrics.contains(metric) },
+                    set: { on in
+                        if on {
+                            settings.voice.metrics.insert(metric)
+                        } else {
+                            settings.voice.metrics.remove(metric)
+                        }
+                    }
+                ))
+                .disabled(!settings.voice.enabled)
+                .accessibilityIdentifier("settings.voice.\(metric.rawValue)")
+            }
+            Button { voiceController.preview() } label: { Text("settings.voice.preview").frame(minHeight: Spacing.minTarget) }
+                .disabled(!settings.voice.enabled || settings.voice.metrics.isEmpty)
+                .accessibilityIdentifier("settings.voice.preview")
+        } header: {
+            Text("settings.voice", comment: "Section header: spoken results")
+        } footer: {
+            Text("settings.voice.footer", comment: "Explains spoken results never block capture and follow the units")
+        }
+        .listRowBackground(Tokens.surface.color)
+    }
 
     private var formatter: MetricFormatter {
         MetricFormatter(units: settings.units, locale: locale)
@@ -51,6 +86,7 @@ struct SettingsView: View {
                     Text("settings.appearance", comment: "Section header for light/dark theme")
                 }
                 .listRowBackground(Tokens.surface.color)
+                voiceSection
             }
             .scrollContentBackground(.hidden)
             #if CAPTURE_HARNESS

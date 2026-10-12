@@ -42,6 +42,11 @@ struct PracticeView: View {
             setup.stopObserving()
             OrientationLock.release()
         }
+        .onChange(of: readiness.blockers.contains(.deviceMoving)) { _, moving in
+            if moving, store.state.status == .active, !store.state.isArmed {
+                store.voice?.prompt(.reposition)
+            }
+        }
         .sheet(isPresented: $showingSetup) {
             SetupView().environment(setup)
         }
@@ -143,6 +148,7 @@ struct PracticeView: View {
                 metricCard(.carry, id: "practice.card.carry")
                 metricCard(.ballSpeed, id: "practice.card.speed")
             }
+            spokenCaption
             if !readiness.blockers.isEmpty, store.state.status == .active {
                 blockedNote
             }
@@ -168,6 +174,19 @@ struct PracticeView: View {
         .card()
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier(id)
+    }
+
+    /// The words of the last announcement, always visible: the audio is never the only channel.
+    @ViewBuilder private var spokenCaption: some View {
+        if let voice = store.voice, let text = voice.caption {
+            Label {
+                Text(verbatim: text)
+            } icon: { Image(systemName: voice.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill").accessibilityHidden(true) }
+                .font(.footnote)
+                .foregroundStyle(Tokens.textSecondary.color)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("practice.spoken")
+        }
     }
 
     private var blockedNote: some View {

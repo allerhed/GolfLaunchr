@@ -20,6 +20,7 @@ packages:
   Capture: { path: Packages/Capture }
   Export: { path: Packages/Export }
   Modes: { path: Packages/Modes }
+  Voice: { path: Packages/Voice }
 targets:
   GolfLaunchr:
     type: application
@@ -32,6 +33,7 @@ targets:
       - package: Formatting
       - package: Export
       - package: Modes
+      - package: Voice
       - package: Capture
       - package: Capture
         product: CaptureAV

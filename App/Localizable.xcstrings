@@ -3357,6 +3357,74 @@
         }
       }
     },
+    "settings.voice": {
+      "comment": "Settings section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spoken results"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uppläsning av resultat"
+          }
+        }
+      }
+    },
+    "settings.voice.enabled": {
+      "comment": "Toggle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speak results"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Läs upp resultat"
+          }
+        }
+      }
+    },
+    "settings.voice.footer": {
+      "comment": "Footer under the voice settings",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Results are always shown as text too. Silence never stops capture. Spoken values follow your units."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resultat visas alltid också som text. Tystnad stoppar aldrig inspelningen. Uppläsningen följer dina enheter."
+          }
+        }
+      }
+    },
+    "settings.voice.preview": {
+      "comment": "Button: preview the voice",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play a sample"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spela ett exempel"
+          }
+        }
+      }
+    },
     "setup.blocked.title": {
       "comment": "Heading above the reasons",
       "localizations": {

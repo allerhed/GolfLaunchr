@@ -44,3 +44,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Unmeasured checks show Not checked and block arming only when nothing at all is measured | Never present absence of data as Good (F02, F06 spirit). |
 | 2026-10-12 | A practice session with zero accepted shots is not saved (dropped at End and at crash recovery) | F05: no misleading empty sessions or averages in history. |
 | 2026-10-12 | Unavailable modes on Home are labelled Coming soon and are not buttons | No dead ends and no pretending a mode exists. |
+| 2026-10-12 | Spoken words are built from the same formatter as the screens and always shown as a caption; muting never hides the text | F07: audio is never the only channel; one formatting layer. |
+| 2026-10-12 | Speech is held while a shot is armed, and a newer result replaces an unspoken one | No audio during the next capture window and no backlog recital (F07). |

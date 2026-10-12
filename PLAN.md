@@ -64,7 +64,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-12 on the simulator with fake scenes; the live camera observer and all thresholds are NOT RUN on a device. Calibration itself (3.2) does not exist yet, so the calibration blockers act on a placeholder state. Evidence: `docs/EVIDENCE.md` 4.2.
 - [x] 4.3 F05 Home, mode chooser, Standard practice, QuickShot (mockups 03, 20), landscape capture layout and rotate-gate
   - Done 2026-10-12 as fixtures-first UI: no production shot source exists yet (5.3), so only Debug demo shots can be accepted; target carry and shot goal are in the state machine but have no UI. Evidence: `docs/EVIDENCE.md` 4.3.
-- [ ] 4.4 F07 Spoken feedback (AVSpeechSynthesizer, en/sv voices, bounded queue)
+- [x] 4.4 F07 Spoken feedback (AVSpeechSynthesizer, en/sv voices, bounded queue)
+  - Done 2026-10-12 with a silent test double; the real system voice, audio routing and headphone unplug are NOT RUN on a device. Evidence: `docs/EVIDENCE.md` 4.4.
 - [ ] 4.5 F18 Settings: language, handedness, units, voice, atmosphere, privacy
 - [ ] 4.6 F10a screens: shot detail, club averages, club profile, gapping, dispersion, filter sheet (portrait + landscape)
 - [ ] 4.7 F25 Localisation pass: complete en/sv catalogs, glossary, pseudo-localisation + max Dynamic Type layout tests; **You**: native Swedish review

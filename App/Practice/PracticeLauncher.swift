@@ -10,13 +10,21 @@ final class PracticeLauncher {
     private let settings: SettingsStore
     private let backend: (any PersistenceStore)?
     private let makeSetup: @MainActor () -> SetupModel
+    private let voice: VoiceController?
     var store: PracticeStore?
     private(set) var setupModel: SetupModel?
     private(set) var failed = false
     private var isStarting = false
 
-    init(bagStore: BagStore, settings: SettingsStore, backend: (any PersistenceStore)?, makeSetup: @escaping @MainActor () -> SetupModel) {
+    init(
+        bagStore: BagStore,
+        settings: SettingsStore,
+        backend: (any PersistenceStore)?,
+        voice: VoiceController? = nil,
+        makeSetup: @escaping @MainActor () -> SetupModel
+    ) {
         self.makeSetup = makeSetup
+        self.voice = voice
         self.bagStore = bagStore
         self.settings = settings
         self.backend = backend
@@ -33,7 +41,7 @@ final class PracticeLauncher {
         await bagStore.load()
         failed = false
         guard !bagStore.bag.active.isEmpty,
-              let started = await PracticeStore.start(mode, bag: bagStore.bag, settings: settings, backend: backend)
+              let started = await PracticeStore.start(mode, bag: bagStore.bag, settings: settings, backend: backend, voice: voice)
         else {
             failed = true
             return

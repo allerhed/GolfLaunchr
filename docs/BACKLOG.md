@@ -81,6 +81,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E13 | Onboarding on the real phone: permission prompt, Settings round trip, actual capability report (formats, free storage), VoiceOver, Dynamic Type; add handedness to Settings (4.5) and a way to re-run onboarding | 4.1 |
 | E14 | Setup on the real phone: live observer (frames, exposure, thermal), tune thresholds from bay clips, add CoreMotion steadiness and ball detection, check the flicker row under real lamps, wire Calibrate (3.2) and Ready (4.3) | 4.2 |
 | E15 | Practice on the phone: start, rotate gate and orientation request on the real iPhone, kill the app mid-session and confirm recovery; target carry / shot goal / notes UI; trajectory view; replace the Debug demo shot with the real pipeline (5.3) | 4.3 |
+| E16 | Listen on the real phone: English and Swedish voices, ducking music, Bluetooth/headphone route and unplug, silent switch, spoken text vs VoiceOver; decide the reposition prompt rules; make the caption a VoiceOver live region | 4.4 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
 
 ## 7. Gates still NOT RUN

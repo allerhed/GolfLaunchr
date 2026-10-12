@@ -20,6 +20,7 @@ final class PracticeStore {
     let backend: any PersistenceStore
     private let settings: SettingsStore
     private let now: () -> Date
+    let voice: VoiceController?
 
     private init(
         state: PracticeState,
@@ -28,6 +29,7 @@ final class PracticeStore {
         lifecycle: SessionLifecycle,
         backend: any PersistenceStore,
         settings: SettingsStore,
+        voice: VoiceController?,
         now: @escaping () -> Date
     ) {
         self.state = state
@@ -36,6 +38,7 @@ final class PracticeStore {
         self.lifecycle = lifecycle
         self.backend = backend
         self.settings = settings
+        self.voice = voice
         self.now = now
     }
 
@@ -46,6 +49,7 @@ final class PracticeStore {
         bag: Bag,
         settings: SettingsStore,
         backend: any PersistenceStore,
+        voice: VoiceController? = nil,
         now: @escaping () -> Date = Date.init
     ) async -> PracticeStore? {
         let clubs = bag.active
@@ -54,7 +58,7 @@ final class PracticeStore {
         let initial = clubs.first { $0.id == settings.lastClubID } ?? clubs.first
         let state = PracticeState(sessionID: session.id, mode: mode, selectedClub: try? initial?.snapshot())
         return PracticeStore(
-            state: state, session: session, clubs: clubs, lifecycle: lifecycle, backend: backend, settings: settings, now: now
+            state: state, session: session, clubs: clubs, lifecycle: lifecycle, backend: backend, settings: settings, voice: voice, now: now
         )
     }
 
@@ -74,7 +78,12 @@ final class PracticeStore {
 
     @discardableResult
     func arm(setupReady: Bool) -> ArmResult {
-        state.arm(setupReady: setupReady)
+        let result = state.arm(setupReady: setupReady)
+        if result == .armed {
+            voice?.prompt(.ready) // spoken now, then nothing new starts until the shot is accepted
+            voice?.hold()
+        }
+        return result
     }
 
     func togglePause() {
@@ -82,6 +91,7 @@ final class PracticeStore {
             state.resume()
         } else {
             state.pause()
+            voice?.stop() // pausing disarms: nothing is spoken or held
         }
     }
 
@@ -90,7 +100,11 @@ final class PracticeStore {
         guard state.isArmed else { return false }
         do {
             _ = try await backend.commitAccepted(shot, ledger: ledger)
-            return state.accept(shot) == .accepted
+            let accepted = state.accept(shot) == .accepted
+            if accepted {
+                voice?.announce(shot)
+            }
+            return accepted
         } catch {
             lastError = "\(error)"
             return false
@@ -100,6 +114,7 @@ final class PracticeStore {
     /// Ends the session once. A second call (double tap, or while the first is still saving) does nothing.
     func end() async -> Bool {
         guard !isEnding, !didEnd else { return false }
+        voice?.stop()
         isEnding = true
         defer { isEnding = false }
         // If saving failed the first time the state is already ended; a retry only repeats the save.

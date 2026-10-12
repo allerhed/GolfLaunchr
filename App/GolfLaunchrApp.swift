@@ -2,6 +2,7 @@ import Capture
 import Domain
 import Persistence
 import SwiftUI
+import Voice
 
 @main
 struct GolfLaunchrApp: App {
@@ -12,6 +13,7 @@ struct GolfLaunchrApp: App {
     @State private var onboarding: OnboardingStore
     @State private var setupLauncher: SetupLauncher
     @State private var practiceLauncher: PracticeLauncher
+    @State private var voice: VoiceController
 
     init() {
         let arguments = CommandLine.arguments
@@ -36,8 +38,11 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
+        let voiceController = VoiceController(settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments))
+        _voice = State(initialValue: voiceController)
         _practiceLauncher = State(initialValue: PracticeLauncher(
-            bagStore: stores.bag, settings: settingsStore, backend: stores.backend, makeSetup: { launcher.makeModel() }
+            bagStore: stores.bag, settings: settingsStore, backend: stores.backend, voice: voiceController,
+            makeSetup: { launcher.makeModel() }
         ))
     }
 
@@ -62,6 +67,16 @@ struct GolfLaunchrApp: App {
                 calibration: calibration
             )
         }
+    }
+
+    /// The system voice; Debug builds started with `-uiTestFakeVoice` use a silent recorder.
+    private static func makeSynthesizer(_ arguments: [String]) -> any SpeechSynthesizing {
+        #if DEBUG
+            if arguments.contains("-uiTestFakeVoice") {
+                return RecordingSynthesizer()
+            }
+        #endif
+        return SystemSpeechSynthesizer()
     }
 
     /// Live camera services; Debug builds started with `-uiTestFakeCamera authorized|denied|none` use doubles (no system prompt).
@@ -128,6 +143,7 @@ struct GolfLaunchrApp: App {
                 .environment(onboarding)
                 .environment(setupLauncher)
                 .environment(practiceLauncher)
+                .environment(voice)
         }
     }
 }
