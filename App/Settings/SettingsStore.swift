@@ -1,9 +1,28 @@
 import Domain
+import Flight
 import Formatting
 import Foundation
 import Observation
 import SwiftUI
 import Voice
+
+/// The language of the app and of speech (F25): the device's language, or an explicit choice that overrides it.
+enum AppLanguage: String, CaseIterable, Identifiable {
+    case system, english, swedish
+
+    var id: String {
+        rawValue
+    }
+
+    /// nil = follow the device.
+    var locale: Locale? {
+        switch self {
+        case .system: nil
+        case .english: Locale(identifier: "en")
+        case .swedish: Locale(identifier: "sv")
+        }
+    }
+}
 
 enum Appearance: String, CaseIterable, Identifiable {
     case system, light, dark
@@ -41,6 +60,8 @@ final class SettingsStore {
         static let onboarding = "settings.onboardingCompleted"
         static let lastClub = "settings.lastClubID"
         static let voice = "settings.voice"
+        static let language = "settings.language"
+        static let atmosphere = "settings.atmosphere"
     }
 
     private let defaults: UserDefaults
@@ -71,6 +92,20 @@ final class SettingsStore {
         didSet { defaults.set(try? JSONEncoder().encode(voice), forKey: Key.voice) }
     }
 
+    var language: AppLanguage {
+        didSet { defaults.set(language.rawValue, forKey: Key.language) }
+    }
+
+    /// Standard or manual air pressure and temperature (F18). Manual values are range-checked when resolved.
+    var atmosphere: AtmosphereSetting {
+        didSet { defaults.set(try? JSONEncoder().encode(atmosphere), forKey: Key.atmosphere) }
+    }
+
+    /// The language shown and spoken right now: the explicit choice, else the app's resolved language.
+    var effectiveLocale: Locale {
+        language.locale ?? Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+    }
+
     /// True once onboarding was finished or skipped. Repeating onboarding never touches credits or stored shots.
     var onboardingCompleted: Bool {
         didSet { defaults.set(onboardingCompleted, forKey: Key.onboarding) }
@@ -80,7 +115,7 @@ final class SettingsStore {
     init(defaults: UserDefaults = .standard, locale: Locale = .current, resetting: Bool = false) {
         self.defaults = defaults
         if resetting {
-            [Key.distance, Key.speed, Key.appearance, Key.handedness, Key.onboarding, Key.lastClub, Key.voice]
+            [Key.distance, Key.speed, Key.appearance, Key.handedness, Key.onboarding, Key.lastClub, Key.voice, Key.language, Key.atmosphere]
                 .forEach(defaults.removeObject(forKey:))
         }
         let regional = DisplayUnits.defaults(for: locale)
@@ -92,6 +127,9 @@ final class SettingsStore {
         swingHandedness = defaults.string(forKey: Key.handedness).flatMap(SwingHandedness.init(rawValue:))
         onboardingCompleted = defaults.bool(forKey: Key.onboarding)
         lastClubID = defaults.string(forKey: Key.lastClub).flatMap(UUID.init(uuidString:))
+        language = defaults.string(forKey: Key.language).flatMap(AppLanguage.init(rawValue:)) ?? .system
+        atmosphere = defaults.data(forKey: Key.atmosphere)
+            .flatMap { try? JSONDecoder().decode(AtmosphereSetting.self, from: $0) } ?? AtmosphereSetting()
         voice = defaults.data(forKey: Key.voice).flatMap { try? JSONDecoder().decode(VoicePreferences.self, from: $0) } ?? .default
     }
 }

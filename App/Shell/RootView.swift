@@ -38,11 +38,14 @@ struct RootView: View {
             await historyStore.load()
         }
         .tint(Tokens.accent.color)
+        .environment(\.locale, settings.language.locale ?? Locale.current)
         .fullScreenCover(isPresented: Binding(get: { !settings.onboardingCompleted }, set: { _ in })) {
             OnboardingView()
                 .preferredColorScheme(settings.appearance.colorScheme)
+                .environment(\.locale, settings.language.locale ?? Locale.current)
         }
         .preferredColorScheme(settings.appearance.colorScheme)
+        .environment(\.locale, settings.language.locale ?? Locale.current)
         #if CAPTURE_HARNESS
             .fullScreenCover(isPresented: .constant(HarnessAutorunConfig.current != nil)) { HarnessView() }
         #endif
@@ -53,6 +56,7 @@ struct RootView: View {
             })) {
                 if let model = setup.model {
                     SetupView().environment(model).preferredColorScheme(settings.appearance.colorScheme)
+                        .environment(\.locale, settings.language.locale ?? Locale.current)
                 }
             }
             .fullScreenCover(isPresented: Binding(get: { practice.store != nil }, set: {
@@ -63,12 +67,14 @@ struct RootView: View {
                 if let store = practice.store, let model = practice.setupModel {
                     PracticeView(store: store, setup: model)
                         .preferredColorScheme(settings.appearance.colorScheme)
+                        .environment(\.locale, settings.language.locale ?? Locale.current)
                 }
             }
             .sheet(isPresented: $navigation.showingSettings) {
                 SettingsView()
                     .environment(settings)
                     .preferredColorScheme(settings.appearance.colorScheme)
+                    .environment(\.locale, settings.language.locale ?? Locale.current)
             }
     }
 }

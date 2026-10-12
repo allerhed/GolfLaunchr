@@ -38,7 +38,9 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
-        let voiceController = VoiceController(settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments))
+        let voiceController = VoiceController(
+            settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments), locale: { settingsStore.effectiveLocale }
+        )
         _voice = State(initialValue: voiceController)
         _practiceLauncher = State(initialValue: PracticeLauncher(
             bagStore: stores.bag, settings: settingsStore, backend: stores.backend, voice: voiceController,

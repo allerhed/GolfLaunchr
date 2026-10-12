@@ -21,6 +21,7 @@ packages:
   Export: { path: Packages/Export }
   Modes: { path: Packages/Modes }
   Voice: { path: Packages/Voice }
+  Flight: { path: Packages/Flight }
 targets:
   GolfLaunchr:
     type: application
@@ -34,6 +35,7 @@ targets:
       - package: Export
       - package: Modes
       - package: Voice
+      - package: Flight
       - package: Capture
       - package: Capture
         product: CaptureAV

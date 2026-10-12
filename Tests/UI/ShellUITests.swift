@@ -162,7 +162,14 @@ final class ShellScreenshotTests: XCTestCase {
             _ = app.tabBars.firstMatch.waitForExistence(timeout: 5)
         }
         if style == "dark" {
+            // Pick the theme in portrait, where the longer Settings form is easy to scroll; then go back to the wanted orientation.
+            XCUIDevice.shared.orientation = .portrait
+            _ = app.tabBars.firstMatch.waitForExistence(timeout: 8)
             try openSettingsAndPick(app, "Dark", "Mörkt", lang)
+            XCUIDevice.shared.orientation = orientation
+            if orientation.isLandscape {
+                _ = app.buttons["nav.home"].waitForExistence(timeout: 8)
+            }
         }
         try shot("\(lang)-\(style)-\(o)-home")
         if orientation.isLandscape {
@@ -180,7 +187,9 @@ final class ShellScreenshotTests: XCTestCase {
     func openSettingsAndPick(_ app: XCUIApplication, _ en: String, _ sv: String, _ lang: String) throws {
         app.buttons["nav.settings"].firstMatch.tap()
         _ = app.buttons["settings.done"].waitForExistence(timeout: 5)
-        app.buttons[lang == "sv" ? sv : en].firstMatch.tap()
+        let option = app.buttons[lang == "sv" ? sv : en].firstMatch
+        app.reveal(option)
+        option.tap()
         app.buttons["settings.done"].tap()
     }
 
@@ -218,7 +227,9 @@ final class ShellScreenshotTests: XCTestCase {
             _ = app.buttons["bag.add"].waitForExistence(timeout: 8)
             if dark {
                 app.buttons["nav.settings"].firstMatch.tap()
-                app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch.tap()
+                let dark = app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch
+                app.reveal(dark)
+                dark.tap()
                 app.buttons["settings.done"].tap()
             }
             try shot("bag-\(lang)-\(o)-list")
@@ -254,7 +265,9 @@ final class ShellScreenshotTests: XCTestCase {
             _ = app.collectionViews["history.list"].waitForExistence(timeout: 8)
             if dark {
                 app.buttons["nav.settings"].firstMatch.tap()
-                app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch.tap()
+                let dark = app.buttons[lang == "sv" ? "Mörkt" : "Dark"].firstMatch
+                app.reveal(dark)
+                dark.tap()
                 app.buttons["settings.done"].tap()
             }
             try shot("history-\(lang)-\(o)-list")

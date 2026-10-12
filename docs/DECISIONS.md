@@ -46,3 +46,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Unavailable modes on Home are labelled Coming soon and are not buttons | No dead ends and no pretending a mode exists. |
 | 2026-10-12 | Spoken words are built from the same formatter as the screens and always shown as a caption; muting never hides the text | F07: audio is never the only channel; one formatting layer. |
 | 2026-10-12 | Speech is held while a shot is armed, and a newer result replaces an unspoken one | No audio during the next capture window and no backlog recital (F07). |
+| 2026-10-13 | Each presented screen applies the app locale itself | A sheet that is already open does not pick up a locale change from its presenter. |
+| 2026-10-13 | Manual atmosphere is reported invalid, never replaced by the standard atmosphere | F18/F06: no silent fabricated values. |

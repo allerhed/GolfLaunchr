@@ -3221,6 +3221,210 @@
         }
       }
     },
+    "settings.atmosphere": {
+      "comment": "Settings section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atmosphere"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atmosfär"
+          }
+        }
+      }
+    },
+    "settings.atmosphere.ambient": {
+      "comment": "Explains there is no barometer input",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic readings are not available yet. Choose standard, or enter the air pressure and temperature yourself."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatiska värden finns inte än. Välj standard, eller ange lufttryck och temperatur själv."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.footer": {
+      "comment": "Footer under the atmosphere section",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the absolute air pressure where you are, not the sea-level pressure from a weather report. Distances are estimates either way."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Använd det absoluta lufttrycket där du är, inte havsnivåtrycket från en väderrapport. Längderna är beräkningar oavsett."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.manual": {
+      "comment": "Atmosphere option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manuell"
+          }
+        }
+      }
+    },
+    "settings.atmosphere.pressure": {
+      "comment": "Field label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Air pressure (hPa)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lufttryck (hPa)"
+          }
+        }
+      }
+    },
+    "settings.atmosphere.problem.missingPressure": {
+      "comment": "Validation message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the air pressure."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange lufttrycket."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.problem.missingTemperature": {
+      "comment": "Validation message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the temperature."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange temperaturen."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.problem.pressureOutOfRange": {
+      "comment": "Validation message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Air pressure must be between 300 and 1100 hPa."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lufttrycket måste vara mellan 300 och 1100 hPa."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.problem.temperatureOutOfRange": {
+      "comment": "Validation message",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperature must be between −30 and 50 °C."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperaturen måste vara mellan −30 och 50 °C."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.stale": {
+      "comment": "Warning about old manual values",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These values were entered more than 12 hours ago. Check them before you rely on distances."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Värdena angavs för mer än 12 timmar sedan. Kontrollera dem innan du litar på längderna."
+          }
+        }
+      }
+    },
+    "settings.atmosphere.standard": {
+      "comment": "Atmosphere option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard"
+          }
+        }
+      }
+    },
+    "settings.atmosphere.temperature": {
+      "comment": "Field label",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperature (°C)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temperatur (°C)"
+          }
+        }
+      }
+    },
     "settings.distance": {
       "comment": "Row label: distance unit",
       "localizations": {
@@ -3285,6 +3489,125 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exempel: 30 m/s"
+          }
+        }
+      }
+    },
+    "settings.handedness.footer": {
+      "comment": "Footer under the swing side picker",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you change your swing side you need to calibrate again before capturing."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om du byter svingsida måste du kalibrera om innan du spelar in."
+          }
+        }
+      }
+    },
+    "settings.handedness.unset": {
+      "comment": "Swing handedness not set yet",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not chosen"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte vald"
+          }
+        }
+      }
+    },
+    "settings.language": {
+      "comment": "Settings section header and picker",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Språk"
+          }
+        }
+      }
+    },
+    "settings.language.footer": {
+      "comment": "Footer under the language picker",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changes the app language and the spoken language. Units, saved data and calibration are not affected."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ändrar appens språk och det talade språket. Enheter, sparad data och kalibrering påverkas inte."
+          }
+        }
+      }
+    },
+    "settings.language.system": {
+      "comment": "Language option: follow the device",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "settings.privacy": {
+      "comment": "Settings section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Integritet"
+          }
+        }
+      }
+    },
+    "settings.privacy.text": {
+      "comment": "Privacy statement",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your shots and clips stay on this iPhone. Nothing is uploaded."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina slag och klipp stannar på den här iPhonen. Inget laddas upp."
           }
         }
       }

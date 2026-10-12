@@ -1,15 +1,142 @@
+import Domain
+import Flight
 import Formatting
 import SwiftUI
 import Voice
 
 struct SettingsView: View {
-    @Environment(SettingsStore.self) private var settings
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.locale) private var locale
-    @Environment(VoiceController.self) private var voiceController
+    @SwiftUI.Environment(SettingsStore.self) private var settings
+    @SwiftUI.Environment(\.dismiss) private var dismiss
+    @SwiftUI.Environment(\.locale) private var locale
+    @SwiftUI.Environment(VoiceController.self) private var voiceController
+    @State private var pressureText = ""
+    @State private var temperatureText = ""
     #if CAPTURE_HARNESS
         @State private var showingHarness = false
     #endif
+
+    private var languageSection: some View {
+        @Bindable var settings = settings
+        return Section {
+            Picker("settings.language", selection: Binding(
+                get: { settings.language },
+                set: { new in
+                    settings.language = new
+                    voiceController.stop() // stale speech in the old language is dropped
+                }
+            )) {
+                Text("settings.language.system").tag(AppLanguage.system)
+                Text(verbatim: "English").tag(AppLanguage.english)
+                Text(verbatim: "Svenska").tag(AppLanguage.swedish)
+            }
+            .accessibilityIdentifier("settings.language")
+        } header: {
+            Text("settings.language", comment: "Section header: app language")
+        } footer: {
+            Text("settings.language.footer", comment: "Language changes the app and speech, nothing else")
+        }
+        .listRowBackground(Tokens.surface.color)
+    }
+
+    private var handednessSection: some View {
+        Section {
+            Picker("setup.handedness", selection: Binding(
+                get: { settings.swingHandedness },
+                set: { settings.swingHandedness = $0 }
+            )) {
+                Text("settings.handedness.unset").tag(SwingHandedness?.none)
+                Text("onboarding.handedness.right").tag(SwingHandedness?.some(.right))
+                Text("onboarding.handedness.left").tag(SwingHandedness?.some(.left))
+            }
+            .accessibilityIdentifier("settings.handedness")
+        } header: {
+            Text("setup.handedness", comment: "Section header: swing handedness")
+        } footer: {
+            Text("settings.handedness.footer", comment: "Changing swing side needs a new calibration")
+        }
+        .listRowBackground(Tokens.surface.color)
+    }
+
+    private var atmosphereSection: some View {
+        @Bindable var settings = settings
+        return Section {
+            Picker("settings.atmosphere", selection: Binding(
+                get: { settings.atmosphere.mode },
+                set: { settings.atmosphere.mode = $0 }
+            )) {
+                Text("settings.atmosphere.standard").tag(AtmosphereSetting.Mode.standard)
+                Text("settings.atmosphere.manual").tag(AtmosphereSetting.Mode.manual)
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("settings.atmosphere")
+            if settings.atmosphere.mode == .manual {
+                numberField("settings.atmosphere.pressure", text: $pressureText, id: "settings.atmosphere.pressure") { value in
+                    settings.atmosphere.pressureHPa = value
+                    settings.atmosphere.enteredAt = Date()
+                }
+                numberField("settings.atmosphere.temperature", text: $temperatureText, id: "settings.atmosphere.temperature") { value in
+                    settings.atmosphere.temperatureC = value
+                    settings.atmosphere.enteredAt = Date()
+                }
+                ForEach(settings.atmosphere.problems(), id: \.rawValue) { problem in
+                    Label { Text(problem.titleKey) } icon: { Image(systemName: "exclamationmark.triangle.fill") }
+                        .foregroundStyle(Tokens.textPrimary.color)
+                        .accessibilityIdentifier("settings.atmosphere.problem.\(problem.rawValue)")
+                }
+                if case .manual(_, true) = settings.atmosphere.resolve(now: Date()) {
+                    Label { Text("settings.atmosphere.stale") } icon: { Image(systemName: "clock.badge.exclamationmark") }
+                        .accessibilityIdentifier("settings.atmosphere.stale")
+                }
+            }
+            Text("settings.atmosphere.ambient", comment: "No automatic barometer reading yet")
+                .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
+        } header: {
+            Text("settings.atmosphere", comment: "Section header: air pressure and temperature")
+        } footer: {
+            Text("settings.atmosphere.footer", comment: "Use absolute pressure; distances are estimates")
+        }
+        .listRowBackground(Tokens.surface.color)
+        .onAppear { loadFieldTexts() }
+    }
+
+    private func numberField(
+        _ title: LocalizedStringKey,
+        text: Binding<String>,
+        id: String,
+        commit: @escaping (Double?) -> Void
+    ) -> some View {
+        LabeledContent {
+            TextField("", text: text)
+                .keyboardType(.numbersAndPunctuation)
+                .multilineTextAlignment(.trailing)
+                .onChange(of: text.wrappedValue) { _, new in
+                    commit(NumberInput.parse(new, locale: locale))
+                }
+                .accessibilityIdentifier(id)
+        } label: {
+            Text(title)
+        }
+        .frame(minHeight: Spacing.minTarget)
+    }
+
+    private func loadFieldTexts() {
+        if let p = settings.atmosphere.pressureHPa {
+            pressureText = formatter.number(p, fractionDigits: 1)
+        }
+        if let t = settings.atmosphere.temperatureC {
+            temperatureText = formatter.number(t, fractionDigits: 1)
+        }
+    }
+
+    private var privacySection: some View {
+        Section {
+            Label { Text("settings.privacy.text") } icon: { Image(systemName: "lock.iphone") }
+                .accessibilityIdentifier("settings.privacy.text")
+        } header: {
+            Text("settings.privacy", comment: "Section header: privacy")
+        }
+        .listRowBackground(Tokens.surface.color)
+    }
 
     private var voiceSection: some View {
         @Bindable var settings = settings
@@ -52,6 +179,8 @@ struct SettingsView: View {
         @Bindable var settings = settings
         NavigationStack {
             Form {
+                languageSection
+                handednessSection
                 Section {
                     Picker("settings.distance", selection: $settings.units.distance) {
                         Text("unit.metres").tag(DistanceUnit.metres)
@@ -87,8 +216,11 @@ struct SettingsView: View {
                 }
                 .listRowBackground(Tokens.surface.color)
                 voiceSection
+                atmosphereSection
+                privacySection
             }
             .scrollContentBackground(.hidden)
+            .accessibilityIdentifier("settings.form")
             #if CAPTURE_HARNESS
                 .safeAreaInset(edge: .bottom) {
                     Button { showingHarness = true } label: { Text(verbatim: "Open capture harness (DEBUG)") }

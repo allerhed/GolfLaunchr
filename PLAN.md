@@ -66,7 +66,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-12 as fixtures-first UI: no production shot source exists yet (5.3), so only Debug demo shots can be accepted; target carry and shot goal are in the state machine but have no UI. Evidence: `docs/EVIDENCE.md` 4.3.
 - [x] 4.4 F07 Spoken feedback (AVSpeechSynthesizer, en/sv voices, bounded queue)
   - Done 2026-10-12 with a silent test double; the real system voice, audio routing and headphone unplug are NOT RUN on a device. Evidence: `docs/EVIDENCE.md` 4.4.
-- [ ] 4.5 F18 Settings: language, handedness, units, voice, atmosphere, privacy
+- [x] 4.5 F18 Settings: language, handedness, units, voice, atmosphere, privacy
+  - Done 2026-10-12/13 for language, swing side, units, theme, voice, atmosphere and a privacy statement. Replay retention (needs Phase 5), delete/export privacy actions (6.5) and automatic barometer readings are NOT built. Evidence: `docs/EVIDENCE.md` 4.5.
 - [ ] 4.6 F10a screens: shot detail, club averages, club profile, gapping, dispersion, filter sheet (portrait + landscape)
 - [ ] 4.7 F25 Localisation pass: complete en/sv catalogs, glossary, pseudo-localisation + max Dynamic Type layout tests; **You**: native Swedish review
 - [ ] 4.8 F22 Accessibility audit: VoiceOver, Reduce Motion, 44pt targets, colour-independence

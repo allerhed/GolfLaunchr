@@ -53,6 +53,7 @@ final class VoiceUITests: XCTestCase {
 
     /// Taps the switch itself (the right end of the row): a tap in the middle of the row only hits its label.
     func toggle(_ element: XCUIElement) {
+        XCUIApplication().reveal(element)
         XCTAssertTrue(element.waitForExistence(timeout: 8), "switch missing")
         let before = isOn(element)
         element.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
@@ -62,7 +63,10 @@ final class VoiceUITests: XCTestCase {
     }
 
     func isOn(_ element: XCUIElement) -> Bool {
-        (element.value as? String) == "1"
+        if !element.isHittable {
+            XCUIApplication().reveal(element)
+        }
+        return (element.value as? String) == "1"
     }
 
     /// Defaults are Carry + Ball speed; choices persist across a relaunch; muting disables the rest.
@@ -83,6 +87,7 @@ final class VoiceUITests: XCTestCase {
         XCTAssertFalse(isOn(again.switches["settings.voice.ballSpeed"]), "choice persisted")
         XCTAssertTrue(isOn(again.switches["settings.voice.verticalLaunch"]))
         toggle(again.switches["settings.voice.enabled"])
+        again.reveal(again.buttons["settings.voice.preview"])
         XCTAssertFalse(again.switches["settings.voice.carry"].isEnabled, "metrics are disabled while voice is off")
         XCTAssertFalse(again.buttons["settings.voice.preview"].isEnabled)
     }
