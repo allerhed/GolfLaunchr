@@ -18,6 +18,7 @@ packages:
   Persistence: { path: Packages/Persistence }
   Formatting: { path: Packages/Formatting }
   Capture: { path: Packages/Capture }
+  Export: { path: Packages/Export }
 targets:
   GolfLaunchr:
     type: application
@@ -28,6 +29,7 @@ targets:
       - package: Analytics
       - package: Persistence
       - package: Formatting
+      - package: Export
       - package: Capture
       - package: Capture
         product: CaptureAV

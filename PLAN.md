@@ -42,7 +42,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [x] 2.3 F10 Sessions and history: list, filters, exclusion/restore, confirmed delete, transactional recompute
 - [x] 2.4 F09 + F10a analytics in `Analytics`: mean/median/SD/P10/P90, club averages, gapping, dispersion maths, multi-club filter contract (spec fixtures 224/160/130/110, 120/130/140)
   - Done 2026-10-12 (logic only; the Averages/Gapping/Dispersion screens and filter sheet are UI work, not yet in the plan as an item: see `docs/BACKLOG.md` E10). Evidence: `docs/EVIDENCE.md` 2.4.
-- [ ] 2.5 F17 Export: CSV (formula-escaped, SI) and JSON v1, round-trip tests
+- [x] 2.5 F17 Export: CSV (formula-escaped, SI) and JSON v1, round-trip tests
+  - Done 2026-10-12 (data layer only; the Export screen and share sheet are UI work, see `docs/BACKLOG.md` E11). Evidence: `docs/EVIDENCE.md` 2.5.
 - [ ] 2.6 **Milestone QA** (O): data layer review incl. crash/kill atomicity tests
 
 ## Phase 3 - Measurement and flight (G2) - WP03; depends on Phase 1 evidence

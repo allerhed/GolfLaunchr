@@ -37,3 +37,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Analysis selection is one pure function (`ShotSelection.select`) feeding profiles, gapping, dispersion and comparison | Guarantees list, averages and gaps use the same shot IDs (F10a). |
 | 2026-10-12 | Standardised conditions view returns no values without an injected standardiser | No validated flight model yet; recorded numbers must not appear under a Standardised label. |
 | 2026-10-12 | Spread ellipse is 1 SD of the covariance, drawn only with 3+ non-collinear lateral points | F10a forbids implying 68/95% coverage; legend must say 1 SD. |
+| 2026-10-12 | Exports exclude demo shots, device identifiers and media links by default; excluded shots are kept with their flag | Privacy-preserving defaults (F17) while keeping analysis reproducible. |
+| 2026-10-12 | CSV formula escape is an apostrophe prefix on text cells only; numbers are never escaped | Negative numbers must stay numeric; OWASP-style neutralisation for user text such as club names. |

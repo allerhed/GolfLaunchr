@@ -1,5 +1,6 @@
 import Analytics
 import Domain
+import Export
 import Foundation
 @testable import GolfLaunchr
 import Persistence
@@ -239,6 +240,28 @@ struct DemoFixtureTests {
         #expect(counts == [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4], [1, 2, 3]])
         #expect(store.summaries.map(\.shotCount).sorted() == [3, 4, 6])
         #expect(try await sqlite.entries().count == 13)
+    }
+
+    /// End to end: the real SQLite store -> JSON and CSV export. Demo shots stay out by default and round-trip when asked for.
+    @Test func exportFromTheRealStoreRoundTrips() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("fixtures-\(UUID().uuidString)/store.sqlite")
+        let sqlite = try SQLiteStore(url: url, allowsSynthetic: true)
+        await HistoryFixtures.seedIfEmpty(sqlite)
+        let service = ExportService(sessions: sqlite, shots: sqlite)
+        #expect(try await JSONExport.decode(service.data(.json)).shots.isEmpty) // everything seeded is demo data
+        var options = ExportOptions()
+        options.includeSyntheticShots = true
+        options.includeDeviceIdentifiers = true
+        let doc = try await JSONExport.decode(service.data(.json, options: options))
+        #expect(doc.shots.count == 13 && doc.sessions.count == 3)
+        for session in try await sqlite.sessions() {
+            for original in try await sqlite.shots(sessionID: session.id) {
+                #expect(doc.shots.first { $0.id == original.id } == original)
+            }
+        }
+        let csvData = try await service.data(.csv, options: options)
+        let csv = String(bytes: csvData, encoding: .utf8) ?? ""
+        #expect(csv.split(separator: "\r\n").count == 14)
     }
 
     /// End to end: SQLite -> HistoryStore -> Analytics. PW is pooled over two sessions; a hidden-ball shot never counts as 0.

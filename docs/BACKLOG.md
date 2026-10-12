@@ -76,6 +76,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E7 | Release configuration, launch screen, version numbers (10.2) | App icon |
 | E8 | A second look at the iOS 27 `swipeActions` row drawing glitch with a minimal repro; consider reporting to Apple | 2.3 |
 | E10 | Build the UI for 2.4: Averages, Gapping, Dispersion, Club metric profile and the multi-club filter sheet (portrait + landscape, en/sv), filter persistence across relaunch, Pro gating, export; add as a plan item | 2.4 |
+| E11 | Export UI: share sheet, include notes/media prompt, export-before-delete, aggregate/analysis content and filters in exports, optional display units in CSV; open one exported CSV in Numbers/Excel and Sheets to confirm columns and the apostrophe escape look right | 2.5 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
 
 ## 7. Gates still NOT RUN
