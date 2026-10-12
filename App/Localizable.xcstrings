@@ -188,6 +188,227 @@
         }
       }
     },
+    "capability.experimental": {
+      "comment": "Device status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experimental"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experimentell"
+          }
+        }
+      }
+    },
+    "capability.experimental.explain": {
+      "comment": "Explains Experimental",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone has not been validated yet, so results may be less accurate."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den här iPhonen har inte validerats än, så resultaten kan vara mindre exakta."
+          }
+        }
+      }
+    },
+    "capability.reason.belowValidatedFrameRate": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This camera no longer offers the speed it was validated at."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kameran erbjuder inte längre den hastighet den validerades med."
+          }
+        }
+      }
+    },
+    "capability.reason.noCamera": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No usable camera was found."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingen användbar kamera hittades."
+          }
+        }
+      }
+    },
+    "capability.reason.noHighFrameRate": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera cannot record fast enough (120 frames per second or more)."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kameran kan inte spela in tillräckligt snabbt (minst 120 bilder per sekund)."
+          }
+        }
+      }
+    },
+    "capability.reason.noValidatedProfile": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone model has not been validated yet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den här iPhone-modellen har inte validerats än."
+          }
+        }
+      }
+    },
+    "capability.reason.osTooOld": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs iOS 18 or later."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kräver iOS 18 eller senare."
+          }
+        }
+      }
+    },
+    "capability.reason.storageCritical": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almost no free storage. Free up space first."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nästan inget ledigt lagringsutrymme. Frigör utrymme först."
+          }
+        }
+      }
+    },
+    "capability.reason.storageLow": {
+      "comment": "Capability reason",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Little free storage. Free up space before recording."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lite ledigt lagringsutrymme. Frigör utrymme innan du spelar in."
+          }
+        }
+      }
+    },
+    "capability.supported": {
+      "comment": "Device status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supported"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stöds"
+          }
+        }
+      }
+    },
+    "capability.supported.explain": {
+      "comment": "Explains Supported",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone has been validated."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den här iPhonen har validerats."
+          }
+        }
+      }
+    },
+    "capability.unsupported": {
+      "comment": "Device status",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not supported"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stöds inte"
+          }
+        }
+      }
+    },
+    "capability.unsupported.explain": {
+      "comment": "Explains Not supported",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can still look at your history, but this iPhone cannot record shots."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kan fortfarande se din historik, men den här iPhonen kan inte spela in slag."
+          }
+        }
+      }
+    },
     "club.category.driver": {
       "comment": "Club category: Driver",
       "localizations": {
@@ -1636,6 +1857,363 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inställningar"
+          }
+        }
+      }
+    },
+    "onboarding.back": {
+      "comment": "Onboarding back button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tillbaka"
+          }
+        }
+      }
+    },
+    "onboarding.device.body": {
+      "comment": "Device check explanation",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We check the camera so you know what to expect. The camera is only used when you start the check."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vi kontrollerar kameran så att du vet vad du kan förvänta dig. Kameran används först när du startar kontrollen."
+          }
+        }
+      }
+    },
+    "onboarding.device.check": {
+      "comment": "Button: run the device check",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check camera"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontrollera kameran"
+          }
+        }
+      }
+    },
+    "onboarding.device.denied": {
+      "comment": "Shown when camera permission is denied",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera access is off. You can turn it on in Settings."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kameraåtkomsten är avstängd. Du kan slå på den i Inställningar."
+          }
+        }
+      }
+    },
+    "onboarding.device.openSettings": {
+      "comment": "Button opening the iOS Settings app",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna Inställningar"
+          }
+        }
+      }
+    },
+    "onboarding.device.title": {
+      "comment": "Device check headline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your iPhone"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontrollera din iPhone"
+          }
+        }
+      }
+    },
+    "onboarding.finish": {
+      "comment": "Onboarding finish button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get started"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kom igång"
+          }
+        }
+      }
+    },
+    "onboarding.handedness.body": {
+      "comment": "Explains handedness is the golf swing",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is your golf swing, not the hand you write with."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gäller din golfsving, inte vilken hand du skriver med."
+          }
+        }
+      }
+    },
+    "onboarding.handedness.left": {
+      "comment": "Left-handed swing option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left-handed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänstersving"
+          }
+        }
+      }
+    },
+    "onboarding.handedness.required": {
+      "comment": "Hint while no handedness chosen",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one to continue."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj ett alternativ för att gå vidare."
+          }
+        }
+      }
+    },
+    "onboarding.handedness.right": {
+      "comment": "Right-handed swing option",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right-handed"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Högersving"
+          }
+        }
+      }
+    },
+    "onboarding.handedness.title": {
+      "comment": "Handedness headline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which way do you swing?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hur svingar du?"
+          }
+        }
+      }
+    },
+    "onboarding.next": {
+      "comment": "Onboarding next button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fortsätt"
+          }
+        }
+      }
+    },
+    "onboarding.placement.clearance": {
+      "comment": "Placement advice 2",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the phone out of the swing path and keep the hitting area clear of people."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Håll telefonen utanför svingbanan och håll slagområdet fritt från människor."
+          }
+        }
+      }
+    },
+    "onboarding.placement.landscape": {
+      "comment": "Placement advice 3",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the phone sideways (landscape) when recording."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ha telefonen liggande när du spelar in."
+          }
+        }
+      }
+    },
+    "onboarding.placement.title": {
+      "comment": "Onboarding placement headline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up safely"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ställ upp säkert"
+          }
+        }
+      }
+    },
+    "onboarding.placement.tripod": {
+      "comment": "Placement advice 1",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Put the phone on a stable tripod or clamp, beside the ball and square to the target line."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placera telefonen på ett stabilt stativ eller en klämma, bredvid bollen och i rät vinkel mot mållinjen."
+          }
+        }
+      }
+    },
+    "onboarding.progress %lld %lld": {
+      "comment": "VoiceOver label of the onboarding progress bar",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steg %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "onboarding.skip": {
+      "comment": "Skip onboarding and use history without camera",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use history only"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Använd bara historik"
+          }
+        }
+      }
+    },
+    "onboarding.welcome.body": {
+      "comment": "Onboarding welcome text",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure your golf shots with your iPhone camera. Your data stays on your phone."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mät dina golfslag med iPhones kamera. Din data stannar på din telefon."
+          }
+        }
+      }
+    },
+    "onboarding.welcome.title": {
+      "comment": "Onboarding welcome headline",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to GolfLaunchr"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välkommen till GolfLaunchr"
           }
         }
       }

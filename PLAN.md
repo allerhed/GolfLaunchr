@@ -58,7 +58,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [ ] 3.7 (O) G2 report: held-out evaluation, per-metric pass/fail. Failed metrics ship as unavailable or labelled Experimental. **Decision point**
 
 ## Phase 4 - Product UI (fixtures first, then real input) - WP05, WP10
-- [ ] 4.1 F01 Onboarding + device qualification (Supported/Experimental/Unsupported), handedness, permissions, units
+- [x] 4.1 F01 Onboarding + device qualification (Supported/Experimental/Unsupported), handedness, permissions, units
+  - Done 2026-10-12 on the simulator with test doubles; real-device camera/permission check NOT RUN. Evidence: `docs/EVIDENCE.md` 4.1.
 - [ ] 4.2 F02 Setup tutorial + environment checks (top-down diagrams, brightness/blur/flicker, test setup without credit)
 - [ ] 4.3 F05 Home, mode chooser, Standard practice, QuickShot (mockups 03, 20), landscape capture layout and rotate-gate
 - [ ] 4.4 F07 Spoken feedback (AVSpeechSynthesizer, en/sv voices, bounded queue)

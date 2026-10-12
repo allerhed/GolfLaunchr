@@ -8,11 +8,19 @@ struct GolfLaunchrApp: App {
     @State private var settings: SettingsStore
     @State private var bagStore: BagStore
     @State private var historyStore: HistoryStore
+    @State private var onboarding: OnboardingStore
 
     init() {
         let arguments = CommandLine.arguments
         // Test-only launch arguments: UI tests start from default settings and a throwaway database.
-        _settings = State(initialValue: SettingsStore(resetting: arguments.contains("-uiTestResetSettings")))
+        let resetting = arguments.contains("-uiTestResetSettings")
+        let settingsStore = SettingsStore(resetting: resetting)
+        // UI tests skip onboarding unless they ask for it, so the other screens can be tested directly.
+        if resetting, !arguments.contains("-uiTestShowOnboarding") {
+            settingsStore.onboardingCompleted = true
+        }
+        _settings = State(initialValue: settingsStore)
+        _onboarding = State(initialValue: Self.makeOnboarding(settingsStore, arguments: arguments))
         let testFile = arguments.firstIndex(of: "-uiTestStoreFile").flatMap { arguments.indices.contains($0 + 1) ? arguments[$0 + 1] : nil }
         // Demo data can be requested in Debug builds only: the flag is not even parsed in Release.
         #if DEBUG
@@ -23,6 +31,20 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
+    }
+
+    /// Live camera services; Debug builds started with `-uiTestFakeCamera authorized|denied|none` use doubles (no system prompt).
+    private static func makeOnboarding(_ settings: SettingsStore, arguments: [String]) -> OnboardingStore {
+        #if DEBUG
+            if let index = arguments.firstIndex(of: "-uiTestFakeCamera"), arguments.indices.contains(index + 1) {
+                let mode = arguments[index + 1]
+                return OnboardingStore(
+                    settings: settings, camera: FakeCameraAccess(result: mode == "denied" ? .denied : .authorized),
+                    inspector: FakeDeviceInspector(hasCamera: mode != "none")
+                )
+            }
+        #endif
+        return OnboardingStore(settings: settings, camera: LiveCameraAccess(), inspector: LiveDeviceInspector())
     }
 
     /// One database serves the bag and the history. A database that cannot be opened is reported, never replaced by a new empty one.
@@ -66,6 +88,7 @@ struct GolfLaunchrApp: App {
                 .environment(settings)
                 .environment(bagStore)
                 .environment(historyStore)
+                .environment(onboarding)
         }
     }
 }

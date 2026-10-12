@@ -3,7 +3,7 @@ import XCTest
 final class HomeUITests: XCTestCase {
     func launch(_ lang: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(\(lang))", "-AppleLocale", lang]
+        app.launchArguments = ["-AppleLanguages", "(\(lang))", "-AppleLocale", lang, "-uiTestResetSettings"]
         app.launch()
         return app
     }

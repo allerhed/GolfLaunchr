@@ -35,6 +35,10 @@ struct RootView: View {
             await historyStore.load()
         }
         .tint(Tokens.accent.color)
+        .fullScreenCover(isPresented: Binding(get: { !settings.onboardingCompleted }, set: { _ in })) {
+            OnboardingView()
+                .preferredColorScheme(settings.appearance.colorScheme)
+        }
         .preferredColorScheme(settings.appearance.colorScheme)
         #if CAPTURE_HARNESS
             .fullScreenCover(isPresented: .constant(HarnessAutorunConfig.current != nil)) { HarnessView() }

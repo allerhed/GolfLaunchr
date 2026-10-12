@@ -1,3 +1,4 @@
+import Domain
 import Formatting
 import Foundation
 import Observation
@@ -35,6 +36,8 @@ final class SettingsStore {
         static let distance = "settings.distanceUnit"
         static let speed = "settings.speedUnit"
         static let appearance = "settings.appearance"
+        static let handedness = "settings.swingHandedness"
+        static let onboarding = "settings.onboardingCompleted"
     }
 
     private let defaults: UserDefaults
@@ -50,11 +53,21 @@ final class SettingsStore {
         didSet { defaults.set(appearance.rawValue, forKey: Key.appearance) }
     }
 
+    /// The golfer's swing, chosen explicitly in onboarding. nil until chosen: it is never inferred (F01).
+    var swingHandedness: SwingHandedness? {
+        didSet { defaults.set(swingHandedness?.rawValue, forKey: Key.handedness) }
+    }
+
+    /// True once onboarding was finished or skipped. Repeating onboarding never touches credits or stored shots.
+    var onboardingCompleted: Bool {
+        didSet { defaults.set(onboardingCompleted, forKey: Key.onboarding) }
+    }
+
     /// - Parameter resetting: UI tests start from defaults (test-only launch argument, see GolfLaunchrApp).
     init(defaults: UserDefaults = .standard, locale: Locale = .current, resetting: Bool = false) {
         self.defaults = defaults
         if resetting {
-            [Key.distance, Key.speed, Key.appearance].forEach(defaults.removeObject(forKey:))
+            [Key.distance, Key.speed, Key.appearance, Key.handedness, Key.onboarding].forEach(defaults.removeObject(forKey:))
         }
         let regional = DisplayUnits.defaults(for: locale)
         units = DisplayUnits(
@@ -62,5 +75,7 @@ final class SettingsStore {
             speed: defaults.string(forKey: Key.speed).flatMap(SpeedUnit.init(rawValue:)) ?? regional.speed
         )
         appearance = defaults.string(forKey: Key.appearance).flatMap(Appearance.init(rawValue:)) ?? .system
+        swingHandedness = defaults.string(forKey: Key.handedness).flatMap(SwingHandedness.init(rawValue:))
+        onboardingCompleted = defaults.bool(forKey: Key.onboarding)
     }
 }
