@@ -58,7 +58,7 @@ public actor CapturePipeline<Payload: Sendable> {
     }
 
     public func recordDrop(_ reason: DroppedFrameReason) {
-        dropped.record(reason)
+        dropped.record(reason, at: lastPTS)
     }
 
     /// Starts a trigger window at `pts` (defaults to the newest frame). No-op while paused or with no frames.

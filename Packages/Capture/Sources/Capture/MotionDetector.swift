@@ -19,13 +19,18 @@ public struct LumaGrid: Sendable, Equatable {
 public struct MotionDetector: Sendable {
     public let threshold: Double
     public let cooldownFrames: Int
+    /// Frames after start during which motion never triggers (camera start-up: exposure and white balance settle). The reference still
+    /// updates.
+    public let warmupFrames: Int
     public private(set) var lastScore: Double?
     private var previous: LumaGrid?
     private var framesSinceTrigger: Int
+    private var framesSeen = 0
 
-    public init(threshold: Double, cooldownFrames: Int) {
+    public init(threshold: Double, cooldownFrames: Int, warmupFrames: Int = 0) {
         self.threshold = threshold
         self.cooldownFrames = cooldownFrames
+        self.warmupFrames = warmupFrames
         framesSinceTrigger = cooldownFrames
     }
 
@@ -34,6 +39,7 @@ public struct MotionDetector: Sendable {
     public mutating func ingest(_ grid: LumaGrid) -> Bool {
         defer { previous = grid }
         framesSinceTrigger += 1
+        framesSeen += 1
         guard let previous, previous.columns == grid.columns, previous.rows == grid.rows else {
             lastScore = nil
             return false
@@ -44,7 +50,7 @@ public struct MotionDetector: Sendable {
         }
         let score = Double(total) / Double(grid.values.count)
         lastScore = score
-        guard score >= threshold, framesSinceTrigger > cooldownFrames else { return false }
+        guard framesSeen > warmupFrames, score >= threshold, framesSinceTrigger > cooldownFrames else { return false }
         framesSinceTrigger = 0
         return true
     }

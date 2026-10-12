@@ -10,6 +10,8 @@
         case trigger(Double)
         case drop(DroppedFrameReason)
         case thermal(ThermalLevel, Double)
+        /// The encoder keeps failing (for example its session was invalidated in the background): stop instead of recording nothing.
+        case encoderFailed(String)
     }
 
     struct FinishedClip {
@@ -57,6 +59,8 @@
                 await pipeline.recordDrop(reason)
             case let .thermal(level, time):
                 telemetry.record(thermal: level, at: time)
+            case .encoderFailed:
+                break // handled by the model before reaching the engine
             }
             return nil
         }

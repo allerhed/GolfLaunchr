@@ -108,13 +108,16 @@ struct ManifestBuilderTests {
         tel.record(ExposureSample(time: 5000, durationSeconds: 0.001, iso: 100)) // after
         tel.record(thermal: .fair, at: 100)
         var drops = DroppedFrameLog()
-        drops.record(.frameWasLate)
+        drops.record(.frameWasLate, at: 100 + 120.0 / 240) // inside the window
+        drops.record(.outOfBuffers, at: 5000) // long after the window: run total only
+        drops.record(.frameWasLate) // no time: cannot be attributed to a window
         let m = builder().build(window: w, dropped: drops, telemetry: tel, createdUTC: Date(timeIntervalSince1970: 1_791_716_400))
         #expect(m.isComplete)
         #expect(m.exposure.count == 1)
         #expect(m.exposure.first?.iso == 200)
         #expect(m.timing.missingFrames == 1)
-        #expect(m.timing.droppedByReason == ["frameWasLate": 1])
+        #expect(m.timing.droppedByReason == ["frameWasLate": 1]) // this window only
+        #expect(m.timing.runDroppedByReason == ["frameWasLate": 2, "outOfBuffers": 1]) // whole run
         #expect(m.timing.triggerPTS == w.triggerPTS)
         #expect(m.stabilizationApplied == "off")
         #expect(m.thermal.count == 1)

@@ -30,11 +30,14 @@ struct RootView: View {
         .background(Tokens.background.color.ignoresSafeArea())
         .tint(Tokens.accent.color)
         .preferredColorScheme(settings.appearance.colorScheme)
-        .sheet(isPresented: $navigation.showingSettings) {
-            SettingsView()
-                .environment(settings)
-                .preferredColorScheme(settings.appearance.colorScheme)
-        }
+        #if CAPTURE_HARNESS
+            .fullScreenCover(isPresented: .constant(HarnessAutorunConfig.current != nil)) { HarnessView() }
+        #endif
+            .sheet(isPresented: $navigation.showingSettings) {
+                SettingsView()
+                    .environment(settings)
+                    .preferredColorScheme(settings.appearance.colorScheme)
+            }
     }
 }
 

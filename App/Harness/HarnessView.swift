@@ -34,7 +34,13 @@
                     }
                 }
             }
-            .task { model.loadFormats() }
+            .task {
+                if let config = HarnessAutorunConfig.current {
+                    await model.runAutorun(config)
+                } else {
+                    model.loadFormats()
+                }
+            }
             .accessibilityIdentifier("harness.root")
         }
 
@@ -77,6 +83,12 @@
                     } label: { Text(verbatim: "Trigger") }
                         .pickerStyle(.segmented)
                         .disabled(model.phase == .running)
+                    Picker(selection: $model.exposurePreset) {
+                        ForEach(ExposurePreset.allCases) { Text(verbatim: $0.rawValue).tag($0) }
+                    } label: { Text(verbatim: "Exposure") }
+                        .pickerStyle(.segmented)
+                        .disabled(model.phase == .running)
+                        .accessibilityIdentifier("harness.exposure")
                     Stepper(value: $model.motionThreshold, in: 1 ... 40, step: 1) {
                         Text(verbatim: "Motion threshold \(Int(model.motionThreshold))")
                     }
@@ -111,6 +123,11 @@
                     liveRow("FPS (capture clock)", model.measuredFPS.map { String(format: "%.1f", $0) } ?? "-")
                     liveRow("Dropped / gaps / missing", "\(model.droppedTotal) / \(model.gapEvents) / \(model.missingFrames)")
                     liveRow("Exposure", model.exposureText)
+                    if let plan = model.exposurePlanText {
+                        liveRow("Exposure plan", plan)
+                    }
+                    liveRow("Orientation", model.orientationText)
+                    liveRow("Callback", model.callbackText)
                     liveRow("Thermal", model.thermalText)
                     liveRow("Buffer", model.bufferText)
                     liveRow("Storage", model.freeSpaceText)

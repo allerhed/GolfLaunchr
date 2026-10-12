@@ -81,17 +81,41 @@ public enum DroppedFrameReason: String, Codable, Sendable, CaseIterable {
     case frameWasLate, outOfBuffers, discontinuity, unknown
 }
 
+public struct DropEvent: Codable, Sendable, Equatable {
+    /// Capture-clock time of the newest frame when the drop was reported. Drops carry no timestamp of their own.
+    public let time: Double
+    public let reason: DroppedFrameReason
+}
+
 /// Dropped frames are counted by reason and are never counted as captured frames.
+/// Events keep a time so a clip can report only the drops inside its own window (a run total would mislead).
 public struct DroppedFrameLog: Equatable, Sendable {
+    public static let maxEvents = 20000
     public private(set) var countsByReason: [DroppedFrameReason: Int] = [:]
+    public private(set) var events: [DropEvent] = []
 
     public init() {}
 
-    public mutating func record(_ reason: DroppedFrameReason) {
+    public mutating func record(_ reason: DroppedFrameReason, at time: Double? = nil) {
         countsByReason[reason, default: 0] += 1
+        if let time {
+            events.append(DropEvent(time: time, reason: reason))
+            if events.count > Self.maxEvents {
+                events.removeFirst(events.count - Self.maxEvents)
+            }
+        }
     }
 
     public var total: Int {
         countsByReason.values.reduce(0, +)
+    }
+
+    /// Only the drops reported while the capture clock was within [from, to].
+    public func within(from: Double, to: Double) -> DroppedFrameLog {
+        var log = DroppedFrameLog()
+        for event in events where event.time >= from && event.time <= to {
+            log.record(event.reason, at: event.time)
+        }
+        return log
     }
 }

@@ -14,6 +14,11 @@ public struct CaptureManifest: Codable, Sendable, Equatable {
     public var stabilizationApplied: String?
     public var hdrApplied: Bool?
     public var orientation: String
+    /// Physical device orientation when recorded (for example "landscapeLeft"). Capture must be landscape (spec F22).
+    public var deviceOrientation: String?
+    public var exposureSetting: ExposureSetting?
+    public var callbackTiming: CallbackTimingSummary?
+    public var frameBytes: FrameSizeStats?
     public var timing: TimingSummary
     public var exposure: [ExposureSample]
     public var thermal: [ThermalSample]
@@ -47,6 +52,21 @@ public struct CaptureManifest: Codable, Sendable, Equatable {
     }
 }
 
+/// What exposure the harness asked for and what the camera actually applied.
+public struct ExposureSetting: Codable, Sendable, Equatable {
+    public var mode: String
+    public var requestedDurationSeconds: Double?
+    public var appliedDurationSeconds: Double?
+    public var appliedISO: Double?
+    public var isoClamped: Bool?
+    /// Stops darker than auto when the camera could not reach the needed ISO; nil in auto mode.
+    public var evShortfallStops: Double?
+
+    public init(mode: String) {
+        self.mode = mode
+    }
+}
+
 public struct DeviceInfo: Codable, Sendable, Equatable {
     /// Hardware identifier, for example "iPhone16,1".
     public let machine: String
@@ -68,10 +88,20 @@ public struct TimingSummary: Codable, Sendable, Equatable {
     public let missingFrames: Int
     public let jitterEvents: Int
     public let fractionWithinTolerance: Double?
+    /// Drops reported while this clip's frames were being captured.
     public let droppedByReason: [String: Int]
+    /// Drops for the whole recording run, for context.
+    public let runDroppedByReason: [String: Int]
     public let triggerPTS: Double?
 
-    public init(stats: FrameClockStats, dropped: DroppedFrameLog, firstPTS: Double?, lastPTS: Double?, triggerPTS: Double?) {
+    public init(
+        stats: FrameClockStats,
+        dropped: DroppedFrameLog,
+        runDropped: DroppedFrameLog? = nil,
+        firstPTS: Double?,
+        lastPTS: Double?,
+        triggerPTS: Double?
+    ) {
         frameCount = stats.framesSeen
         self.firstPTS = firstPTS
         self.lastPTS = lastPTS
@@ -80,6 +110,7 @@ public struct TimingSummary: Codable, Sendable, Equatable {
         jitterEvents = stats.jitterEvents
         fractionWithinTolerance = stats.fractionWithinTolerance
         droppedByReason = Dictionary(uniqueKeysWithValues: dropped.countsByReason.map { ($0.key.rawValue, $0.value) })
+        runDroppedByReason = Dictionary(uniqueKeysWithValues: (runDropped ?? dropped).countsByReason.map { ($0.key.rawValue, $0.value) })
         self.triggerPTS = triggerPTS
     }
 }

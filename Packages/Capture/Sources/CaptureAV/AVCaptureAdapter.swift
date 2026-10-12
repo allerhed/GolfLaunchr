@@ -124,7 +124,31 @@
             )
         }
 
+        /// Waits for auto exposure to settle, then fixes the exposure duration and raises ISO to keep the same brightness,
+        /// as far as the camera allows. Returns the plan with any light shortfall in stops (nil if exposure cannot be read).
+        public func applyFixedExposure(durationSeconds: Double) async throws -> ExposurePlan? {
+            try await Task.sleep(for: .seconds(1))
+            let format = device.activeFormat
+            guard let plan = ExposurePlanner.plan(
+                autoDuration: CMTimeGetSeconds(device.exposureDuration),
+                autoISO: Double(device.iso),
+                targetDuration: durationSeconds,
+                isoRange: Double(format.minISO) ... Double(format.maxISO),
+                durationRange: CMTimeGetSeconds(format.minExposureDuration) ... CMTimeGetSeconds(format.maxExposureDuration)
+            ) else { return nil }
+            try device.lockForConfiguration()
+            defer { device.unlockForConfiguration() }
+            device.setExposureModeCustom(
+                duration: CMTime(seconds: plan.durationSeconds, preferredTimescale: 1_000_000), iso: Float(plan.iso), completionHandler: nil
+            )
+            return plan
+        }
+
         public func stop() {
+            if device.isExposureModeSupported(.continuousAutoExposure), (try? device.lockForConfiguration()) != nil {
+                device.exposureMode = .continuousAutoExposure
+                device.unlockForConfiguration()
+            }
             session.stopRunning()
             dropContinuation.finish()
         }

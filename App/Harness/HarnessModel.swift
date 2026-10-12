@@ -45,6 +45,8 @@
 
         static let preSeconds = 0.75
         static let postSeconds = 1.25
+        /// Seconds after Start during which motion is ignored: stream start-up and exposure settling look like motion.
+        static let motionWarmupSeconds = 2.0
         static let bitRate = 100_000_000
 
         var phase = Phase.idle
@@ -52,6 +54,10 @@
         var selectedFormatID: String?
         var trigger = TriggerMode.manual
         var motionThreshold = 6.0
+        var exposurePreset = ExposurePreset.auto
+        var callbackText = "-"
+        var orientationText = "-"
+        var exposurePlanText: String?
         var handedness = "right"
         var club = "7 iron"
         var lighting = "indoor bright"
@@ -76,8 +82,12 @@
         private var devices: [String: (AVCaptureDevice, AVCaptureDevice.Format)] = [:]
         private var source: AVCaptureFrameSource?
         private var encoder: RealtimeHEVCEncoder?
-        private var engine: HarnessEngine?
+        var engine: HarnessEngine?
         private var builder: ManifestBuilder?
+        var metrics: HarnessMetrics?
+        var autorunConfig: HarnessAutorunConfig?
+        var autorunStarted: Date?
+        var abortedSummary: AutorunSummary?
         private var continuation: AsyncStream<HarnessEvent>.Continuation?
         private var tasks: [Task<Void, Never>] = []
         private var lastPoll: (frames: Int, pts: Double)?
@@ -161,81 +171,44 @@
                 frameRate: rate,
                 bitRate: Self.bitRate
             )
+            let metrics = HarnessMetrics(frameRate: rate)
             encoder.onSample = { box, index, pts in
+                metrics.noteCompleted()
                 let frame = Frame(index: index, pts: pts, byteCost: CMSampleBufferGetTotalSampleSize(box.sample), payload: box)
                 continuation.yield(.frame(frame))
             }
-            source.onFrame = Self.makeFrameHandler(
-                device: device, encoder: encoder, continuation: continuation, rate: rate,
-                motion: MotionBox(threshold: motionThreshold, cooldownFrames: Int(rate), enabled: trigger == .motion)
+            source.onFrame = HarnessFrameHandler.make(
+                device: device, encoder: encoder, continuation: continuation,
+                motion: MotionBox(
+                    threshold: motionThreshold, cooldownFrames: Int(rate), warmupFrames: Int(rate * Self.motionWarmupSeconds),
+                    enabled: trigger == .motion
+                ),
+                metrics: metrics
             )
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
             let applied = try source.start(format: format, frameRate: rate)
             if abs(applied.activeFrameRate - rate) > 1 {
                 message = "Requested \(Int(rate)) fps but the device runs \(Int(applied.activeFrameRate)) fps."
             }
+            let exposureSetting = try await configureExposure(source: source)
             builder = ManifestBuilder(
                 device: Self.deviceInfo(), format: descriptor, requestedFrameRate: rate, orientation: "sensor-landscapeRight",
-                stabilizationApplied: applied.stabilization, hdrApplied: nil
+                stabilizationApplied: applied.stabilization, hdrApplied: nil, exposureSetting: exposureSetting
             )
+            self.metrics = metrics
             self.engine = engine
             self.source = source
             self.encoder = encoder
             self.continuation = continuation
             previewSession = source.session
             UIApplication.shared.isIdleTimerDisabled = true
-            tasks = [
-                Task.detached { [weak self] in
-                    for await event in stream {
-                        if let clip = await engine.handle(event) {
-                            await self?.save(clip)
-                        }
-                    }
-                },
-                Task.detached {
-                    for await reason in source.drops {
-                        continuation.yield(.drop(reason))
-                    }
-                },
-                Task { [weak self] in
-                    for await _ in NotificationCenter.default.notifications(named: ProcessInfo.thermalStateDidChangeNotification) {
-                        self?.recordThermal()
-                    }
-                },
-                Task { [weak self] in
-                    while !Task.isCancelled {
-                        await self?.poll()
-                        try? await Task.sleep(for: .milliseconds(500))
-                    }
-                },
-            ]
+            tasks = makeTasks(stream: stream, engine: engine, source: source, continuation: continuation)
             recordThermal()
-            phase = .running
-        }
-
-        /// Per-frame work on the capture queue: luma grid, exposure sample, motion trigger, then the encoder.
-        private static func makeFrameHandler(
-            device: AVCaptureDevice,
-            encoder: RealtimeHEVCEncoder,
-            continuation: AsyncStream<HarnessEvent>.Continuation,
-            rate _: Double,
-            motion: MotionBox
-        ) -> @Sendable (CVPixelBuffer, Double, Int) -> Void {
-            let deviceBox = DeviceBox(device: device)
-            return { [weak encoder] pixels, pts, index in
-                let grid = LumaSampler.grid(from: pixels)
-                var sample = AVFormatCatalog.exposureSample(of: deviceBox.device, at: pts)
-                if let grid {
-                    sample = ExposureSample(
-                        time: sample.time, durationSeconds: sample.durationSeconds, iso: sample.iso, lensPosition: sample.lensPosition,
-                        meanLuma: Double(grid.values.reduce(0) { $0 + Int($1) }) / Double(grid.values.count) / 255
-                    )
-                    if motion.ingest(grid) {
-                        continuation.yield(.trigger(pts))
-                    }
-                }
-                continuation.yield(.exposure(sample))
-                do { try encoder?.encode(pixels, pts: pts, index: index) } catch { continuation.yield(.drop(.unknown)) }
+            let orientation = Self.orientationName()
+            if orientation != "landscapeLeft", orientation != "landscapeRight" {
+                message = "Phone is not in landscape (\(orientation)): capture must be landscape."
             }
+            phase = .running
         }
 
         func stop() async {
@@ -258,21 +231,40 @@
             continuation = nil
             previewSession = nil
             lastPoll = nil
+            metrics = nil
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
             UIApplication.shared.isIdleTimerDisabled = false
             updateFreeSpace()
+        }
+
+        /// Stops the run because capture can no longer be trusted (backgrounded, encoder failure). A window in progress is saved
+        /// flagged incomplete. The run is not resumed automatically: the owner must start again (spec F04/F23: requalify).
+        func abortRun(_ text: String, reason: PauseReason) async {
+            guard phase == .running else { return }
+            phase = .failed(text) // first, so a second abort or a stop cannot re-enter
+            if let config = autorunConfig, let started = autorunStarted {
+                var summary = await autorunSummary(config, started: started)
+                summary.error = text
+                abortedSummary = summary
+            }
+            if let engine, let clip = await engine.stop(reason: reason) {
+                await save(clip)
+            }
+            await teardown()
+            message = text
         }
 
         func saveNow() async {
             await engine?.triggerNow()
         }
 
-        private func recordThermal() {
+        func recordThermal() {
             guard let continuation else { return }
             let now = CMTimeGetSeconds(CMClockGetTime(CMClockGetHostTimeClock()))
             continuation.yield(.thermal(ThermalLevel(ProcessInfo.processInfo.thermalState), now))
         }
 
-        private func poll() async {
+        func poll() async {
             guard let engine else { return }
             let snap = await engine.snapshot()
             let s = snap.status
@@ -290,11 +282,21 @@
                 exposureText = String(format: "1/%.0f s  ISO %.0f  luma %.2f", 1 / max(e.durationSeconds, 1e-9), e.iso, e.meanLuma ?? .nan)
             }
             thermalText = snap.telemetry.thermal.last?.level.rawValue ?? "-"
+            if let metrics {
+                let m = metrics.snapshot()
+                let t = m.timing
+                callbackText = String(
+                    format: "mean %.2f ms, p99 %.2f ms, max %.1f ms, over budget %.1f%%, encoder backlog %d (max %d)",
+                    t.meanMilliseconds ?? 0, t.p99Milliseconds ?? 0, t.maxMilliseconds, (t.overBudgetFraction ?? 0) * 100, m.backlog,
+                    m.maxBacklog
+                )
+            }
+            orientationText = Self.orientationName()
         }
 
         // MARK: saving
 
-        private func save(_ clip: FinishedClip) async {
+        func save(_ clip: FinishedClip) async {
             guard let builder else { return }
             let created = Date()
             let id = UUID()
@@ -306,7 +308,7 @@
             shot.golferID = golferID
             let manifest = builder.build(
                 window: clip.window, dropped: clip.dropped, telemetry: clip.telemetry, createdUTC: created, clipID: id,
-                setup: setup, shot: shot
+                deviceOrientation: Self.orientationName(), callbackTiming: metrics?.snapshot().timing, setup: setup, shot: shot
             )
             do {
                 let dir = try Self.clipDirectory()
@@ -331,6 +333,19 @@
             updateFreeSpace()
         }
 
+        /// Physical orientation name; capture must be landscape (spec F22).
+        static func orientationName() -> String {
+            switch UIDevice.current.orientation {
+            case .landscapeLeft: "landscapeLeft"
+            case .landscapeRight: "landscapeRight"
+            case .portrait: "portrait"
+            case .portraitUpsideDown: "portraitUpsideDown"
+            case .faceUp: "faceUp"
+            case .faceDown: "faceDown"
+            default: "unknown"
+            }
+        }
+
         static func clipDirectory() throws -> URL {
             let docs = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let dir = docs.appendingPathComponent("G1", isDirectory: true)
@@ -346,27 +361,6 @@
             let machine = String(cString: bytes)
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
             return DeviceInfo(machine: machine, osVersion: ProcessInfo.processInfo.operatingSystemVersionString, appBuild: build)
-        }
-    }
-
-    /// AVCaptureDevice property reads are thread-safe; the box lets the capture-queue closure read exposure.
-    private struct DeviceBox: @unchecked Sendable {
-        let device: AVCaptureDevice
-    }
-
-    /// Motion detector state, touched only from the serial capture queue.
-    private final class MotionBox: @unchecked Sendable {
-        private var detector: MotionDetector
-        private let enabled: Bool
-
-        init(threshold: Double, cooldownFrames: Int, enabled: Bool) {
-            detector = MotionDetector(threshold: threshold, cooldownFrames: cooldownFrames)
-            self.enabled = enabled
-        }
-
-        func ingest(_ grid: LumaGrid) -> Bool {
-            let hit = detector.ingest(grid)
-            return enabled && hit
         }
     }
 #endif
