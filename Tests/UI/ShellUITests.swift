@@ -175,6 +175,16 @@ final class ShellScreenshotTests: XCTestCase {
         app.buttons["settings.done"].tap()
     }
 
+    /// Visual check of the app icon on the simulator home screen.
+    func testHomeScreenIcon() throws {
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.press(.home)
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        _ = springboard.icons["GolfLaunchr"].waitForExistence(timeout: 5)
+        try shot("home-screen-icon")
+    }
+
     func testHarnessScreens() throws {
         for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
             XCUIDevice.shared.orientation = orientation

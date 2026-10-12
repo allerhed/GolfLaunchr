@@ -99,7 +99,7 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 
 ## Phase 10 - App Store launch
 - [ ] 10.1 **You**: decide final brand name/trademark and domain; name/subtitle within 30 chars per locale (spec 01); keep bundle id stable
-- [ ] 10.2 (S) App icon (original), launch screen, marketing/version/build numbers, `Release` config
+- [ ] 10.2 (S) App icon (original; 2026-10-12: icon added from owner-supplied artwork, see PROVENANCE, rights to be confirmed), launch screen, marketing/version/build numbers, `Release` config
 - [ ] 10.3 (S) Screenshots for required iPhone sizes in en + sv generated from the real app (shipping behaviour only), via UI-test screenshot script
 - [ ] 10.4 (S+O) Store metadata en/sv: description, keywords (no competitor names), promo text, what's new, support URL, privacy policy URL (**You**: host pages; Swedish native review)
 - [ ] 10.5 **You**: Age rating, App Privacy nutrition labels, export compliance, EU DSA trader status, tax/banking agreements, subscription review info

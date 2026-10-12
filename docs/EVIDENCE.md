@@ -145,4 +145,10 @@ Phase 0 (foundation, tooling; no feature IDs):
 - **Bug found by data, not tests:** the app-level engine kept its own untimed drop log, so per-clip drops were empty even though the Capture package tests passed. Fixed by using the pipeline log.
 - **NOT RUN:** main-lens runs, rate-cap effect on drops, 10-minute run, motion trigger on device after the warm-up fix, touch-interaction load measurement.
 
+### App icon  (PLAN item 10.2, partial)
+- **Status:** icon added and verified on the simulator and built for the device; launch screen, version numbers and Release config remain open, so 10.2 stays unchecked. Not looked at on the phone's actual home screen by me (device screen not visible to me).
+- **What:** owner-supplied concept art (`docs/branding/app-icon-source.webp`) turned into a 1024x1024 opaque PNG by `scripts/make-app-icon.swift` (artwork bounds detected, source compression noise snapped to the background colour, mark centred at 86% width; the source's own rounded corners are not carried over because iOS applies the mask). Asset catalog `App/Assets.xcassets/AppIcon.appiconset`, `ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon`.
+- **Checked:** output is 1024x1024 with no alpha channel; `assetutil` finds `AppIcon` at 1024 px in the built `Assets.car`; simulator home screen screenshot shows the masked icon next to system icons (first version at 74% looked small, enlarged to 86%); `scripts/verify.sh` passes.
+- **Open:** owner to confirm rights and origin of the artwork (PROVENANCE); optional dark and tinted icon variants (iOS 18) not made; legibility at small sizes (Settings, Spotlight) not reviewed.
+
 (Further records are appended here, newest last.)

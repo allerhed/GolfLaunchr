@@ -31,7 +31,7 @@ GolfLaunchr is an independently designed and implemented iPhone golf practice ap
 
 | Asset | Source | Licence / consent | Where used |
 |---|---|---|---|
-| none | | | |
+| App icon artwork (`docs/branding/app-icon-source.webp`, composed into `App/Assets.xcassets/AppIcon.appiconset` by `scripts/make-app-icon.swift`) | Supplied by the owner in chat on 2026-10-12 | Owner supplied; **how it was produced and the owner's rights to it are to be confirmed by the owner** (spec 13: one original logo after design review) | App icon |
 
 ## Attestation (G0)
 
