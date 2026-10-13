@@ -21,7 +21,7 @@ struct ProgressScreen: View {
                     .tag(ProgressSection.analysis)
                 Text("progress.trends", comment: "Progress tab segment: trends (not built yet)").tag(ProgressSection.trends)
             } label: { Text("progress.sessions") }
-                .pickerStyle(.segmented)
+                .adaptiveSegmented()
                 .padding(.horizontal, Spacing.m)
                 .accessibilityIdentifier("progress.section")
             switch navigation.progressSection {
@@ -83,40 +83,38 @@ struct HistoryView: View {
 
     private var filters: some View {
         @Bindable var history = history
-        return ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: Spacing.s) {
-                chip(id: "history.filter.range", active: history.filter.range != .allTime) {
-                    Picker(selection: $history.filter.range) {
-                        ForEach(TimeRange.allCases, id: \.self) { Text($0.titleKey).tag($0) }
-                    } label: { Text("history.range.allTime") }
-                } label: { Text(history.filter.range.titleKey) }
-                chip(id: "history.filter.mode", active: history.filter.mode != nil) {
-                    Picker(selection: $history.filter.mode) {
-                        Text("history.mode.all").tag(ShotMode?.none)
-                        ForEach(history.modeOptions, id: \.self) { Text($0.titleKey).tag(Optional($0)) }
-                    } label: { Text("history.mode.all") }
-                } label: {
-                    if let mode = history.filter.mode {
-                        Text(mode.titleKey)
-                    } else {
-                        Text("history.mode.all")
-                    }
-                }
-                chip(id: "history.filter.club", active: history.filter.clubID != nil) {
-                    Picker(selection: $history.filter.clubID) {
-                        Text("history.club.all").tag(UUID?.none)
-                        ForEach(history.clubOptions, id: \.id) { Text(verbatim: $0.name).tag(Optional($0.id)) }
-                    } label: { Text("history.club.all") }
-                } label: {
-                    if let id = history.filter.clubID, let club = history.clubOptions.first(where: { $0.id == id }) {
-                        Text(verbatim: club.name)
-                    } else {
-                        Text("history.club.all")
-                    }
+        return WrappingChips {
+            chip(id: "history.filter.range", active: history.filter.range != .allTime) {
+                Picker(selection: $history.filter.range) {
+                    ForEach(TimeRange.allCases, id: \.self) { Text($0.titleKey).tag($0) }
+                } label: { Text("history.range.allTime") }
+            } label: { Text(history.filter.range.titleKey) }
+            chip(id: "history.filter.mode", active: history.filter.mode != nil) {
+                Picker(selection: $history.filter.mode) {
+                    Text("history.mode.all").tag(ShotMode?.none)
+                    ForEach(history.modeOptions, id: \.self) { Text($0.titleKey).tag(Optional($0)) }
+                } label: { Text("history.mode.all") }
+            } label: {
+                if let mode = history.filter.mode {
+                    Text(mode.titleKey)
+                } else {
+                    Text("history.mode.all")
                 }
             }
-            .padding(.horizontal, Spacing.m)
+            chip(id: "history.filter.club", active: history.filter.clubID != nil) {
+                Picker(selection: $history.filter.clubID) {
+                    Text("history.club.all").tag(UUID?.none)
+                    ForEach(history.clubOptions, id: \.id) { Text(verbatim: $0.name).tag(Optional($0.id)) }
+                } label: { Text("history.club.all") }
+            } label: {
+                if let id = history.filter.clubID, let club = history.clubOptions.first(where: { $0.id == id }) {
+                    Text(verbatim: club.name)
+                } else {
+                    Text("history.club.all")
+                }
+            }
         }
+        .padding(.horizontal, Spacing.m)
     }
 
     /// A pill-shaped menu. A filtered state is shown with a filled pill and an explicit label, not colour alone.
@@ -130,14 +128,15 @@ struct HistoryView: View {
             content()
         } label: {
             HStack(spacing: Spacing.xs) {
-                label()
+                label().multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
                 Image(systemName: "chevron.down").font(.caption.weight(.semibold))
             }
             .font(.subheadline.weight(active ? .bold : .regular))
             .padding(.horizontal, Spacing.m)
+            .padding(.vertical, Spacing.s)
             .frame(minHeight: Spacing.minTarget)
             .foregroundStyle(active ? Tokens.onAccent.color : Tokens.textPrimary.color)
-            .background(active ? Tokens.accent.color : Tokens.surface.color, in: Capsule())
+            .background(active ? Tokens.accent.color : Tokens.surface.color, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         }
         .accessibilityIdentifier(id)
     }

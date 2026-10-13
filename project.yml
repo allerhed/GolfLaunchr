@@ -48,7 +48,8 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         UIRequiredDeviceCapabilities: [arm64]
         CFBundleLocalizations: [en, sv]
-        NSCameraUsageDescription: Camera is used to detect and measure your golf shots.
+        # English fallback; the localised texts are in App/en.lproj and App/sv.lproj (InfoPlist.strings).
+        NSCameraUsageDescription: GolfLaunchr uses the camera to see and measure your golf shots. Video stays on your iPhone.
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.allerhed.golflaunchr

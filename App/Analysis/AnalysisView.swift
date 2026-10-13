@@ -17,33 +17,12 @@ struct AnalysisView: View {
     var body: some View {
         @Bindable var store = store
         let result = store.result
-        ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.m) {
-                chips(result)
-                if store.applied.sessionIDs != nil {
-                    scopeNote
-                }
-                Picker(selection: $store.tab) {
-                    ForEach(AnalysisStore.Tab.allCases) { Text($0.titleKey).tag($0) }
-                } label: { Text("progress.analysis") }
-                    .pickerStyle(.segmented)
-                    .accessibilityIdentifier("analysis.tab")
-                if result.selection.shots.isEmpty {
-                    emptyNote
-                } else {
-                    switch store.tab {
-                    case .averages: ClubAveragesView(result: result)
-                    case .gapping: GappingView(result: result)
-                    case .dispersion: DispersionView(result: result)
-                    }
-                }
-                if store.applied.conditions == .standardised {
-                    standardisedNote
-                }
+        GeometryReader { geo in
+            ScrollView {
+                content(result, width: min(720, geo.size.width - 2 * Spacing.m))
+                    .padding(Spacing.m)
+                    .frame(width: geo.size.width)
             }
-            .frame(maxWidth: 720, alignment: .leading)
-            .padding(Spacing.m)
-            .frame(maxWidth: .infinity)
         }
         .background(Tokens.background.color)
         .sheet(isPresented: $store.showingFilter) {
@@ -59,11 +38,40 @@ struct AnalysisView: View {
         .navigationDestination(for: ClubRoute.self) { ClubProfileView(clubID: $0.id) }
     }
 
+    /// The screen's content in a column of exactly `width`: a child that wants to be wider wraps or shrinks instead of shifting the page.
+    private func content(_ result: AnalysisStore.Result, width: CGFloat) -> some View {
+        @Bindable var store = store
+        return VStack(alignment: .leading, spacing: Spacing.m) {
+            chips(result)
+            if store.applied.sessionIDs != nil {
+                scopeNote
+            }
+            Picker(selection: $store.tab) {
+                ForEach(AnalysisStore.Tab.allCases) { Text($0.titleKey).tag($0) }
+            } label: { Text("progress.analysis") }
+                .adaptiveSegmented()
+                .accessibilityIdentifier("analysis.tab")
+            if result.selection.shots.isEmpty {
+                emptyNote
+            } else {
+                switch store.tab {
+                case .averages: ClubAveragesView(result: result)
+                case .gapping: GappingView(result: result)
+                case .dispersion: DispersionView(result: result)
+                }
+            }
+            if store.applied.conditions == .standardised {
+                standardisedNote
+            }
+        }
+        .frame(width: width, alignment: .leading)
+    }
+
     // MARK: filter chips
 
     private func chips(_: AnalysisStore.Result) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: Spacing.s) {
+        WrappingChips {
+            Group {
                 Button { store.openFilter() } label: {
                     chipLabel(clubChipText, symbol: "figure.golf")
                 }
@@ -106,15 +114,16 @@ struct AnalysisView: View {
     private func chipLabel(_ text: Text, symbol: String) -> some View {
         HStack(spacing: Spacing.xs) {
             Image(systemName: symbol).accessibilityHidden(true)
-            text
+            text.multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
             Image(systemName: "chevron.down").font(.caption2).accessibilityHidden(true)
         }
         .font(.subheadline.weight(.medium))
         .padding(.horizontal, Spacing.m)
+        .padding(.vertical, Spacing.s)
         .frame(minHeight: Spacing.minTarget)
         .foregroundStyle(Tokens.textPrimary.color)
-        .background(Tokens.surface.color, in: Capsule())
-        .overlay(Capsule().stroke(Tokens.textSecondary.color.opacity(0.3)))
+        .background(Tokens.surface.color, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(Tokens.textSecondary.color.opacity(0.3)))
     }
 
     private var scopeNote: some View {

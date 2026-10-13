@@ -67,7 +67,7 @@ struct SettingsView: View {
                 Text("settings.atmosphere.standard").tag(AtmosphereSetting.Mode.standard)
                 Text("settings.atmosphere.manual").tag(AtmosphereSetting.Mode.manual)
             }
-            .pickerStyle(.segmented)
+            .adaptiveSegmented()
             .accessibilityIdentifier("settings.atmosphere")
             if settings.atmosphere.mode == .manual {
                 numberField("settings.atmosphere.pressure", text: $pressureText, id: "settings.atmosphere.pressure") { value in
@@ -209,7 +209,7 @@ struct SettingsView: View {
                     Picker("settings.appearance", selection: $settings.appearance) {
                         ForEach(Appearance.allCases) { Text($0.titleKey).tag($0) }
                     }
-                    .pickerStyle(.segmented)
+                    .adaptiveSegmented()
                     .accessibilityIdentifier("settings.appearance")
                 } header: {
                     Text("settings.appearance", comment: "Section header for light/dark theme")

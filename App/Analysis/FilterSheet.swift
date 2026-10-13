@@ -57,12 +57,12 @@ struct FilterSheet: View {
                     Picker("analysis.filter.distance", selection: $store.editor.draft.distance) {
                         ForEach(DistanceKind.allCases, id: \.rawValue) { Text($0.titleKey).tag($0) }
                     }
-                    .pickerStyle(.segmented)
+                    .adaptiveSegmented()
                     .accessibilityIdentifier("filter.distance")
                     Picker("analysis.filter.conditions", selection: $store.editor.draft.conditions) {
                         ForEach(ConditionsView.allCases, id: \.rawValue) { Text($0.titleKey).tag($0) }
                     }
-                    .pickerStyle(.segmented)
+                    .adaptiveSegmented()
                     .accessibilityIdentifier("filter.conditions")
                 } footer: {
                     if store.editor.draft.conditions == .standardised {

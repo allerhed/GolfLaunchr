@@ -84,6 +84,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E16 | Listen on the real phone: English and Swedish voices, ducking music, Bluetooth/headphone route and unplug, silent switch, spoken text vs VoiceOver; decide the reposition prompt rules; make the caption a VoiceOver live region | 4.4 |
 | E17 | Wire the atmosphere setting into shot creation and the result cards (needs 3.4/5.3); pause arming and clear the ball lock when the swing side changes mid-session (needs 3.2); voice-availability check for Swedish; region override; replay retention and delete/export actions (Phase 5/6.5) | 4.5 |
 | E18 | Analysis on real data and phone: plot zoom/reset, Pro gate and upgrade preview, export with filters, My Bag club profile entry, landscape master/detail, VoiceOver and Dynamic Type for the plot and tables, gap/overlap advisory | 4.6 |
+| E19 | At the largest text size WITHOUT string doubling on the real phone: look for overlaps (wrapped picker labels over the next row, gapping rows), fix with real layouts; landscape at large sizes; App Store metadata en/sv with limits | 4.7 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
 
 ## 7. Gates still NOT RUN

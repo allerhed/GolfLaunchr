@@ -70,7 +70,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-12/13 for language, swing side, units, theme, voice, atmosphere and a privacy statement. Replay retention (needs Phase 5), delete/export privacy actions (6.5) and automatic barometer readings are NOT built. Evidence: `docs/EVIDENCE.md` 4.5.
 - [x] 4.6 F10a screens: shot detail, club averages, club profile, gapping, dispersion, filter sheet (portrait + landscape)
   - Done 2026-10-13 on the simulator with demo data; zoom/reset and the Pro entitlement gate are NOT built. Evidence: `docs/EVIDENCE.md` 4.6.
-- [ ] 4.7 F25 Localisation pass: complete en/sv catalogs, glossary, pseudo-localisation + max Dynamic Type layout tests; **You**: native Swedish review
+- [x] 4.7 F25 Localisation pass: complete en/sv catalogs, glossary, pseudo-localisation + max Dynamic Type layout tests; **You**: native Swedish review
+  - Done 2026-10-13 except the native Swedish review (yours, backlog H1) which stays open. Evidence: `docs/EVIDENCE.md` 4.7.
 - [ ] 4.8 F22 Accessibility audit: VoiceOver, Reduce Motion, 44pt targets, colour-independence
 - [ ] 4.9 **Milestone QA** (O): all screens vs mockups, en/sv, both orientations
 

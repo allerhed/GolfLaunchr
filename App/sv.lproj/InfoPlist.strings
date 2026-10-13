@@ -1,0 +1,3 @@
+/* Visas av iOS i kamerabehörighetens fråga och i Inställningar. */
+"NSCameraUsageDescription" = "GolfLaunchr använder kameran för att se och mäta dina golfslag. Videon stannar på din iPhone.";
+"CFBundleDisplayName" = "GolfLaunchr";

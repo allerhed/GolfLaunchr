@@ -50,3 +50,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-13 | Manual atmosphere is reported invalid, never replaced by the standard atmosphere | F18/F06: no silent fabricated values. |
 | 2026-10-13 | One canonical club order (bag order, then others by name) drives lists, filter sheet and colours | A club must look and sit the same in every F10a screen whatever is selected. |
 | 2026-10-13 | A 2D spread shape is drawn only if the shortest axis is at least 10% of the longest | Nearly collinear points make a sliver that looks like a line and means nothing. |
+| 2026-10-13 | Segmented pickers become menus and chip rows stack at accessibility text sizes | Segmented controls cannot shrink; sideways scrolling hides options (F22). |
+| 2026-10-13 | The localisation key-usage check is part of the gate | A key missing from the catalog shows raw text to the user; stale keys hide untranslated leftovers. |

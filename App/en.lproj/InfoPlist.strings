@@ -1,0 +1,3 @@
+/* Shown by iOS in the camera permission prompt and in Settings. */
+"NSCameraUsageDescription" = "GolfLaunchr uses the camera to see and measure your golf shots. Video stays on your iPhone.";
+"CFBundleDisplayName" = "GolfLaunchr";
