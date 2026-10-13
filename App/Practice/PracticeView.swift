@@ -10,6 +10,7 @@ struct PracticeView: View {
     let setup: SetupModel
     @SwiftUI.Environment(SettingsStore.self) private var settings
     @SwiftUI.Environment(HistoryStore.self) private var history
+    @SwiftUI.Environment(AllowanceStore.self) private var allowance
     @SwiftUI.Environment(\.locale) private var locale
     @SwiftUI.Environment(\.dismiss) private var dismiss
     @State private var confirmEnd = false
@@ -37,7 +38,9 @@ struct PracticeView: View {
         .task {
             setup.startObserving()
             OrientationLock.requestLandscape()
+            await allowance.refresh()
         }
+        .onChange(of: store.state.shots.count) { _, _ in Task { await allowance.refresh() } }
         .onDisappear {
             setup.stopObserving()
             OrientationLock.release()
@@ -89,6 +92,9 @@ struct PracticeView: View {
             HStack(alignment: .top, spacing: Spacing.m) {
                 cards
                 shotList
+            }
+            if !allowance.canArm, allowance.snapshot != nil {
+                noAllowanceNote
             }
             controls
         }
@@ -215,13 +221,31 @@ struct PracticeView: View {
         .frame(maxWidth: 320)
     }
 
+    /// Shown instead of arming when nothing is left: history and settings stay reachable, never a swing that is not recorded.
+    private var noAllowanceNote: some View {
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Label { Text("practice.noAllowance") } icon: { Image(systemName: "lock.fill") }
+                .font(.subheadline.weight(.semibold))
+            if let reset = allowance.snapshot?.nextReset {
+                HStack(spacing: Spacing.xs) {
+                    Text("allowance.next.reset")
+                    Text(reset, format: .dateTime.day().month(.wide))
+                }
+                .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("practice.noAllowance")
+    }
+
     private var controls: some View {
         HStack(spacing: Spacing.m) {
-            Button { store.arm(setupReady: readiness.canArm) } label: {
+            Button { store.arm(setupReady: readiness.canArm, allowanceAvailable: allowance.canArm) } label: {
                 Text("practice.arm").frame(maxWidth: .infinity, minHeight: Spacing.minTarget)
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(store.state.isArmed || store.state.status != .active || !readiness.canArm)
+            .disabled(store.state.isArmed || store.state.status != .active || !readiness.canArm || !allowance.canArm)
             .accessibilityIdentifier("practice.arm")
             Button { store.togglePause() } label: {
                 Text(store.state.status == .paused ? "practice.resume" : "practice.pause")

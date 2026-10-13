@@ -33,7 +33,7 @@
                     versions: ShotVersions(pipeline: "demo", flight: "demo", deviceProfile: "demo-fixture"), isSynthetic: true
                 )
                 let ledger = try LedgerEntry(
-                    acceptedShotID: shot.id, allowanceKind: .introductory, periodID: nil, creditCost: 1, committedAt: shot.impactTimeUTC
+                    acceptedShotID: shot.id, allowanceKind: .introductory, periodID: nil, creditCost: 0, committedAt: shot.impactTimeUTC
                 )
                 return await commit(shot, ledger: ledger)
             } catch {

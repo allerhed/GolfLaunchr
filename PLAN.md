@@ -86,7 +86,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 
 ## Phase 6 - Commerce and privacy - WP07
 - [ ] 6.1 **You**: App Store Connect app record (bundle id `com.allerhed.golflaunchr` unless brand changes), Pro subscription group, Monthly 49 SEK + Annual 499 SEK, StoreKit configuration file for local testing
-- [ ] 6.2 F19 Allowance ledger: 50 intro shots, 10/month, idempotent resets, clock-rollback safety, arming-time reservation (heavy unit tests on boundaries 49/50/51, 9/10/11)
+- [x] 6.2 F19 Allowance ledger: 50 intro shots, 10/month, idempotent resets, clock-rollback safety, arming-time reservation (heavy unit tests on boundaries 49/50/51, 9/10/11)
+  - Done 2026-10-13 (rules, tests, Home line and arming gate on the simulator). The StoreKit entitlement (6.3) and real ledger writes from capture (5.3) are NOT built. Evidence: `docs/EVIDENCE.md` 6.2.
 - [ ] 6.3 F19 StoreKit 2: products, purchase/restore/manage, verified entitlements, offline revalidation window, paywall + plan comparison + exhausted screens
 - [ ] 6.4 F19a Offer-code redemption UI + complimentary display + partner runbook (`docs/PARTNER_ACCESS.md`); **You** create offers in App Store Connect
 - [ ] 6.5 F21 Privacy: delete all/media-only, export-before-delete, redacted diagnostics bundle, no-upload network audit; owner approves retention wording

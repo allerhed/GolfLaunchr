@@ -40,6 +40,13 @@ struct PracticeStateTests {
         #expect(!s.isArmed && s.arm(setupReady: true) == .blocked(.notActive)) // pausing disarms; no arming while paused
     }
 
+    /// F19: no allowance left means nothing arms, whatever else is ready; an unarmed swing is never recorded.
+    @Test func noAllowanceBlocksArming() {
+        var s = state()
+        #expect(s.arm(setupReady: true, allowanceAvailable: false) == .blocked(.noAllowance) && !s.isArmed)
+        #expect(s.arm(setupReady: true, allowanceAvailable: true) == .armed)
+    }
+
     /// F05: a club change is applied only to the next armed shot.
     @Test func aClubChangeWhileArmedAppliesToTheNextShotOnly() throws {
         var s = state()

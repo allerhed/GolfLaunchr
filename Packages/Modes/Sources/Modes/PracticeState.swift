@@ -10,7 +10,7 @@ public enum PracticeStatus: String, Sendable {
 }
 
 public enum ArmBlock: String, Sendable {
-    case notActive, noClub, setupNotReady
+    case notActive, noClub, setupNotReady, noAllowance
 }
 
 public enum ArmResult: Equatable, Sendable {
@@ -74,10 +74,13 @@ public struct PracticeState: Equatable, Sendable {
         targetCarryM = metres.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
     }
 
-    public mutating func arm(setupReady: Bool) -> ArmResult {
+    /// `allowanceAvailable` is the F19 reservation made for this shot; with none left nothing arms (the golfer is offered
+    /// history/settings).
+    public mutating func arm(setupReady: Bool, allowanceAvailable: Bool = true) -> ArmResult {
         guard status == .active else { return .blocked(.notActive) }
         guard let club = selectedClub else { return .blocked(.noClub) }
         guard setupReady else { return .blocked(.setupNotReady) }
+        guard allowanceAvailable else { return .blocked(.noAllowance) }
         armedClub = club
         armedTarget = targetCarryM
         return .armed

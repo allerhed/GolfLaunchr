@@ -56,3 +56,7 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-13 | Club colours are light/dark colour tokens with at least 3:1 contrast | Dots and lines on the plot need contrast in both schemes; symbols still carry the identity. |
 | 2026-10-13 | The Apple audit runs with documented exemptions (glass bars, disabled controls, informational clipping) | Findings we cannot attribute to our own views would hide real ones; each exemption is explained in the test. |
 | 2026-10-13 | Milestone QA is an automated screen walk plus a human-eye comparison, labelled as self-review | An independent reviewer was not available in this session; the limit is stated in the evidence. |
+| 2026-10-13 | Allowance rules live in a pure `Allowance` package; the app only supplies the ledger, the clock and the entitlement | Boundary tests (49/50/51, 9/10/11) run in seconds and do not need StoreKit. |
+| 2026-10-13 | The effective clock is the latest of now, the latest time seen and the latest ledger commit | A rolled-back clock must not open an earlier, unspent period. |
+| 2026-10-13 | The monthly grant starts the calendar month AFTER the introductory credits run out | F19: no accumulation before exhaustion and no same-month top-up. |
+| 2026-10-13 | Nothing arms until the ledger has been read | An unknown balance must not grant access; a failed load blocks and says so. |

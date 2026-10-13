@@ -77,8 +77,8 @@ final class PracticeStore {
     }
 
     @discardableResult
-    func arm(setupReady: Bool) -> ArmResult {
-        let result = state.arm(setupReady: setupReady)
+    func arm(setupReady: Bool, allowanceAvailable: Bool = true) -> ArmResult {
+        let result = state.arm(setupReady: setupReady, allowanceAvailable: allowanceAvailable)
         if result == .armed {
             voice?.prompt(.ready) // spoken now, then nothing new starts until the shot is accepted
             voice?.hold()

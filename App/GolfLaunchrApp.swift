@@ -15,6 +15,7 @@ struct GolfLaunchrApp: App {
     @State private var practiceLauncher: PracticeLauncher
     @State private var voice: VoiceController
     @State private var analysis: AnalysisStore
+    @State private var allowance: AllowanceStore
 
     init() {
         let arguments = CommandLine.arguments
@@ -40,6 +41,11 @@ struct GolfLaunchrApp: App {
         _bagStore = State(initialValue: stores.bag)
         _analysis = State(initialValue: AnalysisStore(history: stores.history, bag: stores.bag, defaults: Self.analysisDefaults(arguments)))
         _historyStore = State(initialValue: stores.history)
+        let allowanceStore = AllowanceStore(backend: stores.backend, defaults: Self.allowanceDefaults(arguments))
+        #if DEBUG
+            allowanceStore.extraEntries = Self.debugLedger(arguments)
+        #endif
+        _allowance = State(initialValue: allowanceStore)
         let voiceController = VoiceController(
             settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments), locale: { settingsStore.effectiveLocale }
         )
@@ -81,6 +87,31 @@ struct GolfLaunchrApp: App {
             }
         #endif
         return SystemSpeechSynthesizer()
+    }
+
+    #if DEBUG
+        /// `-uiTestAllowanceSpent <n>` adds n spent introductory credits in memory (Debug builds only), to reach the exhausted state.
+        private static func debugLedger(_ arguments: [String]) -> [LedgerEntry] {
+            guard let index = arguments.firstIndex(of: "-uiTestAllowanceSpent"), arguments.indices.contains(index + 1),
+                  let count = Int(arguments[index + 1]) else { return [] }
+            return (0 ..< count).compactMap { _ in
+                try? LedgerEntry(
+                    acceptedShotID: UUID(),
+                    allowanceKind: .introductory,
+                    periodID: "intro",
+                    creditCost: 1,
+                    committedAt: Date()
+                )
+            }
+        }
+    #endif
+
+    /// The device-local allowance state; UI tests that reset settings also start a fresh allowance.
+    private static func allowanceDefaults(_ arguments: [String]) -> UserDefaults {
+        if arguments.contains("-uiTestResetSettings") {
+            UserDefaults.standard.removeObject(forKey: AllowanceStore.stateKey)
+        }
+        return .standard
     }
 
     /// Applied analysis filters persist in the normal defaults; UI tests that reset settings also reset them.
@@ -157,6 +188,7 @@ struct GolfLaunchrApp: App {
                 .environment(practiceLauncher)
                 .environment(voice)
                 .environment(analysis)
+                .environment(allowance)
         }
     }
 }

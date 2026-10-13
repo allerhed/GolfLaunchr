@@ -20,6 +20,7 @@ packages:
   Capture: { path: Packages/Capture }
   Export: { path: Packages/Export }
   Modes: { path: Packages/Modes }
+  Allowance: { path: Packages/Allowance }
   Voice: { path: Packages/Voice }
   Flight: { path: Packages/Flight }
 targets:
@@ -34,6 +35,7 @@ targets:
       - package: Formatting
       - package: Export
       - package: Modes
+      - package: Allowance
       - package: Voice
       - package: Flight
       - package: Capture

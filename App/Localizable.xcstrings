@@ -1,6 +1,122 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "allowance.intro.left %lld": {
+      "comment": "Home: introductory free shots left",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free shot left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free shots left"
+                }
+              }
+            }
+          }
+        },
+        "sv": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld gratis slag kvar"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld gratis slag kvar"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "allowance.monthly.left %lld": {
+      "comment": "Home: monthly free shots left",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free shot left this month"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld free shots left this month"
+                }
+              }
+            }
+          }
+        },
+        "sv": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld gratis slag kvar den här månaden"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld gratis slag kvar den här månaden"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "allowance.next.reset": {
+      "comment": "Label before the date of the next monthly grant",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next free shots:"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nästa gratis slag:"
+          }
+        }
+      }
+    },
+    "allowance.none.left": {
+      "comment": "Home: nothing left",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No free shots left"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga gratis slag kvar"
+          }
+        }
+      }
+    },
     "analysis.card.meanCarry": {
       "comment": "Card label",
       "localizations": {
@@ -3704,6 +3820,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Avsluta passet?"
+          }
+        }
+      }
+    },
+    "practice.noAllowance": {
+      "comment": "Practice: arming is blocked because no allowance is left",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No free shots left. History and settings stay available."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga gratis slag kvar. Historik och inställningar finns kvar."
           }
         }
       }

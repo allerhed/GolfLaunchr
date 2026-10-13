@@ -7,6 +7,7 @@ struct HomeView: View {
     @SwiftUI.Environment(PracticeLauncher.self) private var practice
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(BagStore.self) private var bag
+    @SwiftUI.Environment(AllowanceStore.self) private var allowance
 
     var body: some View {
         ScrollView {
@@ -21,6 +22,7 @@ struct HomeView: View {
                         .accessibilityIdentifier("home.subtitle")
                 }
                 startCard
+                allowanceRow
                 quickShotRow
                 if practice.failed {
                     failureNote
@@ -34,6 +36,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
         }
         .scrollContentBackground(.hidden)
+        .task { await allowance.refresh() }
     }
 
     private var failureNote: some View {
@@ -61,6 +64,33 @@ struct HomeView: View {
         .buttonStyle(.plain)
         .disabled(!practice.isAvailable)
         .accessibilityIdentifier("home.start")
+    }
+
+    /// What is left for free before practising (F19): introductory shots, then the monthly grant with the next reset date.
+    @ViewBuilder
+    private var allowanceRow: some View {
+        if let snap = allowance.snapshot, !snap.isPro {
+            VStack(alignment: .leading, spacing: Spacing.xs) {
+                if snap.introRemaining > 0 {
+                    Text("allowance.intro.left \(snap.introRemaining)")
+                } else if snap.monthlyRemaining > 0 {
+                    Text("allowance.monthly.left \(snap.monthlyRemaining)")
+                } else {
+                    Text("allowance.none.left")
+                }
+                if snap.introRemaining == 0, let reset = snap.nextReset {
+                    HStack(spacing: Spacing.xs) {
+                        Text("allowance.next.reset")
+                        Text(reset, format: .dateTime.day().month(.wide))
+                    }
+                    .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
+                }
+            }
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(Tokens.textPrimary.color)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("home.allowance")
+        }
     }
 
     private var quickShotRow: some View {
