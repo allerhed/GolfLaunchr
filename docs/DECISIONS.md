@@ -55,3 +55,4 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-13 | Primary buttons use one `PrimaryButtonStyle` with an `onAccent` label colour | White on the lime accent failed contrast in dark mode; one style keeps all five buttons consistent (F22). |
 | 2026-10-13 | Club colours are light/dark colour tokens with at least 3:1 contrast | Dots and lines on the plot need contrast in both schemes; symbols still carry the identity. |
 | 2026-10-13 | The Apple audit runs with documented exemptions (glass bars, disabled controls, informational clipping) | Findings we cannot attribute to our own views would hide real ones; each exemption is explained in the test. |
+| 2026-10-13 | Milestone QA is an automated screen walk plus a human-eye comparison, labelled as self-review | An independent reviewer was not available in this session; the limit is stated in the evidence. |

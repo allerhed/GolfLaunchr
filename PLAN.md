@@ -74,7 +74,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-13 except the native Swedish review (yours, backlog H1) which stays open. Evidence: `docs/EVIDENCE.md` 4.7.
 - [x] 4.8 F22 Accessibility audit: VoiceOver, Reduce Motion, 44pt targets, colour-independence
   - Done 2026-10-13 in the simulator (Apple audit + own label/44pt checks, en light and sv dark). Real VoiceOver and largest text on the device remain open (backlog). Evidence: `docs/EVIDENCE.md` 4.8.
-- [ ] 4.9 **Milestone QA** (O): all screens vs mockups, en/sv, both orientations
+- [x] 4.9 **Milestone QA** (O): all screens vs mockups, en/sv, both orientations
+  - Done 2026-10-13 on the simulator by the implementing session (not an independent reviewer). Evidence: `docs/EVIDENCE.md` 4.9.
 
 ## Phase 5 - Impact replay and media (needs Phase 1/3) - F16
 - [ ] 5.1 Media package: impact package (frames + manifest, still, deterministic composite), atomic finalise, pending/complete/partial/failed states, recovery, storage checks

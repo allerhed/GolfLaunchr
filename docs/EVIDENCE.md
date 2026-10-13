@@ -355,3 +355,15 @@ Phase 0 (foundation, tooling; no feature IDs):
 **Verified:** `scripts/verify.sh --ui` VERIFY OK on the final code. The first full run failed three `ShellUITests` because combining the example rows made their identifiers ambiguous; fixed and rerun clean. Device build installed on the owner's iPhone (sequence 4224); launch was refused because the phone was locked.
 
 **NOT RUN:** real VoiceOver on the device; largest Dynamic Type on the device without string doubling; Reduce Motion on the device (code-reviewed only); native Swedish read-through of the accessibility labels.
+
+## 4.9 Milestone QA: screens vs mockups (4.1-4.8) — 2026-10-13
+
+**Method and honesty note:** done by the same session that built the screens, not by an independent reviewer, so weaker than the plan's intent. `MilestoneQAUITests` walks Home, Bag, Progress, session, shot detail, Analysis (averages, gapping, dispersion), club profile, filter sheet, Settings (top and scrolled), Setup and the capture screen in English and Swedish, portrait and landscape, plus onboarding in all four combinations. Each screen is captured and checked automatically for raw localisation keys and text crossing the screen edge; the capture screen must open in landscape. Screens were then compared by eye with the mockups (Home vs 03, gapping vs 24, bag landscape vs 15, capture vs 20).
+
+**Result:** the automated checks found nothing. By eye, differences from the mockups are all deliberate or later phases: no photo hero or greeting on Home (concept art; original assets only), no "free shots left" chip (Phase 6), no Practice/Settings tab (settings is the gear), mockup club-colour rings replaced by ring + symbol + name, demo club names are English in Swedish because they are data. Portrait capture shows the rotate prompt, as specified.
+
+**Found while doing it:** simulator screenshots of landscape come out rotated 90 degrees (a simulator capture property, not an app defect); the shot detail is a sheet closed with its own Done button.
+
+**Verified:** `scripts/verify.sh --ui` VERIFY OK on the final code; device build installed and launched on the owner's iPhone (sequence 4240).
+
+**NOT RUN:** independent review by a separate agent or person; comparison on a physical iPhone (notch, Dynamic Island, real rotation); capture, measurement and replay screens (Phase 3 and 5); mockups for Target, Ladder, Virtual Golf, replay and composite (features not built).
