@@ -48,3 +48,5 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-12 | Speech is held while a shot is armed, and a newer result replaces an unspoken one | No audio during the next capture window and no backlog recital (F07). |
 | 2026-10-13 | Each presented screen applies the app locale itself | A sheet that is already open does not pick up a locale change from its presenter. |
 | 2026-10-13 | Manual atmosphere is reported invalid, never replaced by the standard atmosphere | F18/F06: no silent fabricated values. |
+| 2026-10-13 | One canonical club order (bag order, then others by name) drives lists, filter sheet and colours | A club must look and sit the same in every F10a screen whatever is selected. |
+| 2026-10-13 | A 2D spread shape is drawn only if the shortest axis is at least 10% of the longest | Nearly collinear points make a sliver that looks like a line and means nothing. |

@@ -2,7 +2,7 @@ import Domain
 import Foundation
 
 /// Which clubs an analysis covers. `all` means every eligible club in scope; choosing clubs replaces it (spec F10a).
-public enum ClubSelection: Equatable, Sendable {
+public enum ClubSelection: Equatable, Sendable, Codable {
     case all
     case some(Set<UUID>)
 
@@ -21,6 +21,26 @@ public enum ClubSelection: Equatable, Sendable {
         }
     }
 
+    private enum CodingKeys: String, CodingKey { case all, ids }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if try c.decodeIfPresent(Bool.self, forKey: .all) == true {
+            self = .all
+        } else {
+            self = try .some(Set(c.decode([UUID].self, forKey: .ids)))
+        }
+    }
+
+    /// Ids are written sorted so the stored text is stable.
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .all: try c.encode(true, forKey: .all)
+        case let .some(ids): try c.encode(ids.map(\.uuidString).sorted().compactMap { UUID(uuidString: $0) }, forKey: .ids)
+        }
+    }
+
     /// Toggling a club while on All starts a specific selection with just that club; clearing the last club leaves it empty.
     public func toggling(_ id: UUID) -> ClubSelection {
         switch self {
@@ -34,11 +54,11 @@ public enum ClubSelection: Equatable, Sendable {
     }
 }
 
-public enum InclusionState: String, Sendable, CaseIterable {
+public enum InclusionState: String, Sendable, CaseIterable, Codable {
     case included, excluded, all
 }
 
-public enum DistanceKind: String, Sendable, CaseIterable {
+public enum DistanceKind: String, Sendable, CaseIterable, Codable {
     case carry, total
 
     public var key: MetricKey {
@@ -46,13 +66,13 @@ public enum DistanceKind: String, Sendable, CaseIterable {
     }
 }
 
-public enum ConditionsView: String, Sendable, CaseIterable {
+public enum ConditionsView: String, Sendable, CaseIterable, Codable {
     case asRecorded, standardised
 }
 
 /// The one data selection shared by shot list, averages, gapping and dispersion (F10a). Clubs combine by OR, all other
 /// categories by AND. Defaults: all clubs, all sessions in scope, included shots, carry, as recorded.
-public struct AnalysisFilter: Equatable, Sendable {
+public struct AnalysisFilter: Equatable, Sendable, Codable {
     public var clubs = ClubSelection.all
     /// nil = every session; otherwise only these (the "current session" scope is one id).
     public var sessionIDs: Set<UUID>?

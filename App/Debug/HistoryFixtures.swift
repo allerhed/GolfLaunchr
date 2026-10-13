@@ -89,6 +89,12 @@
                 .clubSpeed: Domain.Measurement.unavailable(.clubSpeed, failure: sequence == 3 ? .blur : .unsupportedMetric),
                 .spinAxis: Domain.Measurement.unavailable(.spinAxis),
             ]
+            // Demo sideways landing (metres, right positive): a small deterministic scatter, only where the ball was seen.
+            if entry.carry != nil {
+                metrics[.lateralLanding] = try Domain.Measurement(
+                    key: .lateralLanding, value: Double(sequence * 5 % 13) - 6, provenance: .estimated, quality: .provisional
+                )
+            }
             metrics[.carry] = try entry.carry.map { try Domain.Measurement(
                 key: .carry,
                 value: $0,

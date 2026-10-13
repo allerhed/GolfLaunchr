@@ -14,6 +14,7 @@ struct GolfLaunchrApp: App {
     @State private var setupLauncher: SetupLauncher
     @State private var practiceLauncher: PracticeLauncher
     @State private var voice: VoiceController
+    @State private var analysis: AnalysisStore
 
     init() {
         let arguments = CommandLine.arguments
@@ -37,6 +38,7 @@ struct GolfLaunchrApp: App {
         #endif
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
+        _analysis = State(initialValue: AnalysisStore(history: stores.history, bag: stores.bag, defaults: Self.analysisDefaults(arguments)))
         _historyStore = State(initialValue: stores.history)
         let voiceController = VoiceController(
             settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments), locale: { settingsStore.effectiveLocale }
@@ -79,6 +81,14 @@ struct GolfLaunchrApp: App {
             }
         #endif
         return SystemSpeechSynthesizer()
+    }
+
+    /// Applied analysis filters persist in the normal defaults; UI tests that reset settings also reset them.
+    private static func analysisDefaults(_ arguments: [String]) -> UserDefaults {
+        if arguments.contains("-uiTestResetSettings") {
+            UserDefaults.standard.removeObject(forKey: "analysis.filter")
+        }
+        return .standard
     }
 
     /// Live camera services; Debug builds started with `-uiTestFakeCamera authorized|denied|none` use doubles (no system prompt).
@@ -146,6 +156,7 @@ struct GolfLaunchrApp: App {
                 .environment(setupLauncher)
                 .environment(practiceLauncher)
                 .environment(voice)
+                .environment(analysis)
         }
     }
 }

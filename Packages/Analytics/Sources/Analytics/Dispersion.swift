@@ -35,6 +35,9 @@ public enum Dispersion {
         }
     }
 
+    /// Shortest axis divided by the longest below which a 2D shape is not drawn.
+    public static let minimumAspectRatio = 0.1
+
     /// Needs at least three points with lateral values that are not (nearly) collinear; otherwise nil and the UI shows dots/1D spread.
     public static func ellipse(_ points: [DispersionPoint]) -> SpreadEllipse? {
         let pts = points.compactMap { p in p.lateralM.map { (x: p.longitudinalM, y: $0) } }
@@ -53,6 +56,8 @@ public enum Dispersion {
         guard trace > 0, det > 1e-9 * trace * trace else { return nil } // collinear or degenerate
         let disc = ((trace * trace) / 4 - det).squareRoot()
         let l1 = trace / 2 + disc, l2 = trace / 2 - disc
+        // Almost-collinear points give a sliver that looks like a line and means nothing: show the dots only.
+        guard l1 > 0, (l2 / l1).squareRoot() >= minimumAspectRatio else { return nil }
         let angle = 0.5 * atan2(2 * sxy, sxx - syy)
         return SpreadEllipse(
             centreLongitudinalM: mx, centreLateralM: my, semiMajorM: l1.squareRoot(), semiMinorM: l2.squareRoot(), angleRad: angle

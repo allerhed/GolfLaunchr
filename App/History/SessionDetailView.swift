@@ -7,6 +7,8 @@ struct SessionDetailView: View {
     let sessionID: UUID
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(SettingsStore.self) private var settings
+    @SwiftUI.Environment(AnalysisStore.self) private var analysis
+    @SwiftUI.Environment(AppNavigation.self) private var navigation
     @SwiftUI.Environment(\.locale) private var locale
     @SwiftUI.Environment(\.dismiss) private var dismiss
     @State private var shotToDelete: UUID?
@@ -74,6 +76,17 @@ struct SessionDetailView: View {
         .navigationTitle(Text(summary.mode.titleKey))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    analysis.focus(onSession: sessionID)
+                    navigation.paths[.progress] = NavigationPath()
+                    navigation.progressSection = .analysis
+                } label: {
+                    Image(systemName: "chart.dots.scatter").frame(minWidth: Spacing.minTarget, minHeight: Spacing.minTarget)
+                }
+                .accessibilityLabel(Text("session.analyse", comment: "Button: open this session's averages, gapping and dispersion"))
+                .accessibilityIdentifier("session.analyse")
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button(role: .destructive) { confirmSessionDelete = true } label: {
                     Image(systemName: "trash").frame(minWidth: Spacing.minTarget, minHeight: Spacing.minTarget)

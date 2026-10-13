@@ -48,7 +48,13 @@ enum AppTab: String, CaseIterable, Identifiable, Hashable {
 final class AppNavigation {
     var selection: AppTab = .home
     var showingSettings = false
+    /// The Progress tab's segment, kept here so rotation and "Analyse this session" can change it.
+    var progressSection = ProgressSection.sessions
     /// Per-tab navigation, kept here so rotating the phone (which rebuilds the shell) keeps the open session.
     /// Created up front so reading a path never fabricates a new one (an unstable path binding can make the stack rebuild its screens).
     var paths: [AppTab: NavigationPath] = Dictionary(uniqueKeysWithValues: AppTab.allCases.map { ($0, NavigationPath()) })
+}
+
+enum ProgressSection: String, Hashable {
+    case sessions, analysis, trends
 }

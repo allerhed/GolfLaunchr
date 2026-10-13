@@ -57,7 +57,7 @@ public enum SessionSummaries {
     }
 }
 
-public enum TimeRange: String, CaseIterable, Sendable {
+public enum TimeRange: String, CaseIterable, Sendable, Codable {
     case allTime, last7Days, last30Days
 
     /// The earliest start time allowed, or nil for all time.

@@ -10,21 +10,23 @@ struct SessionRoute: Hashable {
 
 /// The Progress tab (mockup 08): Sessions and Trends. Trends are a later feature.
 struct ProgressScreen: View {
-    @State private var section = Section.sessions
-
-    private enum Section { case sessions, trends }
+    @SwiftUI.Environment(AppNavigation.self) private var navigation
 
     var body: some View {
+        @Bindable var navigation = navigation
         VStack(spacing: Spacing.s) {
-            Picker(selection: $section) {
-                Text("progress.sessions", comment: "Progress tab segment: session history").tag(Section.sessions)
-                Text("progress.trends", comment: "Progress tab segment: trends (not built yet)").tag(Section.trends)
+            Picker(selection: $navigation.progressSection) {
+                Text("progress.sessions", comment: "Progress tab segment: session history").tag(ProgressSection.sessions)
+                Text("progress.analysis", comment: "Progress tab segment: club averages, gapping and dispersion")
+                    .tag(ProgressSection.analysis)
+                Text("progress.trends", comment: "Progress tab segment: trends (not built yet)").tag(ProgressSection.trends)
             } label: { Text("progress.sessions") }
                 .pickerStyle(.segmented)
                 .padding(.horizontal, Spacing.m)
                 .accessibilityIdentifier("progress.section")
-            switch section {
+            switch navigation.progressSection {
             case .sessions: HistoryView()
+            case .analysis: AnalysisView()
             case .trends: PlaceholderView(symbol: "chart.line.uptrend.xyaxis", message: "progress.placeholder")
             }
         }

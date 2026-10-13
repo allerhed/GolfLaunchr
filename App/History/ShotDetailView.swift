@@ -1,3 +1,4 @@
+import Analytics
 import Domain
 import Formatting
 import SwiftUI
@@ -6,6 +7,7 @@ import SwiftUI
 struct ShotDetailView: View {
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(SettingsStore.self) private var settings
+    @SwiftUI.Environment(AnalysisStore.self) private var analysis
     @SwiftUI.Environment(\.locale) private var locale
     @SwiftUI.Environment(\.dismiss) private var dismiss
 
@@ -17,6 +19,7 @@ struct ShotDetailView: View {
         NavigationStack {
             if let id = history.selectedShotID, let shot = history.shot(id) {
                 List {
+                    comparisonSection(shot)
                     Section {
                         ForEach(MetricKey.allCases, id: \.self) { key in metricRow(key, shot: shot) }
                     } header: { Text("shot.section.metrics", comment: "Section: the shot's measurements") }
@@ -52,6 +55,38 @@ struct ShotDetailView: View {
             }
         }
         .accessibilityIdentifier("shotDetail.root")
+    }
+
+    /// The shot against its own club's average under the filter in force (F10a): average, signed difference, sample count, and whether
+    /// this shot is part of that average. Nothing is shown when either side has no value.
+    @ViewBuilder private func comparisonSection(_ shot: Shot) -> some View {
+        let key = analysis.applied.distance.key
+        Section {
+            if let c = analysis.comparison(for: shot, key: key) {
+                row("shot.compare.average") {
+                    Text(verbatim: formatter.format(c.clubMean, for: key)?.text ?? "–").font(.body.monospacedDigit())
+                }
+                row("shot.compare.difference") {
+                    Text(verbatim: signed(c.delta, key)).font(.body.monospacedDigit().weight(.semibold))
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("shotDetail.compare.delta")
+                row("shot.compare.basedOn") { Text("history.shotCount \(c.sampleCount)") }
+                if !c.shotIsIncluded {
+                    Label { Text("shot.compare.excluded") } icon: { Image(systemName: "eye.slash") }
+                        .accessibilityIdentifier("shotDetail.compare.excluded")
+                }
+            } else {
+                Text("shot.compare.none").foregroundStyle(Tokens.textSecondary.color)
+                    .accessibilityIdentifier("shotDetail.compare.none")
+            }
+        } header: { Text("shot.compare.title", comment: "Section: comparison with the club's average") }
+            .listRowBackground(Tokens.surface.color)
+    }
+
+    private func signed(_ si: Double, _ key: MetricKey) -> String {
+        guard let f = formatter.format(abs(si), for: key) else { return "–" }
+        return si < 0 ? "−\(f.text)" : (si > 0 ? "+\(f.text)" : f.text)
     }
 
     private func row(_ title: LocalizedStringKey, @ViewBuilder value: () -> some View) -> some View {

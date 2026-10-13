@@ -285,6 +285,14 @@ struct DispersionTests {
         #expect(abs(e.centreLongitudinalM - 110) < 1e-9)
     }
 
+    /// Three points that are not exactly in line but nearly so would draw a meaningless sliver: no shape is drawn.
+    @Test func aNearlyCollinearScatterGetsNoEllipse() throws {
+        let c = club("7i")
+        let shots = try [(100.0, -4.0), (110, 0.2), (120, 4.0), (130, 8.1)].map { try shot(c, carry: $0.0, lateral: $0.1) }
+        let pts = Dispersion.points(shots, filter: AnalysisFilter())
+        #expect(Dispersion.ellipse(pts) == nil)
+    }
+
     @Test func missingLateralKeepsDistanceOnlyPointsAndNoEllipse() throws {
         let c = club("7i")
         let pts = try Dispersion.points([100, 110, 120].map { try shot(c, carry: $0) }, filter: AnalysisFilter())
@@ -334,5 +342,59 @@ struct IndependentReferenceTests {
         let table = ClubGapping.table(ps, filter: f, eligibleClubCount: 14)
         #expect(ps.count == 14 && table.rows.count == 14)
         #expect(Date().timeIntervalSince(start) < 2, "analysis of 10,000 shots must stay interactive")
+    }
+}
+
+struct FilterPersistenceTests {
+    @Test func aFilterRoundTripsThroughJSON() throws {
+        var f = AnalysisFilter()
+        let ids: Set<UUID> = [UUID(), UUID(), UUID()]
+        f.clubs = .some(ids)
+        f.sessionIDs = [UUID()]
+        f.range = .last30Days
+        f.mode = .target
+        f.inclusion = .all
+        f.distance = .total
+        f.conditions = .standardised
+        let data = try JSONEncoder().encode(f)
+        #expect(try JSONDecoder().decode(AnalysisFilter.self, from: data) == f)
+        #expect(try JSONDecoder().decode(AnalysisFilter.self, from: JSONEncoder().encode(AnalysisFilter())) == AnalysisFilter())
+    }
+
+    @Test func encodingIsStableForTheSameSelection() throws {
+        let ids = (0 ..< 5).map { _ in UUID() }
+        var a = AnalysisFilter(), b = AnalysisFilter()
+        a.clubs = .some(Set(ids))
+        b.clubs = .some(Set(ids.reversed()))
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        #expect(try encoder.encode(a) == encoder.encode(b))
+    }
+
+    @Test func emptySelectionSurvivesAsEmptyNotAll() throws {
+        var f = AnalysisFilter()
+        f.clubs = .some([])
+        let back = try JSONDecoder().decode(AnalysisFilter.self, from: JSONEncoder().encode(f))
+        #expect(back.clubs == .some([]) && !back.canApply)
+    }
+}
+
+struct ClubStyleTests {
+    @Test func stylesAreDistinctForTheFirstTwentyFourClubsAndDeterministic() {
+        let styles = (0 ..< 24).map(ClubStyle.forPosition)
+        #expect(Set(styles.map { "\($0.colourSlot)-\($0.symbolIndex)" }).count == 24)
+        #expect(ClubStyle.forPosition(3) == ClubStyle.forPosition(3))
+        #expect(ClubStyle.forPosition(-1) == ClubStyle.forPosition(0))
+    }
+
+    @Test func eachClubDiffersByColourOrSymbolFromItsNeighbours() {
+        for i in 0 ..< 23 {
+            #expect(ClubStyle.forPosition(i) != ClubStyle.forPosition(i + 1))
+        }
+    }
+
+    @Test func badgesAreShortAndUppercase() {
+        #expect(ClubBadge.text(for: "7 iron") == "7I" && ClubBadge.text(for: "Driver") == "DR" && ClubBadge.text(for: "PW") == "PW")
+        #expect(ClubBadge.text(for: "") == "" && ClubBadge.text(for: "  Sand wedge ") == "SW")
     }
 }
