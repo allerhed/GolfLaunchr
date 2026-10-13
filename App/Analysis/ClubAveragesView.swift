@@ -60,6 +60,13 @@ struct ClubAveragesView: View {
         .accessibilityElement(children: .combine)
     }
 
+    @ViewBuilder private func shotCountLine(_ p: ClubProfile) -> some View {
+        Text("history.shotCount \(p.shotCount)").foregroundStyle(Tokens.textSecondary.color).lineLimit(1).fixedSize()
+        if p.isProvisional, p.distanceSamples > 0 {
+            ProvisionalBadge()
+        }
+    }
+
     private func stat(_ title: LocalizedStringKey, value: String?, note: LocalizedStringKey? = nil, id _: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.subheadline).foregroundStyle(Tokens.textSecondary.color)

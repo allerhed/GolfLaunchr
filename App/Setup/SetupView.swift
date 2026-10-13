@@ -70,10 +70,11 @@ struct SetupView: View {
         return Button { model.choose(value) } label: {
             HStack {
                 Image(systemName: selected ? "checkmark.circle.fill" : "circle").accessibilityHidden(true)
-                Text(key)
+                Text(key).multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
             }
+            .padding(.vertical, Spacing.xs)
             .frame(maxWidth: .infinity, minHeight: Spacing.minTarget)
-            .foregroundStyle(selected ? Color.white : Tokens.textPrimary.color)
+            .foregroundStyle(selected ? Tokens.onAccent.color : Tokens.textPrimary.color)
             .background(selected ? Tokens.accent.color : Tokens.surface.color, in: Capsule())
         }
         .buttonStyle(.plain)
@@ -138,7 +139,7 @@ struct SetupView: View {
         @Bindable var model = model
         return VStack(spacing: Spacing.s) {
             Button { dismiss() } label: { Text("setup.ready").frame(maxWidth: .infinity, minHeight: Spacing.minTarget) }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(PrimaryButtonStyle())
                 .disabled(!model.readiness.canArm)
                 .accessibilityIdentifier("setup.ready")
             Button { model.mode = model.mode == .test ? .scored : .test } label: {

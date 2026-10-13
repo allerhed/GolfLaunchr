@@ -341,3 +341,17 @@ Phase 0 (foundation, tooling; no feature IDs):
 **Verified:** `scripts/verify.sh --ui` OK on the final code (one earlier full run had three unrelated UI failures after I killed overlapping test runs; they passed in isolation and in the clean rerun). A build was installed and launched on the owner's iPhone.
 
 **NOT RUN / open:** native Swedish review of all wording (H1) and of the glossary; App Store metadata en/sv and its character limits (10.4); the real device at the largest text size and VoiceOver (the checks are simulator-only, and doubled strings are an artificial worst case: with doubling at the largest size some labels still look crowded or overlap, e.g. a wrapped picker label over the next row, even though nothing leaves the screen); pseudo-localisation of right-to-left and non-Latin scripts; Dynamic Type in landscape; spoken text in the real Swedish voice (E16); the system camera permission prompt text on a real device; language override applied to the system-owned sheets.
+
+## 4.8 Accessibility audit (F22)
+
+**What ran:** `AccessibilityUITests` runs Apple's `performAccessibilityAudit` (contrast, element descriptions, hit regions, traits) on Home, Bag, Progress, a session, Analysis (averages, gapping, dispersion), Settings, Setup in English light and Swedish dark, plus the onboarding steps and the practice gate. Our own checks on every screen: every button, switch and text field has a label; no touch target under 44 pt (list rows count as their cell; system bars and segmented controls are sized by iOS).
+
+**Defects found and fixed:** white text on the lime accent in dark mode (new `onAccent` colour and `PrimaryButtonStyle`, five buttons); club colours had no dark variants (now light/dark tokens, at least 3:1 contrast, unit-tested); section headers/footers and the session summary header in system grey; onboarding progress bar and back button too small to hit; dispersion disclosure label 28 pt high; unlabelled example rows; Reduce Motion: the practice auto-scroll no longer animates.
+
+**Exemptions in the audit (each with its reason in the test):** Dynamic Type findings (covered by the XXXL and doubled-string tests of 4.7); text-clipped findings are informational; findings under the floating tab/nav bar (glass sampling); contrast of glass-bar buttons and disabled controls; the two fixed unit example rows ("108.0 km/h") for the readability heuristic.
+
+**Colour-independence:** statuses, club identity (symbol + name) and the gapping warning all carry a symbol or words, checked by review, not automated.
+
+**Verified:** `scripts/verify.sh --ui` VERIFY OK on the final code. The first full run failed three `ShellUITests` because combining the example rows made their identifiers ambiguous; fixed and rerun clean. Device build installed on the owner's iPhone (sequence 4224); launch was refused because the phone was locked.
+
+**NOT RUN:** real VoiceOver on the device; largest Dynamic Type on the device without string doubling; Reduce Motion on the device (code-reviewed only); native Swedish read-through of the accessibility labels.

@@ -46,17 +46,19 @@ extension InclusionState {
     }
 }
 
-/// Colours and symbols for clubs: every club has both, so it is never told apart by colour alone.
+/// Colours and symbols for clubs: every club has both, so it is never told apart by colour alone. Each colour has a light and a dark
+/// value, each at least 3:1 against the surface and background of its scheme (non-text contrast, WCAG 1.4.11; checked in unit tests).
 enum ClubPalette {
-    static let colours: [Color] = [
-        Color(red: 0.11, green: 0.42, blue: 0.29), Color(red: 0.78, green: 0.47, blue: 0.0), Color(red: 0.08, green: 0.40, blue: 0.75),
-        Color(red: 0.68, green: 0.08, blue: 0.34), Color(red: 0.42, green: 0.11, blue: 0.60), Color(red: 0.0, green: 0.51, blue: 0.56),
-        Color(red: 0.43, green: 0.30, blue: 0.25), Color(red: 0.33, green: 0.43, blue: 0.48),
+    static let tokens: [ColorToken] = [
+        ColorToken(light: 0x1B6B4A, dark: 0x7ED9A4), ColorToken(light: 0xB35F00, dark: 0xFFB74D),
+        ColorToken(light: 0x1565C0, dark: 0x64B5F6), ColorToken(light: 0xAD1457, dark: 0xF48FB1),
+        ColorToken(light: 0x6A1B9A, dark: 0xCE93D8), ColorToken(light: 0x00796B, dark: 0x4DD0E1),
+        ColorToken(light: 0x6D4C41, dark: 0xBCAAA4), ColorToken(light: 0x546E7A, dark: 0xB0BEC5),
     ]
     static let symbols = ["circle.fill", "square.fill", "triangle.fill", "diamond.fill", "star.fill", "hexagon.fill"]
 
     static func colour(_ style: ClubStyle) -> Color {
-        colours[style.colourSlot % colours.count]
+        tokens[style.colourSlot % tokens.count].color
     }
 
     static func symbol(_ style: ClubStyle) -> String {

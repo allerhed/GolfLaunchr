@@ -22,8 +22,8 @@ struct GappingView: View {
             VStack(spacing: 0) {
                 HStack {
                     Text("analysis.gap.club").frame(maxWidth: .infinity, alignment: .leading)
-                    Text(table.distance.meanTitleKey).frame(width: 84, alignment: .trailing)
-                    Text("analysis.gap.next").frame(width: 96, alignment: .trailing)
+                    Text(table.distance.meanTitleKey).frame(width: 76, alignment: .trailing)
+                    Text("analysis.gap.next").frame(width: 116, alignment: .trailing)
                 }
                 .font(.caption).foregroundStyle(Tokens.textSecondary.color)
                 .padding(.vertical, Spacing.s)
@@ -65,8 +65,8 @@ struct GappingView: View {
                     Text("history.noData").foregroundStyle(Tokens.textSecondary.color)
                 }
             }
-            .frame(width: 84, alignment: .trailing)
-            gapCell(row).frame(width: 96, alignment: .trailing)
+            .frame(width: 76, alignment: .trailing)
+            gapCell(row).frame(width: 116, alignment: .trailing)
         }
         .frame(minHeight: 56)
         .accessibilityElement(children: .combine)
@@ -78,7 +78,7 @@ struct GappingView: View {
             if gap < 0 {
                 VStack(alignment: .trailing, spacing: 0) {
                     Label { Text(verbatim: "−\(f.text)") } icon: { Image(systemName: "exclamationmark.triangle.fill") }
-                        .font(.headline.monospacedDigit())
+                        .font(.headline.monospacedDigit()).lineLimit(1).minimumScaleFactor(0.8)
                     Text("analysis.gap.inverted").font(.caption2).foregroundStyle(Tokens.textSecondary.color)
                 }
             } else {

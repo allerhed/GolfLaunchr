@@ -8,6 +8,7 @@ struct OnboardingView: View {
     @SwiftUI.Environment(OnboardingStore.self) private var store
     @SwiftUI.Environment(SettingsStore.self) private var settings
     @SwiftUI.Environment(\.openURL) private var openURL
+    @SwiftUI.Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 0) {
@@ -47,6 +48,7 @@ struct OnboardingView: View {
                     .frame(height: 6)
             }
         }
+        .padding(.vertical, 19) // a 44-point tall element, so it is not a tiny hit area for VoiceOver and the audit
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("onboarding.progress \(store.step.rawValue + 1) \(OnboardingStore.Step.allCases.count)"))
     }
@@ -130,7 +132,7 @@ struct OnboardingView: View {
             Button { Task { await store.checkDevice() } } label: {
                 Text("onboarding.device.check").frame(maxWidth: .infinity, minHeight: Spacing.minTarget)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(PrimaryButtonStyle())
             .disabled(store.isChecking)
             .accessibilityIdentifier("onboarding.device.check")
             if store.permission == .denied {
@@ -180,17 +182,19 @@ struct OnboardingView: View {
         VStack(spacing: Spacing.s) {
             HStack {
                 if store.step != .welcome {
-                    Button { store.back() } label: { Text("onboarding.back").frame(minHeight: Spacing.minTarget) }
-                        .accessibilityIdentifier("onboarding.back")
+                    Button { store.back() } label: {
+                        Text("onboarding.back").frame(minWidth: Spacing.minTarget, minHeight: Spacing.minTarget)
+                    }
+                    .accessibilityIdentifier("onboarding.back")
                 }
                 Spacer()
                 if store.isLastStep {
                     Button { store.finish() } label: { Text("onboarding.finish").frame(minWidth: 140, minHeight: Spacing.minTarget) }
-                        .buttonStyle(.borderedProminent)
+                        .buttonStyle(PrimaryButtonStyle())
                         .accessibilityIdentifier("onboarding.finish")
                 } else {
                     Button { store.next() } label: { Text("onboarding.next").frame(minWidth: 140, minHeight: Spacing.minTarget) }
-                        .buttonStyle(.borderedProminent)
+                        .buttonStyle(PrimaryButtonStyle())
                         .disabled(!store.canContinue)
                         .accessibilityIdentifier("onboarding.next")
                 }

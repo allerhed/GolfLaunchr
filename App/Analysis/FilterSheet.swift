@@ -33,7 +33,7 @@ struct FilterSheet: View {
                         .accessibilityIdentifier("filter.club.\(index)")
                     }
                 } header: {
-                    Text("analysis.filter.subtitle")
+                    Text("analysis.filter.subtitle").foregroundStyle(Tokens.textSecondary.color)
                 } footer: {
                     if !store.editor.draft.canApply {
                         Text("analysis.filter.empty").foregroundStyle(Tokens.textPrimary.color)

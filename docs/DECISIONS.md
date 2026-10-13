@@ -52,3 +52,6 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-13 | A 2D spread shape is drawn only if the shortest axis is at least 10% of the longest | Nearly collinear points make a sliver that looks like a line and means nothing. |
 | 2026-10-13 | Segmented pickers become menus and chip rows stack at accessibility text sizes | Segmented controls cannot shrink; sideways scrolling hides options (F22). |
 | 2026-10-13 | The localisation key-usage check is part of the gate | A key missing from the catalog shows raw text to the user; stale keys hide untranslated leftovers. |
+| 2026-10-13 | Primary buttons use one `PrimaryButtonStyle` with an `onAccent` label colour | White on the lime accent failed contrast in dark mode; one style keeps all five buttons consistent (F22). |
+| 2026-10-13 | Club colours are light/dark colour tokens with at least 3:1 contrast | Dots and lines on the plot need contrast in both schemes; symbols still carry the identity. |
+| 2026-10-13 | The Apple audit runs with documented exemptions (glass bars, disabled controls, informational clipping) | Findings we cannot attribute to our own views would hide real ones; each exemption is explained in the test. |

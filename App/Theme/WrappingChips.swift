@@ -39,3 +39,19 @@ extension View {
         modifier(AdaptiveSegmented())
     }
 }
+
+/// The primary action button: accent fill, the matching on-accent label colour (white on the dark-mode lime accent fails contrast),
+/// at least 44 points tall. A disabled button is dimmed.
+struct PrimaryButtonStyle: ButtonStyle {
+    @SwiftUI.Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.body.weight(.semibold))
+            .foregroundStyle(Tokens.onAccent.color)
+            .padding(.horizontal, Spacing.m)
+            .frame(minHeight: Spacing.minTarget)
+            .background(Tokens.accent.color.opacity(configuration.isPressed ? 0.8 : 1), in: Capsule())
+            .opacity(isEnabled ? 1 : 0.4)
+    }
+}

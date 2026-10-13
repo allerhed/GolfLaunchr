@@ -80,3 +80,26 @@ struct NavigationTests {
         #expect(AppTab.allCases.count == 3) // Home, Bag, Progress; Settings is a gear, not a tab
     }
 }
+
+/// F22: non-text contrast (3:1) for club colours in both schemes, and no colour/foreground mix that fails (white on the lime accent
+/// was found by review: lime is the dark-mode accent).
+struct ClubPaletteContrastTests {
+    @Test func everyClubColourReadsAgainstTheSurfaceAndBackgroundInBothSchemes() {
+        for (index, token) in ClubPalette.tokens.enumerated() {
+            for isDark in [false, true] {
+                for (name, bg) in [("surface", Tokens.surface), ("background", Tokens.background)] {
+                    let ratio = Contrast.ratio(token.hex(dark: isDark), bg.hex(dark: isDark))
+                    #expect(ratio >= 3, "club colour \(index) on \(name), \(isDark ? "dark" : "light") = \(ratio)")
+                }
+            }
+        }
+    }
+
+    @Test func textOnTheAccentFillUsesTheOnAccentColourNotWhite() {
+        // White on lime (the dark-mode accent) is about 1.4:1; onAccent on accent is far above 4.5 in both schemes.
+        #expect(Contrast.ratio(0xFFFFFF, Palette.lime) < 3)
+        for isDark in [false, true] {
+            #expect(Contrast.ratio(Tokens.onAccent.hex(dark: isDark), Tokens.accent.hex(dark: isDark)) >= 4.5)
+        }
+    }
+}

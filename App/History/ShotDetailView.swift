@@ -22,8 +22,11 @@ struct ShotDetailView: View {
                     comparisonSection(shot)
                     Section {
                         ForEach(MetricKey.allCases, id: \.self) { key in metricRow(key, shot: shot) }
-                    } header: { Text("shot.section.metrics", comment: "Section: the shot's measurements") }
-                        .listRowBackground(Tokens.surface.color)
+                    } header: {
+                        Text("shot.section.metrics", comment: "Section: the shot's measurements")
+                            .foregroundStyle(Tokens.textSecondary.color)
+                    }
+                    .listRowBackground(Tokens.surface.color)
                     Section {
                         row("shot.club") { Text(verbatim: shot.clubSnapshot.name) }
                         row("shot.handedness") { Text(shot.swingHandedness == .right ? "handedness.right" : "handedness.left") }
@@ -32,8 +35,11 @@ struct ShotDetailView: View {
                         if shot.isSynthetic {
                             row("history.demo") { DemoBadge() }
                         }
-                    } header: { Text("shot.section.context", comment: "Section: when and how the shot was taken") }
-                        .listRowBackground(Tokens.surface.color)
+                    } header: {
+                        Text("shot.section.context", comment: "Section: when and how the shot was taken")
+                            .foregroundStyle(Tokens.textSecondary.color)
+                    }
+                    .listRowBackground(Tokens.surface.color)
                     Section {
                         Button { Task { await history.setIncluded(shot.id, !shot.included) } } label: {
                             Text(shot.included ? "shot.exclude" : "shot.restore").frame(maxWidth: .infinity, minHeight: Spacing.minTarget)
@@ -80,8 +86,10 @@ struct ShotDetailView: View {
                 Text("shot.compare.none").foregroundStyle(Tokens.textSecondary.color)
                     .accessibilityIdentifier("shotDetail.compare.none")
             }
-        } header: { Text("shot.compare.title", comment: "Section: comparison with the club's average") }
-            .listRowBackground(Tokens.surface.color)
+        } header: {
+            Text("shot.compare.title", comment: "Section: comparison with the club's average").foregroundStyle(Tokens.textSecondary.color)
+        }
+        .listRowBackground(Tokens.surface.color)
     }
 
     private func signed(_ si: Double, _ key: MetricKey) -> String {

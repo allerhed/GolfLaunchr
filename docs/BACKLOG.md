@@ -86,6 +86,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E18 | Analysis on real data and phone: plot zoom/reset, Pro gate and upgrade preview, export with filters, My Bag club profile entry, landscape master/detail, VoiceOver and Dynamic Type for the plot and tables, gap/overlap advisory | 4.6 |
 | E19 | At the largest text size WITHOUT string doubling on the real phone: look for overlaps (wrapped picker labels over the next row, gapping rows), fix with real layouts; landscape at large sizes; App Store metadata en/sv with limits | 4.7 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
+| H2 | Real-device accessibility: VoiceOver walk-through, largest text without string doubling, Reduce Motion, Settings picker values that may truncate | Owner / bay visit |
 
 ## 7. Gates still NOT RUN
 

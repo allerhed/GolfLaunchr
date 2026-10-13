@@ -72,7 +72,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-13 on the simulator with demo data; zoom/reset and the Pro entitlement gate are NOT built. Evidence: `docs/EVIDENCE.md` 4.6.
 - [x] 4.7 F25 Localisation pass: complete en/sv catalogs, glossary, pseudo-localisation + max Dynamic Type layout tests; **You**: native Swedish review
   - Done 2026-10-13 except the native Swedish review (yours, backlog H1) which stays open. Evidence: `docs/EVIDENCE.md` 4.7.
-- [ ] 4.8 F22 Accessibility audit: VoiceOver, Reduce Motion, 44pt targets, colour-independence
+- [x] 4.8 F22 Accessibility audit: VoiceOver, Reduce Motion, 44pt targets, colour-independence
+  - Done 2026-10-13 in the simulator (Apple audit + own label/44pt checks, en light and sv dark). Real VoiceOver and largest text on the device remain open (backlog). Evidence: `docs/EVIDENCE.md` 4.8.
 - [ ] 4.9 **Milestone QA** (O): all screens vs mockups, en/sv, both orientations
 
 ## Phase 5 - Impact replay and media (needs Phase 1/3) - F16

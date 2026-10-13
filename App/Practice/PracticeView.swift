@@ -220,7 +220,7 @@ struct PracticeView: View {
             Button { store.arm(setupReady: readiness.canArm) } label: {
                 Text("practice.arm").frame(maxWidth: .infinity, minHeight: Spacing.minTarget)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(PrimaryButtonStyle())
             .disabled(store.state.isArmed || store.state.status != .active || !readiness.canArm)
             .accessibilityIdentifier("practice.arm")
             Button { store.togglePause() } label: {

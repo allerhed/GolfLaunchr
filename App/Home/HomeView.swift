@@ -53,7 +53,7 @@ struct HomeView: View {
                 Spacer()
                 Image(systemName: "arrow.right.circle.fill").font(.system(size: 44)).accessibilityHidden(true)
             }
-            .foregroundStyle(Color.white)
+            .foregroundStyle(Tokens.onAccent.color)
             .padding(Spacing.m)
             .frame(maxWidth: .infinity, minHeight: 120, alignment: .leading)
             .background(Tokens.accent.color, in: RoundedRectangle(cornerRadius: Spacing.cornerRadius, style: .continuous))

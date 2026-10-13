@@ -58,6 +58,7 @@ struct SessionDetailView: View {
                 // The summary is the section's header (not a tall first row): rows below it are laid out by the list normally.
                 VStack(alignment: .leading, spacing: Spacing.m) {
                     header(summary)
+                        .foregroundStyle(Tokens.textPrimary.color)
                         .padding(Spacing.m)
                         .background(Tokens.surface.color, in: RoundedRectangle(cornerRadius: Spacing.cornerRadius, style: .continuous))
                     Text("session.shots", comment: "Section header: the shots of a session")
@@ -143,20 +144,31 @@ struct SessionDetailView: View {
         }
     }
 
-    /// "Average estimated carry  130 m (Estimated)", or "No data" with the same label: never a 0.
+    /// "Average estimated carry  130 m (Estimated)", or "No data" with the same label: never a 0. The value and its label drop below
+    /// the title when the row is too narrow, so nothing is clipped.
     private func metricLine(_ title: LocalizedStringKey, value: FormattedMetric?, provenance: Provenance, id: String) -> some View {
-        HStack {
-            Text(title).foregroundStyle(Tokens.textSecondary.color)
-            Spacer()
-            if let value {
-                Text(verbatim: value.text).font(.headline.monospacedDigit())
-                Text(provenance.titleKey).font(.caption).foregroundStyle(Tokens.textSecondary.color)
-            } else {
-                Text("history.noData").foregroundStyle(Tokens.textSecondary.color)
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Text(title).foregroundStyle(Tokens.textSecondary.color).lineLimit(1)
+                Spacer()
+                valueParts(value, provenance)
+            }
+            VStack(alignment: .leading, spacing: Spacing.xs) {
+                Text(title).foregroundStyle(Tokens.textSecondary.color)
+                HStack { valueParts(value, provenance) }
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier(id)
+    }
+
+    @ViewBuilder private func valueParts(_ value: FormattedMetric?, _ provenance: Provenance) -> some View {
+        if let value {
+            Text(verbatim: value.text).font(.headline.monospacedDigit())
+            Text(provenance.titleKey).font(.caption).foregroundStyle(Tokens.textSecondary.color)
+        } else {
+            Text("history.noData").foregroundStyle(Tokens.textSecondary.color)
+        }
     }
 }
 
@@ -182,7 +194,7 @@ struct ShotRow: View {
                 valueText(.ballSpeed)
                 valueText(.carry)
             }
-            .font(.subheadline.monospacedDigit()).foregroundStyle(Tokens.textSecondary.color)
+            .font(.subheadline.monospacedDigit())
         }
         .foregroundStyle(shot.included ? Tokens.textPrimary.color : Tokens.textSecondary.color)
         .frame(minHeight: Spacing.minTarget)

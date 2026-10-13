@@ -31,9 +31,10 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("settings.language")
         } header: {
-            Text("settings.language", comment: "Section header: app language")
+            Text("settings.language", comment: "Section header: app language").foregroundStyle(Tokens.textSecondary.color)
         } footer: {
             Text("settings.language.footer", comment: "Language changes the app and speech, nothing else")
+                .foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
     }
@@ -50,9 +51,10 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("settings.handedness")
         } header: {
-            Text("setup.handedness", comment: "Section header: swing handedness")
+            Text("setup.handedness", comment: "Section header: swing handedness").foregroundStyle(Tokens.textSecondary.color)
         } footer: {
             Text("settings.handedness.footer", comment: "Changing swing side needs a new calibration")
+                .foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
     }
@@ -91,9 +93,10 @@ struct SettingsView: View {
             Text("settings.atmosphere.ambient", comment: "No automatic barometer reading yet")
                 .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
         } header: {
-            Text("settings.atmosphere", comment: "Section header: air pressure and temperature")
+            Text("settings.atmosphere", comment: "Section header: air pressure and temperature").foregroundStyle(Tokens.textSecondary.color)
         } footer: {
             Text("settings.atmosphere.footer", comment: "Use absolute pressure; distances are estimates")
+                .foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
         .onAppear { loadFieldTexts() }
@@ -133,7 +136,7 @@ struct SettingsView: View {
             Label { Text("settings.privacy.text") } icon: { Image(systemName: "lock.iphone") }
                 .accessibilityIdentifier("settings.privacy.text")
         } header: {
-            Text("settings.privacy", comment: "Section header: privacy")
+            Text("settings.privacy", comment: "Section header: privacy").foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
     }
@@ -164,9 +167,10 @@ struct SettingsView: View {
                 .disabled(!settings.voice.enabled || settings.voice.metrics.isEmpty)
                 .accessibilityIdentifier("settings.voice.preview")
         } header: {
-            Text("settings.voice", comment: "Section header: spoken results")
+            Text("settings.voice", comment: "Section header: spoken results").foregroundStyle(Tokens.textSecondary.color)
         } footer: {
             Text("settings.voice.footer", comment: "Explains spoken results never block capture and follow the units")
+                .foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
     }
@@ -201,8 +205,10 @@ struct SettingsView: View {
                     exampleRow("settings.example.speed", value: formatter.format(30, for: .ballSpeed)?.text, id: "settings.example.speed")
                 } header: {
                     Text("settings.units", comment: "Section header for distance and speed units")
+                        .foregroundStyle(Tokens.textSecondary.color)
                 } footer: {
                     Text("settings.units.footer", comment: "Explains that units only change display")
+                        .foregroundStyle(Tokens.textSecondary.color)
                 }
                 .listRowBackground(Tokens.surface.color)
                 Section {
@@ -212,7 +218,7 @@ struct SettingsView: View {
                     .adaptiveSegmented()
                     .accessibilityIdentifier("settings.appearance")
                 } header: {
-                    Text("settings.appearance", comment: "Section header for light/dark theme")
+                    Text("settings.appearance", comment: "Section header for light/dark theme").foregroundStyle(Tokens.textSecondary.color)
                 }
                 .listRowBackground(Tokens.surface.color)
                 voiceSection

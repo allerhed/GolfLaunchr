@@ -266,7 +266,7 @@ struct DispersionView: View {
                     .buttonStyle(.plain)
                 }
             }
-        } label: { Text("analysis.disp.list") }
+        } label: { Text("analysis.disp.list").frame(maxWidth: .infinity, minHeight: Spacing.minTarget, alignment: .leading) }
             .accessibilityIdentifier("analysis.disp.list")
     }
 }

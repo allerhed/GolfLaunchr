@@ -34,7 +34,7 @@ struct ClubProfileView: View {
                     row("analysis.card.spread") {
                         Text(verbatim: profile.spread.flatMap { formatter.format($0, for: kind.key) }.map { "±\($0.text)" } ?? "–")
                     }
-                } header: { Text(verbatim: profile.name) }
+                } header: { Text(verbatim: profile.name).foregroundStyle(Tokens.textSecondary.color) }
                     .listRowBackground(Tokens.surface.color)
                 Section {
                     ForEach(profile.metrics.filter { $0.validSamples > 0 }, id: \.key) { m in
@@ -52,7 +52,7 @@ struct ClubProfileView: View {
                                 .map { "±\($0.text)" } ?? "–")
                         }
                     }
-                } header: { Text("analysis.profile.metrics") }
+                } header: { Text("analysis.profile.metrics").foregroundStyle(Tokens.textSecondary.color) }
                     .listRowBackground(Tokens.surface.color)
                 Section {
                     NavigationLink(value: ClubShotsRoute(id: clubID)) {
