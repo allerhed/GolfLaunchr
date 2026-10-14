@@ -73,3 +73,6 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-15 | The network audit is a static check in the gate until capture exists | No real traffic exists to capture yet; the static check fails the build on any networking API or third-party package. |
 | 2026-10-15 | The diagnostic bundle is built on request, previewed in full, and shared only through the system share sheet | F21: no automatic sending; the golfer sees the content first. |
 | 2026-10-15 | The commerce store keeps its own latest-time-seen | Expiry decisions must not depend on a clock the user can set back. |
+| 2026-10-15 | Short and long count only misses beyond the tolerance | A hit that lands 2 m long is a hit, not a long miss; the average signed error shows any bias. |
+| 2026-10-15 | Drills are scored on distance only until sideways landing is validated, and say so | F11/F06: no sideways hit or miss from an unvalidated figure; labelled "Distance only". |
+| 2026-10-15 | The drill configuration is stored in the session record | History must show the original drill, not today's settings. |

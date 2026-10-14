@@ -34,14 +34,21 @@ final class PracticeLauncher {
         backend != nil
     }
 
-    func start(_ mode: PracticeMode) async {
+    func start(_ mode: PracticeMode, drill: TargetDrillConfig? = nil) async {
         guard !isStarting, store == nil, let backend else { return }
         isStarting = true
         defer { isStarting = false }
         await bagStore.load()
         failed = false
         guard !bagStore.bag.active.isEmpty,
-              let started = await PracticeStore.start(mode, bag: bagStore.bag, settings: settings, backend: backend, voice: voice)
+              let started = await PracticeStore.start(
+                  mode,
+                  drill: drill,
+                  bag: bagStore.bag,
+                  settings: settings,
+                  backend: backend,
+                  voice: voice
+              )
         else {
             failed = true
             return

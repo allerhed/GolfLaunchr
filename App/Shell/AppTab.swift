@@ -50,6 +50,7 @@ final class AppNavigation {
     var showingSettings = false
     /// Kept here, not in a screen, so rotation (which rebuilds the shell) does not close the plans sheet.
     var showingPlans = false
+    var showingDrillSetup = false
     /// The Progress tab's segment, kept here so rotation and "Analyse this session" can change it.
     var progressSection = ProgressSection.sessions
     /// Per-tab navigation, kept here so rotating the phone (which rebuilds the shell) keeps the open session.

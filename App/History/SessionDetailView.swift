@@ -1,6 +1,7 @@
 import Analytics
 import Domain
 import Formatting
+import Modes
 import SwiftUI
 
 struct SessionDetailView: View {
@@ -36,12 +37,27 @@ struct SessionDetailView: View {
         }
     }
 
+    /// A target session shows its drill result, recomputed from the stored shots with the configuration the session ran with.
+    @ViewBuilder
+    private func drillSection(_ summary: SessionSummary) -> some View {
+        if let drill = summary.drill {
+            Section {
+                DrillSummaryView(result: TargetDrill.evaluate(
+                    config: drill, shots: history.shots(of: sessionID), lateralValidated: PracticeStore.lateralValidated
+                ))
+                .accessibilityIdentifier("session.drill")
+            }
+            .listRowBackground(Tokens.surface.color)
+        }
+    }
+
     private func content(_ summary: SessionSummary) -> some View {
         List {
             if case .storageFailed = history.lastError {
                 Text("history.saveError", comment: "Shown when a history change could not be saved")
                     .accessibilityIdentifier("session.error")
             }
+            drillSection(summary)
             Section {
                 ForEach(history.shots(of: sessionID)) { shot in
                     Button { history.selectedShotID = shot.id } label: { ShotRow(shot: shot, formatter: formatter) }

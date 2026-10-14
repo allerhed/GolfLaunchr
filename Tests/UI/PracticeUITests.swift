@@ -53,7 +53,8 @@ final class PracticeUITests: XCTestCase {
         let app = launch("en")
         XCTAssertTrue(app.buttons["home.start"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["home.quickshot"].exists)
-        for mode in ["target", "ladder", "virtual"] {
+        XCTAssertTrue(app.buttons["home.mode.target"].exists, "the target drill is available")
+        for mode in ["ladder", "virtual"] {
             let tile = any(app, "home.mode.\(mode)")
             XCTAssertTrue(tile.exists)
             XCTAssertTrue(tile.label.contains("Coming soon"), "\(mode): \(tile.label)")

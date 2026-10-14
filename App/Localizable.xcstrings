@@ -2134,6 +2134,584 @@
         }
       }
     },
+    "drill.complete": {
+      "comment": "All attempts scored",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drill complete"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Övningen är klar"
+          }
+        }
+      }
+    },
+    "drill.distanceOnly": {
+      "comment": "Scored on distance only; sideways is not measured",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distance only"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endast längd"
+          }
+        }
+      }
+    },
+    "drill.hit": {
+      "comment": "Target drill: the attempt was inside the tolerance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hit"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träff"
+          }
+        }
+      }
+    },
+    "drill.hits %lld": {
+      "comment": "Target drill hits so far",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hits: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träffar: %lld"
+          }
+        }
+      }
+    },
+    "drill.miss.left %@": {
+      "comment": "Target drill: missed to the left",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ left of the line"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ vänster om linjen"
+          }
+        }
+      }
+    },
+    "drill.miss.long %@": {
+      "comment": "Target drill: missed long; argument is the distance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long by %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lång med %@"
+          }
+        }
+      }
+    },
+    "drill.miss.right %@": {
+      "comment": "Target drill: missed to the right",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ right of the line"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ höger om linjen"
+          }
+        }
+      }
+    },
+    "drill.miss.short %@": {
+      "comment": "Target drill: missed short; argument is the distance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short by %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kort med %@"
+          }
+        }
+      }
+    },
+    "drill.pro.notNow": {
+      "comment": "Alert cancel",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte nu"
+          }
+        }
+      }
+    },
+    "drill.pro.text": {
+      "comment": "Alert body",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your 50 introductory shots are used, so the target drill needs GolfLaunchr Pro. Basic practice stays free within your monthly shots."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dina 50 introduktionsslag är använda, så målövningen kräver GolfLaunchr Pro. Vanlig träning är fortfarande gratis med dina månatliga slag."
+          }
+        }
+      }
+    },
+    "drill.pro.title": {
+      "comment": "Alert title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target drill is part of Pro"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Målövningen ingår i Pro"
+          }
+        }
+      }
+    },
+    "drill.progress %lld %lld": {
+      "comment": "Target drill progress: scored attempts of the total",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attempts: %1$lld of %2$lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Försök: %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "drill.setup.allClubs": {
+      "comment": "Setup toggle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All clubs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alla klubbor"
+          }
+        }
+      }
+    },
+    "drill.setup.attempts %lld": {
+      "comment": "Setup stepper",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attempts: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Försök: %lld"
+          }
+        }
+      }
+    },
+    "drill.setup.chooseClub": {
+      "comment": "Setup hint",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose at least one club, or All clubs."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj minst en klubba, eller Alla klubbor."
+          }
+        }
+      }
+    },
+    "drill.setup.clubs": {
+      "comment": "Setup section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clubs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klubbor"
+          }
+        }
+      }
+    },
+    "drill.setup.header": {
+      "comment": "Setup section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your target"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ditt mål"
+          }
+        }
+      }
+    },
+    "drill.setup.lateral": {
+      "comment": "Why there is no sideways setting",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sideways tolerance is not available yet: sideways landing is not validated, so the drill is scored on distance only."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sidotolerans finns inte än: sidoläget är inte validerat, så övningen poängsätts bara på längd."
+          }
+        }
+      }
+    },
+    "drill.setup.start": {
+      "comment": "Setup button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start drill"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starta övningen"
+          }
+        }
+      }
+    },
+    "drill.setup.target %@": {
+      "comment": "Setup stepper",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target distance: %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Målets längd: %@"
+          }
+        }
+      }
+    },
+    "drill.setup.title": {
+      "comment": "Setup screen title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target drill"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Målövning"
+          }
+        }
+      }
+    },
+    "drill.setup.tolerance %@": {
+      "comment": "Setup stepper",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tolerance either side: %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tolerans åt vardera håll: %@"
+          }
+        }
+      }
+    },
+    "drill.streak %lld": {
+      "comment": "Target drill current run of hits",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Streak: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie: %lld"
+          }
+        }
+      }
+    },
+    "drill.summary.bestStreak %lld": {
+      "comment": "Summary best run of hits",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best streak: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bästa serie: %lld"
+          }
+        }
+      }
+    },
+    "drill.summary.hits %lld %lld": {
+      "comment": "Summary hits",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hits: %1$lld of %2$lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träffar: %1$lld av %2$lld"
+          }
+        }
+      }
+    },
+    "drill.summary.incomplete %lld %lld": {
+      "comment": "Summary of an unfinished drill",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not finished: %1$lld of %2$lld attempts scored."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte klar: %1$lld av %2$lld försök poängsatta."
+          }
+        }
+      }
+    },
+    "drill.summary.meanError %@": {
+      "comment": "Summary signed mean error",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average error: %@ (long is plus, short is minus)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genomsnittligt fel: %@ (långt är plus, kort är minus)"
+          }
+        }
+      }
+    },
+    "drill.summary.rate %@": {
+      "comment": "Summary hit rate",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hit rate: %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träffprocent: %@"
+          }
+        }
+      }
+    },
+    "drill.summary.shortLong %lld %lld": {
+      "comment": "Summary short and long counts",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed short: %1$lld, missed long: %2$lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missade för kort: %1$lld, missade för långt: %2$lld"
+          }
+        }
+      }
+    },
+    "drill.summary.title": {
+      "comment": "Summary title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target drill results"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resultat för målövningen"
+          }
+        }
+      }
+    },
+    "drill.summary.uncertainty": {
+      "comment": "Result accuracy is not the tolerance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each distance is an estimate with its own uncertainty. That is separate from the tolerance you chose, which only decides a hit."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Varje längd är en uppskattning med egen osäkerhet. Den är skild från den tolerans du valde, som bara avgör en träff."
+          }
+        }
+      }
+    },
+    "drill.target %@ %@": {
+      "comment": "Target drill header: target distance and tolerance",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target %1$@, ±%2$@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mål %1$@, ±%2$@"
+          }
+        }
+      }
+    },
+    "drill.unscored %lld": {
+      "comment": "Shots that did not count as attempts",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shots without a carry, not scored: %lld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slag utan längd, ej poängsatta: %lld"
+          }
+        }
+      }
+    },
+    "drill.viewSummary": {
+      "comment": "Opens the drill summary",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See results"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visa resultat"
+          }
+        }
+      }
+    },
     "failure.ambiguousBall": {
       "comment": "Why a value is unavailable: Ball unclear",
       "localizations": {

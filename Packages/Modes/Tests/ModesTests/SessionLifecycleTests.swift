@@ -95,4 +95,21 @@ struct SessionLifecycleTests {
         _ = try await rig.lifecycle.recoverInterrupted()
         #expect(try await rig.store.entries().count == 1)
     }
+
+    /// F11: a target session stores the drill exactly as configured; other modes store none.
+    @Test func aTargetSessionKeepsItsDrillConfiguration() async throws {
+        let rig = try await Rig.make()
+        let config = try TargetDrillConfig(targetCarryM: 150, longitudinalToleranceM: 7, attempts: 5)
+        let session = try await rig.lifecycle.start(.target, drill: config, now: t0)
+        #expect(session.mode == .target && session.drill == config)
+        #expect(try await rig.store.session(id: session.id)?.drill == config, "stored, not just returned")
+        let plain = try await rig.lifecycle.start(.standard, now: t0)
+        #expect(plain.mode == .practice && plain.drill == nil)
+    }
+
+    @Test func aTargetSessionWithoutAConfigGetsTheSpecDefaults() async throws {
+        let rig = try await Rig.make()
+        let session = try await rig.lifecycle.start(.target, now: t0)
+        #expect(try session.drill == TargetDrillConfig())
+    }
 }

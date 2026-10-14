@@ -99,7 +99,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-15 as a self-review (not independent) on the simulator; 6.6 device and sandbox tests are still open (yours). Evidence: `docs/EVIDENCE.md` 6.7.
 
 ## Phase 7 - Mode breadth (G4) - WP06
-- [ ] 7.1 F11 Target drill
+- [x] 7.1 F11 Target drill
+  - Done 2026-10-15 on the simulator with Debug demo shots; scored on distance only (sideways landing is not validated). Real-shot behaviour is NOT RUN (G4). Evidence: `docs/EVIDENCE.md` 7.1.
 - [ ] 7.2 F12 Ladder drill (resumable, event-sourced)
 - [ ] 7.3 F13 Driving range + challenges (original virtual range, personal bests)
 - [ ] 7.4 F14 Skill tracking

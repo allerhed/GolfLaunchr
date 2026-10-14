@@ -22,8 +22,13 @@ public struct SessionLifecycle: Sendable {
         self.shots = shots
     }
 
-    public func start(_ mode: PracticeMode, now: Date) async throws -> Session {
-        let session = try Session(mode: mode == .quickShot ? .quickShot : .practice, createdAt: now)
+    /// A target session stores its drill configuration with it (history keeps the original). Without one it gets the spec defaults.
+    public func start(_ mode: PracticeMode, drill: TargetDrillConfig? = nil, now: Date) async throws -> Session {
+        let session = switch mode {
+        case .standard: try Session(mode: .practice, createdAt: now)
+        case .quickShot: try Session(mode: .quickShot, createdAt: now)
+        case .target: try Session(mode: .target, createdAt: now, drill: drill ?? TargetDrillConfig())
+        }
         try await sessions.save(session)
         return session
     }

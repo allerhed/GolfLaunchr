@@ -26,6 +26,8 @@ public struct SessionSummary: Equatable, Sendable, Identifiable {
     public let meanBallSpeedMetresPerSecond: Double?
     /// True if any shot is synthetic (fixture/demo data): the UI must label it.
     public let containsDemoData: Bool
+    /// The target drill this session ran, as configured then. History never recomputes it from today's settings.
+    public let drill: TargetDrillConfig?
 }
 
 public enum SessionSummaries {
@@ -41,7 +43,8 @@ public enum SessionSummaries {
             duration: session.endedAt.map { $0.timeIntervalSince(session.createdAt) },
             shotCount: ordered.count, includedCount: included.count, clubs: clubs,
             meanCarryMetres: Statistics.mean(carry), carrySamples: carry.count,
-            meanBallSpeedMetresPerSecond: Statistics.mean(speed), containsDemoData: ordered.contains(where: \.isSynthetic)
+            meanBallSpeedMetresPerSecond: Statistics.mean(speed), containsDemoData: ordered.contains(where: \.isSynthetic),
+            drill: session.drill
         )
     }
 

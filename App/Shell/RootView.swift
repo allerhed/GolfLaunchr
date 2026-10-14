@@ -82,6 +82,11 @@ struct RootView: View {
                         .environment(\.locale, settings.language.locale ?? Locale.current)
                 }
             }
+            .sheet(isPresented: $navigation.showingDrillSetup) {
+                DrillSetupSheet()
+                    .preferredColorScheme(settings.appearance.colorScheme)
+                    .environment(\.locale, settings.language.locale ?? Locale.current)
+            }
             .sheet(isPresented: $navigation.showingPlans) {
                 PaywallView()
                     .preferredColorScheme(settings.appearance.colorScheme)

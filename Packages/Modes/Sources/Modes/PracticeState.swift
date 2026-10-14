@@ -2,7 +2,7 @@ import Domain
 import Foundation
 
 public enum PracticeMode: String, Sendable {
-    case standard, quickShot
+    case standard, quickShot, target
 }
 
 public enum PracticeStatus: String, Sendable {

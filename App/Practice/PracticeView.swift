@@ -12,6 +12,7 @@ struct PracticeView: View {
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(AllowanceStore.self) private var allowance
     @State private var showingPlans = false
+    @State private var showingDrillSummary = false
     @SwiftUI.Environment(\.locale) private var locale
     @SwiftUI.Environment(\.dismiss) private var dismiss
     @State private var confirmEnd = false
@@ -42,6 +43,17 @@ struct PracticeView: View {
             await allowance.refresh()
         }
         .onChange(of: store.state.shots.count) { _, _ in Task { await allowance.refresh() } }
+        // The summary opens by itself when the last attempt is scored.
+        .onChange(of: store.drillResult?.isComplete) { _, complete in
+            if complete == true {
+                showingDrillSummary = true
+            }
+        }
+        .sheet(isPresented: $showingDrillSummary) {
+            if let result = store.drillResult {
+                DrillSummarySheet(result: result)
+            }
+        }
         .onDisappear {
             setup.stopObserving()
             OrientationLock.release()
@@ -212,14 +224,16 @@ struct PracticeView: View {
         .accessibilityIdentifier("practice.blocked")
     }
 
+    /// The right column scrolls as a whole: the drill score sits above the shots and can never push Arm off the screen.
     private var shotList: some View {
-        VStack(alignment: .leading, spacing: Spacing.s) {
-            Text("practice.shots \(store.state.shots.count)").font(.headline).accessibilityIdentifier("practice.shotCount")
-            ScrollView {
-                VStack(spacing: Spacing.s) {
-                    ForEach(store.state.shots.reversed().prefix(6), id: \.id) { shot in
-                        ShotRow(shot: shot, formatter: formatter).card()
-                    }
+        ScrollView {
+            VStack(alignment: .leading, spacing: Spacing.s) {
+                if let drill = store.drillResult {
+                    DrillPanel(result: drill, showingSummary: $showingDrillSummary)
+                }
+                Text("practice.shots \(store.state.shots.count)").font(.headline).accessibilityIdentifier("practice.shotCount")
+                ForEach(store.state.shots.reversed().prefix(6), id: \.id) { shot in
+                    ShotRow(shot: shot, formatter: formatter).card()
                 }
             }
         }

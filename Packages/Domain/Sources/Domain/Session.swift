@@ -14,6 +14,8 @@ public struct Session: Identifiable, Codable, Sendable, Equatable {
     /// Version of the mode configuration (drill targets, ladder steps) in force; lets drills be reconstructed.
     public let modeConfigVersion: Int
     public var recoveryState: SessionRecoveryState
+    /// The target drill this session ran, exactly as configured. Later changes never rewrite it. Nil for other modes.
+    public let drill: TargetDrillConfig?
 
     public init(
         id: UUID = UUID(),
@@ -22,7 +24,8 @@ public struct Session: Identifiable, Codable, Sendable, Equatable {
         endedAt: Date? = nil,
         clubSnapshots: [ClubSnapshot] = [],
         modeConfigVersion: Int = 1,
-        recoveryState: SessionRecoveryState = .active
+        recoveryState: SessionRecoveryState = .active,
+        drill: TargetDrillConfig? = nil
     ) throws(ContractError) {
         if let endedAt, endedAt < createdAt {
             throw .invalidDateOrder
@@ -34,9 +37,10 @@ public struct Session: Identifiable, Codable, Sendable, Equatable {
         self.clubSnapshots = clubSnapshots
         self.modeConfigVersion = modeConfigVersion
         self.recoveryState = recoveryState
+        self.drill = drill
     }
 
-    private enum CodingKeys: String, CodingKey { case id, mode, createdAt, endedAt, clubSnapshots, modeConfigVersion, recoveryState }
+    private enum CodingKeys: String, CodingKey { case id, mode, createdAt, endedAt, clubSnapshots, modeConfigVersion, recoveryState, drill }
 
     public init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -48,7 +52,8 @@ public struct Session: Identifiable, Codable, Sendable, Equatable {
                 endedAt: c.decodeIfPresent(Date.self, forKey: .endedAt),
                 clubSnapshots: c.decode([ClubSnapshot].self, forKey: .clubSnapshots),
                 modeConfigVersion: c.decode(Int.self, forKey: .modeConfigVersion),
-                recoveryState: c.decode(SessionRecoveryState.self, forKey: .recoveryState)
+                recoveryState: c.decode(SessionRecoveryState.self, forKey: .recoveryState),
+                drill: c.decodeIfPresent(TargetDrillConfig.self, forKey: .drill)
             )
         } catch let error as ContractError {
             throw error.asDecodingError(decoder.codingPath)

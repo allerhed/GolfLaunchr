@@ -1,3 +1,4 @@
+import Allowance
 import Modes
 import SwiftUI
 
@@ -9,6 +10,7 @@ struct HomeView: View {
     @SwiftUI.Environment(BagStore.self) private var bag
     @SwiftUI.Environment(AllowanceStore.self) private var allowance
     @SwiftUI.Environment(AppNavigation.self) private var navigation
+    @State private var askingForPro = false
 
     var body: some View {
         ScrollView {
@@ -143,10 +145,42 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: Spacing.s) {
             Text("home.modes").font(.headline)
             HStack(alignment: .top, spacing: Spacing.s) {
-                modeTile("scope", "home.mode.target", "home.mode.target.text", id: "target")
+                targetTile
                 modeTile("chart.bar.fill", "home.mode.ladder", "home.mode.ladder.text", id: "ladder")
                 modeTile("flag.fill", "home.mode.virtual", "home.mode.virtual.text", id: "virtual")
             }
+        }
+    }
+
+    /// The target drill (F11). After the introduction it is Pro: the golfer is asked before anything starts.
+    private var targetTile: some View {
+        Button { openTarget() } label: {
+            VStack(spacing: Spacing.xs) {
+                Image(systemName: "scope").font(.title).accessibilityHidden(true)
+                Text("home.mode.target").font(.subheadline.bold())
+                Text("home.mode.target.text").font(.caption).multilineTextAlignment(.center)
+            }
+            .foregroundStyle(Tokens.textPrimary.color)
+            .frame(maxWidth: .infinity)
+            .padding(Spacing.s)
+            .background(Tokens.surface.color, in: RoundedRectangle(cornerRadius: Spacing.cornerRadius, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .disabled(!practice.isAvailable)
+        .accessibilityIdentifier("home.mode.target")
+        .alert("drill.pro.title", isPresented: $askingForPro) {
+            Button { navigation.showingPlans = true } label: { Text("allowance.see.plans") }
+            Button(role: .cancel) {} label: { Text("drill.pro.notNow") }
+        } message: {
+            Text("drill.pro.text")
+        }
+    }
+
+    private func openTarget() {
+        if let snapshot = allowance.snapshot, AllowanceEngine.access(.targetDrill, snapshot: snapshot) == .requiresPro {
+            askingForPro = true
+        } else {
+            navigation.showingDrillSetup = true
         }
     }
 

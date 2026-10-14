@@ -16,6 +16,7 @@ public enum ContractError: Error, Equatable, Sendable {
     case invalidCalibration(String)
     case invalidCreditCost(Int)
     case unknownValue(field: String, value: String)
+    case invalidDrillConfig(String)
 }
 
 extension ContractError {

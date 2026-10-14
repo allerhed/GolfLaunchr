@@ -46,6 +46,7 @@ final class PracticeStore {
     /// both can switch freely. Returns nil if storage is unavailable or the bag is empty.
     static func start(
         _ mode: PracticeMode,
+        drill: TargetDrillConfig? = nil,
         bag: Bag,
         settings: SettingsStore,
         backend: any PersistenceStore,
@@ -54,12 +55,25 @@ final class PracticeStore {
     ) async -> PracticeStore? {
         let clubs = bag.active
         let lifecycle = SessionLifecycle(sessions: backend, shots: backend)
-        guard let session = try? await lifecycle.start(mode, now: now()) else { return nil }
+        guard let session = try? await lifecycle.start(mode, drill: drill, now: now()) else { return nil }
         let initial = clubs.first { $0.id == settings.lastClubID } ?? clubs.first
-        let state = PracticeState(sessionID: session.id, mode: mode, selectedClub: try? initial?.snapshot())
+        var state = PracticeState(sessionID: session.id, mode: mode, selectedClub: try? initial?.snapshot())
+        state.setTargetCarry(session.drill?.targetCarryM) // each shot records the target it was armed against
         return PracticeStore(
             state: state, session: session, clubs: clubs, lifecycle: lifecycle, backend: backend, settings: settings, voice: voice, now: now
         )
+    }
+
+    /// The target drill of this session (nil in other modes) and its live score, recomputed from the shots every time.
+    var drill: TargetDrillConfig? {
+        session.drill
+    }
+
+    /// Sideways landing is not validated yet (G2), so drills are scored on distance only and say so.
+    static let lateralValidated = false
+
+    var drillResult: TargetDrillResult? {
+        drill.map { TargetDrill.evaluate(config: $0, shots: state.shots, lateralValidated: Self.lateralValidated) }
     }
 
     var selectedClubID: UUID? {
