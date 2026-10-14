@@ -4,8 +4,8 @@ import Foundation
 import Observation
 import Persistence
 
-/// What the golfer may still do for free (F19), computed from the usage ledger and the device-local allowance state. There is no
-/// subscription yet (StoreKit is item 6.3), so the entitlement is always none and everyone is on the free allowance.
+/// What the golfer may still do for free (F19), computed from the usage ledger and the device-local allowance state. The
+/// subscription entitlement comes from the commerce store; without one everyone is on the free allowance.
 @MainActor @Observable
 final class AllowanceStore {
     private(set) var snapshot: AllowanceSnapshot?
@@ -14,6 +14,8 @@ final class AllowanceStore {
     private let backend: (any LedgerRepository)?
     private let defaults: UserDefaults
     private let now: () -> Date
+    /// The verified entitlement, from the commerce store; none until the first purchase or restore.
+    var entitlement: () -> Entitlement? = { nil }
     private let zone: () -> TimeZone
     private var state: AllowanceState?
     /// Debug-only: ledger rows added in memory so UI tests can reach the exhausted state without 50 stored shots.
@@ -66,7 +68,7 @@ final class AllowanceStore {
             var current = loadState()
             current.observe(now())
             save(current)
-            snapshot = AllowanceEngine.snapshot(entries: entries, state: current, entitlement: nil, now: now())
+            snapshot = AllowanceEngine.snapshot(entries: entries, state: current, entitlement: entitlement(), now: now())
             loadFailed = false
         } catch {
             loadFailed = true
@@ -80,7 +82,7 @@ final class AllowanceStore {
         var current = loadState()
         current.observe(now())
         save(current)
-        return AllowanceEngine.decide(entries: entries, state: current, entitlement: nil, now: now(), reserved: reserved)
+        return AllowanceEngine.decide(entries: entries, state: current, entitlement: entitlement(), now: now(), reserved: reserved)
     }
 
     var canArm: Bool {

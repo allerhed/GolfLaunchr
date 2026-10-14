@@ -117,6 +117,40 @@
         }
       }
     },
+    "allowance.pro.active": {
+      "comment": "Home: Pro is active",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro: unlimited shots"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro: obegränsat antal slag"
+          }
+        }
+      }
+    },
+    "allowance.see.plans": {
+      "comment": "Opens the plans screen",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See plans"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visa planer"
+          }
+        }
+      }
+    },
     "analysis.card.meanCarry": {
       "comment": "Card label",
       "localizations": {
@@ -3701,6 +3735,499 @@
           "stringUnit": {
             "state": "translated",
             "value": "Välkommen till GolfLaunchr"
+          }
+        }
+      }
+    },
+    "paywall.active": {
+      "comment": "Followed by the date",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro is active until"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro är aktivt till"
+          }
+        }
+      }
+    },
+    "paywall.annual.perMonth %@": {
+      "comment": "Annual price spread over twelve months, not a monthly charge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About %@ per month, billed annually"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungefär %@ per månad, debiteras årsvis"
+          }
+        }
+      }
+    },
+    "paywall.annual.saving %@": {
+      "comment": "Annual saving",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves %@ compared with twelve monthly payments"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du sparar %@ jämfört med tolv månadsbetalningar"
+          }
+        }
+      }
+    },
+    "paywall.autorenew": {
+      "comment": "Auto-renewal disclosure",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscriptions renew automatically until you cancel. Manage or cancel any time in your App Store account settings."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prenumerationer förnyas automatiskt tills du avslutar dem. Hantera eller avsluta när som helst i dina App Store-kontoinställningar."
+          }
+        }
+      }
+    },
+    "paywall.buy.annual": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscribe annually"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prenumerera årsvis"
+          }
+        }
+      }
+    },
+    "paywall.buy.monthly": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscribe monthly"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prenumerera månadsvis"
+          }
+        }
+      }
+    },
+    "paywall.continueFree": {
+      "comment": "Dismiss the plans screen",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue free"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fortsätt gratis"
+          }
+        }
+      }
+    },
+    "paywall.feature.analysis": {
+      "comment": "Pro benefit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Club gapping and dispersion analysis"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Längdskillnader och spridning för dina klubbor"
+          }
+        }
+      }
+    },
+    "paywall.feature.unlimited": {
+      "comment": "Pro benefit",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlimited shots"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obegränsat antal slag"
+          }
+        }
+      }
+    },
+    "paywall.free.summary": {
+      "comment": "What the free allowance is",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free: 50 shots to start, then 10 free shots every month."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratis: 50 slag att börja med, sedan 10 gratis slag varje månad."
+          }
+        }
+      }
+    },
+    "paywall.loadFailed": {
+      "comment": "Plans failed to load",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plans could not be loaded. Check your connection and try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Planerna kunde inte hämtas. Kontrollera anslutningen och försök igen."
+          }
+        }
+      }
+    },
+    "paywall.loading": {
+      "comment": "Loading state",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading plans…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hämtar planer…"
+          }
+        }
+      }
+    },
+    "paywall.manage": {
+      "comment": "Opens the App Store subscription settings",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage subscription"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hantera prenumeration"
+          }
+        }
+      }
+    },
+    "paywall.plan.annual": {
+      "comment": "Plan name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annual"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Årsvis"
+          }
+        }
+      }
+    },
+    "paywall.plan.monthly": {
+      "comment": "Plan name",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monthly"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Månadsvis"
+          }
+        }
+      }
+    },
+    "paywall.price.month %@": {
+      "comment": "Monthly price line; argument is the store's localised price",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ per month"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ per månad"
+          }
+        }
+      }
+    },
+    "paywall.price.year %@": {
+      "comment": "Annual price line; the full amount is charged upfront",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ per year, billed once a year"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ per år, debiteras en gång per år"
+          }
+        }
+      }
+    },
+    "paywall.restore": {
+      "comment": "Button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore purchases"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Återställ köp"
+          }
+        }
+      }
+    },
+    "paywall.restore.failed": {
+      "comment": "Restore result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore did not work. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Återställningen misslyckades. Försök igen."
+          }
+        }
+      }
+    },
+    "paywall.restore.found": {
+      "comment": "Restore result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your subscription was restored."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Din prenumeration återställdes."
+          }
+        }
+      }
+    },
+    "paywall.restore.none": {
+      "comment": "Restore result",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No earlier purchase was found."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inget tidigare köp hittades."
+          }
+        }
+      }
+    },
+    "paywall.retry": {
+      "comment": "Retry loading plans",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Försök igen"
+          }
+        }
+      }
+    },
+    "paywall.status.cancelled": {
+      "comment": "Purchase cancelled",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Purchase cancelled."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Köpet avbröts."
+          }
+        }
+      }
+    },
+    "paywall.status.failed": {
+      "comment": "Purchase failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The purchase did not go through. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Köpet gick inte igenom. Försök igen."
+          }
+        }
+      }
+    },
+    "paywall.status.pending": {
+      "comment": "Purchase pending",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for approval. Nothing is unlocked yet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Väntar på godkännande. Inget är upplåst än."
+          }
+        }
+      }
+    },
+    "paywall.status.succeeded": {
+      "comment": "Purchase succeeded",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thank you. GolfLaunchr Pro is active."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tack. GolfLaunchr Pro är aktivt."
+          }
+        }
+      }
+    },
+    "paywall.subtitle": {
+      "comment": "Plans screen subtitle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practise without limits."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Träna utan gränser."
+          }
+        }
+      }
+    },
+    "paywall.terms": {
+      "comment": "Link to the terms",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of use"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Användarvillkor"
+          }
+        }
+      }
+    },
+    "paywall.title": {
+      "comment": "Plans screen title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro"
           }
         }
       }

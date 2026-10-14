@@ -8,6 +8,7 @@ struct HomeView: View {
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(BagStore.self) private var bag
     @SwiftUI.Environment(AllowanceStore.self) private var allowance
+    @SwiftUI.Environment(AppNavigation.self) private var navigation
 
     var body: some View {
         ScrollView {
@@ -69,27 +70,37 @@ struct HomeView: View {
     /// What is left for free before practising (F19): introductory shots, then the monthly grant with the next reset date.
     @ViewBuilder
     private var allowanceRow: some View {
-        if let snap = allowance.snapshot, !snap.isPro {
+        if let snap = allowance.snapshot {
             VStack(alignment: .leading, spacing: Spacing.xs) {
-                if snap.introRemaining > 0 {
-                    Text("allowance.intro.left \(snap.introRemaining)")
-                } else if snap.monthlyRemaining > 0 {
-                    Text("allowance.monthly.left \(snap.monthlyRemaining)")
-                } else {
-                    Text("allowance.none.left")
-                }
-                if snap.introRemaining == 0, let reset = snap.nextReset {
-                    HStack(spacing: Spacing.xs) {
-                        Text("allowance.next.reset")
-                        Text(reset, format: .dateTime.day().month(.wide))
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    if snap.isPro {
+                        Text("allowance.pro.active")
+                    } else {
+                        if snap.introRemaining > 0 {
+                            Text("allowance.intro.left \(snap.introRemaining)")
+                        } else if snap.monthlyRemaining > 0 {
+                            Text("allowance.monthly.left \(snap.monthlyRemaining)")
+                        } else {
+                            Text("allowance.none.left")
+                        }
+                        if snap.introRemaining == 0, let reset = snap.nextReset {
+                            HStack(spacing: Spacing.xs) {
+                                Text("allowance.next.reset")
+                                Text(reset, format: .dateTime.day().month(.wide))
+                            }
+                            .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
+                        }
                     }
-                    .font(.footnote).foregroundStyle(Tokens.textSecondary.color)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("home.allowance")
+                Button { navigation.showingPlans = true } label: {
+                    Text("allowance.see.plans").frame(minHeight: Spacing.minTarget, alignment: .leading)
+                }
+                .accessibilityIdentifier("home.plans")
             }
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(Tokens.textPrimary.color)
-            .accessibilityElement(children: .combine)
-            .accessibilityIdentifier("home.allowance")
         }
     }
 

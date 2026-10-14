@@ -8,6 +8,9 @@ struct RootView: View {
     @Environment(HistoryStore.self) private var historyStore
     @Environment(SetupLauncher.self) private var setup
     @Environment(PracticeLauncher.self) private var practice
+    @Environment(CommerceStore.self) private var commerce
+    @Environment(AllowanceStore.self) private var allowance
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -36,6 +39,15 @@ struct RootView: View {
             await practice.recoverInterrupted()
             await bagStore.load()
             await historyStore.load()
+            await commerce.refreshEntitlement()
+        }
+        // A purchase, restore, expiry or refund changes what is free, so the balance is read again.
+        .onChange(of: commerce.entitlement) { _, _ in Task { await allowance.refresh() } }
+        // Renewals, expiries and refunds that happened while the app was away are picked up when it returns.
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                Task { await commerce.refreshEntitlement() }
+            }
         }
         .tint(Tokens.accent.color)
         .environment(\.locale, settings.language.locale ?? Locale.current)
@@ -69,6 +81,11 @@ struct RootView: View {
                         .preferredColorScheme(settings.appearance.colorScheme)
                         .environment(\.locale, settings.language.locale ?? Locale.current)
                 }
+            }
+            .sheet(isPresented: $navigation.showingPlans) {
+                PaywallView()
+                    .preferredColorScheme(settings.appearance.colorScheme)
+                    .environment(\.locale, settings.language.locale ?? Locale.current)
             }
             .sheet(isPresented: $navigation.showingSettings) {
                 SettingsView()

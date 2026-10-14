@@ -1,3 +1,4 @@
+import Allowance
 import Capture
 import Domain
 import Persistence
@@ -16,6 +17,7 @@ struct GolfLaunchrApp: App {
     @State private var voice: VoiceController
     @State private var analysis: AnalysisStore
     @State private var allowance: AllowanceStore
+    @State private var commerce: CommerceStore
 
     init() {
         let arguments = CommandLine.arguments
@@ -45,6 +47,9 @@ struct GolfLaunchrApp: App {
         #if DEBUG
             allowanceStore.extraEntries = Self.debugLedger(arguments)
         #endif
+        let commerceStore = CommerceStore(store: Self.makeStore(arguments), defaults: Self.commerceDefaults(arguments))
+        allowanceStore.entitlement = { commerceStore.activeEntitlement }
+        _commerce = State(initialValue: commerceStore)
         _allowance = State(initialValue: allowanceStore)
         let voiceController = VoiceController(
             settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments), locale: { settingsStore.effectiveLocale }
@@ -105,6 +110,24 @@ struct GolfLaunchrApp: App {
             }
         }
     #endif
+
+    /// StoreKit 2; Debug builds started with `-uiTestStore <scenario>` use a scripted store (no purchase, no network).
+    private static func makeStore(_ arguments: [String]) -> any StoreProviding {
+        #if DEBUG
+            if let index = arguments.firstIndex(of: "-uiTestStore"), arguments.indices.contains(index + 1),
+               let scenario = ScriptedStore.Scenario(rawValue: arguments[index + 1]) {
+                return ScriptedStore(scenario)
+            }
+        #endif
+        return LiveStore()
+    }
+
+    private static func commerceDefaults(_ arguments: [String]) -> UserDefaults {
+        if arguments.contains("-uiTestResetSettings") {
+            UserDefaults.standard.removeObject(forKey: CommerceStore.entitlementKey)
+        }
+        return .standard
+    }
 
     /// The device-local allowance state; UI tests that reset settings also start a fresh allowance.
     private static func allowanceDefaults(_ arguments: [String]) -> UserDefaults {
@@ -189,6 +212,7 @@ struct GolfLaunchrApp: App {
                 .environment(voice)
                 .environment(analysis)
                 .environment(allowance)
+                .environment(commerce)
         }
     }
 }

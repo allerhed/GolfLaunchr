@@ -60,3 +60,8 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-13 | The effective clock is the latest of now, the latest time seen and the latest ledger commit | A rolled-back clock must not open an earlier, unspent period. |
 | 2026-10-13 | The monthly grant starts the calendar month AFTER the introductory credits run out | F19: no accumulation before exhaustion and no same-month top-up. |
 | 2026-10-13 | Nothing arms until the ledger has been read | An unknown balance must not grant access; a failed load blocks and says so. |
+| 2026-10-14 | The store sits behind `StoreProviding`; a scripted store (Debug only) drives UI tests | Purchases cannot be automated through the system sheet, and tests must never charge or need a network. |
+| 2026-10-14 | A failed or incomplete catalog is "failed" with a retry, never a plan | F19: a loading failure must not look like free access or a zero price. |
+| 2026-10-14 | A verified "no entitlement" from the store clears access at once; an unreachable store keeps the cache for seven days | F19: no paid grace after a known revocation, and offline use inside the documented window. |
+| 2026-10-14 | The local StoreKit file lives in `Config/`, outside the app bundle | A test fixture must never ship in the app. |
+| 2026-10-14 | Terms link is Apple's standard licence until the owner hosts their own | Avoids a dead or invented URL; recorded in the backlog. |

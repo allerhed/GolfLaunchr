@@ -81,5 +81,8 @@ targets:
 schemes:
   GolfLaunchr:
     build: { targets: { GolfLaunchr: all } }
+    run:
+      storeKitConfiguration: Config/GolfLaunchr.storekit
     test:
       targets: [GolfLaunchrTests, GolfLaunchrUITests]
+      storeKitConfiguration: Config/GolfLaunchr.storekit

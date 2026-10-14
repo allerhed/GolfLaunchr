@@ -1,0 +1,32 @@
+{
+  "identifier" : "A1B2C3D4",
+  "nonRenewingSubscriptions" : [],
+  "products" : [],
+  "settings" : { "_failTransactionsEnabled" : false, "_locale" : "sv_SE", "_storefront" : "SWE", "_storeKitErrors" : [] },
+  "subscriptionGroups" : [
+    {
+      "id" : "21400001",
+      "localizations" : [],
+      "name" : "GolfLaunchr Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [], "codeOffers" : [], "displayPrice" : "49", "familyShareable" : false,
+          "groupNumber" : 1, "internalID" : "6740000001",
+          "introductoryOffer" : null,
+          "localizations" : [ { "description" : "Unlimited shots and full analysis", "displayName" : "GolfLaunchr Pro Monthly", "locale" : "en_US" } ],
+          "productID" : "com.allerhed.golflaunchr.pro.monthly", "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro Monthly", "subscriptionGroupID" : "21400001", "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [], "codeOffers" : [], "displayPrice" : "499", "familyShareable" : false,
+          "groupNumber" : 1, "internalID" : "6740000002",
+          "introductoryOffer" : null,
+          "localizations" : [ { "description" : "Unlimited shots and full analysis", "displayName" : "GolfLaunchr Pro Annual", "locale" : "en_US" } ],
+          "productID" : "com.allerhed.golflaunchr.pro.annual", "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro Annual", "subscriptionGroupID" : "21400001", "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : { "major" : 3, "minor" : 0 }
+}

@@ -11,6 +11,7 @@ struct PracticeView: View {
     @SwiftUI.Environment(SettingsStore.self) private var settings
     @SwiftUI.Environment(HistoryStore.self) private var history
     @SwiftUI.Environment(AllowanceStore.self) private var allowance
+    @State private var showingPlans = false
     @SwiftUI.Environment(\.locale) private var locale
     @SwiftUI.Environment(\.dismiss) private var dismiss
     @State private var confirmEnd = false
@@ -237,6 +238,13 @@ struct PracticeView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("practice.noAllowance")
+        .overlay(alignment: .trailing) {
+            Button { showingPlans = true } label: {
+                Text("allowance.see.plans").frame(minHeight: Spacing.minTarget)
+            }
+            .accessibilityIdentifier("practice.plans")
+        }
+        .sheet(isPresented: $showingPlans) { PaywallView() }
     }
 
     private var controls: some View {

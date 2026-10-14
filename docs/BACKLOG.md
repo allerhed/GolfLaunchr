@@ -87,6 +87,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E19 | At the largest text size WITHOUT string doubling on the real phone: look for overlaps (wrapped picker labels over the next row, gapping rows), fix with real layouts; landscape at large sizes; App Store metadata en/sv with limits | 4.7 |
 | E9 | Dark and tinted app icon variants (iOS 18) | App icon |
 | H2 | Real-device accessibility: VoiceOver walk-through, largest text without string doubling, Reduce Motion, Settings picker values that may truncate | Owner / bay visit |
+| H3 | Plans screen: host terms and privacy pages (10.4) and replace the standard-licence link; set real App Store Connect prices (6.1) | Owner |
 
 ## 7. Gates still NOT RUN
 
