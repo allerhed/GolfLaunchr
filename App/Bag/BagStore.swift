@@ -67,6 +67,13 @@ final class BagStore {
 
     // MARK: loading
 
+    /// After all practice data was deleted the stored bag is gone: read again, which seeds the default bag as on a first launch.
+    func reloadAfterDeletion() async {
+        loadTask = nil
+        loadState = .idle
+        await load()
+    }
+
     /// Reads the bag. Only a store that has never held a bag is seeded; a bag that exists but cannot be read is an error and
     /// is left alone (never re-seeded over).
     func load() async {

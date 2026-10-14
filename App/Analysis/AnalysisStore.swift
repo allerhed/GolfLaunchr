@@ -125,6 +125,13 @@ final class AnalysisStore {
         persist()
     }
 
+    /// After a deletion the applied clubs and the session scope may point at things that no longer exist.
+    func resetAfterDeletion() {
+        editor = AnalysisFilterEditor(applied: AnalysisFilter())
+        showingFilter = false
+        persist()
+    }
+
     func cancelFilter() {
         editor.cancel()
         showingFilter = false

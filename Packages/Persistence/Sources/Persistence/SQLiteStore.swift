@@ -15,7 +15,7 @@ public enum FaultAction: String, Sendable {
 
 /// The real local store (spec F20): SQLite in write-ahead-log mode with full synchronous commits.
 /// A shot and its ledger entry are written in one transaction; a crash leaves both or neither.
-public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository, ClubRepository {
+public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotRepository, LedgerRepository, ClubRepository, PrivacyRepository {
     private let database: SQLiteDatabase
     private let allowsSynthetic: Bool
     private let encoder = ContractJSON.encoder()
@@ -109,6 +109,27 @@ public actor SQLiteStore: SessionRepository, CalibrationRepository, ShotReposito
                 throw PersistenceError.notFound("session \(id)")
             }
         }
+    }
+
+    // MARK: PrivacyRepository
+
+    public func deleteAllPracticeData() throws -> DeletionSummary {
+        try database.exec("PRAGMA secure_delete = ON")
+        let summary = try database.transaction {
+            let sessions = try database.query("SELECT COUNT(*) FROM sessions") { Int($0.int(0)) }.first ?? 0
+            let shots = try database.query("SELECT COUNT(*) FROM shots") { Int($0.int(0)) }.first ?? 0
+            let calibrations = try database.query("SELECT COUNT(*) FROM calibrations") { Int($0.int(0)) }.first ?? 0
+            // Shots go with their sessions (ON DELETE CASCADE); the ledger table is untouched.
+            try database.run("DELETE FROM sessions")
+            try database.run("DELETE FROM shots")
+            try database.run("DELETE FROM calibrations")
+            let bag = try database.run("DELETE FROM bag")
+            return DeletionSummary(sessions: sessions, shots: shots, calibrations: calibrations, bagDeleted: bag > 0)
+        }
+        // Rewrite the file and empty the write-ahead log so the deleted text is not left behind in free pages.
+        try database.exec("VACUUM")
+        try database.exec("PRAGMA wal_checkpoint(TRUNCATE)")
+        return summary
     }
 
     // MARK: CalibrationRepository

@@ -8,6 +8,17 @@ public enum MediaError: Error, Equatable {
     case missing(String)
 }
 
+/// What a media-only deletion removed.
+public struct MediaDeletion: Sendable, Equatable {
+    public let files: Int
+    public let bytes: Int
+
+    public init(files: Int, bytes: Int) {
+        self.files = files
+        self.bytes = bytes
+    }
+}
+
 public struct StagedFile: Sendable, Equatable {
     public let url: URL
 }
@@ -91,6 +102,26 @@ public struct MediaDirectory: Sendable {
         for path in report.unreferenced {
             try FileManager.default.removeItem(at: resolve(path))
         }
+    }
+
+    /// F21 media-only deletion: every committed and staged file goes, nothing else (the database is not touched). The folders stay
+    /// usable. Callers must mark their own records as having no media.
+    public func deleteAll() throws -> MediaDeletion {
+        var files = 0, bytes = 0
+        for folder in [mediaURL, stagingURL] {
+            if let walker = FileManager.default.enumerator(at: folder, includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey]) {
+                for case let url as URL in walker {
+                    let values = try url.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
+                    if values.isRegularFile == true {
+                        files += 1
+                        bytes += values.fileSize ?? 0
+                    }
+                }
+            }
+            try FileManager.default.removeItem(at: folder)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        }
+        return MediaDeletion(files: files, bytes: bytes)
     }
 
     /// A relative path must be non-empty, not absolute and must not contain `..` or empty components.

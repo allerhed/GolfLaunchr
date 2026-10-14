@@ -4725,6 +4725,448 @@
         }
       }
     },
+    "privacy.delete.cancel": {
+      "comment": "Cancel",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt"
+          }
+        }
+      }
+    },
+    "privacy.delete.confirm": {
+      "comment": "Destructive confirm button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete everything"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera allt"
+          }
+        }
+      }
+    },
+    "privacy.delete.done": {
+      "comment": "After deletion",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleted. Practice data is gone from this iPhone."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raderat. Träningsdata är borta från den här iPhonen."
+          }
+        }
+      }
+    },
+    "privacy.delete.exportFirst": {
+      "comment": "Export before deleting",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export first"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportera först"
+          }
+        }
+      }
+    },
+    "privacy.delete.failed": {
+      "comment": "Deletion failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleting did not finish. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raderingen blev inte klar. Försök igen."
+          }
+        }
+      }
+    },
+    "privacy.delete.keeps": {
+      "comment": "What deletion does not affect",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not affected: your App Store purchases and subscription (Apple manages those) and the count of free shots you have used, which is kept so that deleting data cannot reset the free allowance."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Påverkas inte: dina köp och din prenumeration i App Store (Apple hanterar dem) och antalet gratis slag du har använt, som sparas så att radering av data inte kan återställa gratisslagen."
+          }
+        }
+      }
+    },
+    "privacy.delete.removes": {
+      "comment": "What deletion removes",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This removes all sessions, shots, calibrations and your bag from this iPhone. It cannot be undone."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta tar bort alla pass, slag, kalibreringar och din bag från den här iPhonen. Det går inte att ångra."
+          }
+        }
+      }
+    },
+    "privacy.delete.start": {
+      "comment": "Opens the delete confirmation",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete my practice data…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera mina träningsdata…"
+          }
+        }
+      }
+    },
+    "privacy.delete.title": {
+      "comment": "Delete confirmation title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete all practice data?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera alla träningsdata?"
+          }
+        }
+      }
+    },
+    "privacy.diagnostics.failed": {
+      "comment": "Diagnostic failure",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The bundle could not be made. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paketet kunde inte skapas. Försök igen."
+          }
+        }
+      }
+    },
+    "privacy.diagnostics.note": {
+      "comment": "Diagnostic bundle explanation",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only what you see below would be shared, and only if you choose to share it. Clips are never included."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bara det du ser nedan delas, och bara om du väljer att dela. Klipp ingår aldrig."
+          }
+        }
+      }
+    },
+    "privacy.diagnostics.share": {
+      "comment": "Share the bundle",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dela"
+          }
+        }
+      }
+    },
+    "privacy.diagnostics.start": {
+      "comment": "Opens the diagnostic preview",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic bundle…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostikpaket…"
+          }
+        }
+      }
+    },
+    "privacy.diagnostics.title": {
+      "comment": "Preview title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic bundle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostikpaket"
+          }
+        }
+      }
+    },
+    "privacy.export.csv": {
+      "comment": "Button: export as CSV",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export my data (CSV)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportera mina data (CSV)"
+          }
+        }
+      }
+    },
+    "privacy.export.failed": {
+      "comment": "Export failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file could not be made. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filen kunde inte skapas. Försök igen."
+          }
+        }
+      }
+    },
+    "privacy.export.json": {
+      "comment": "Button: export as JSON",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export my data (JSON)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportera mina data (JSON)"
+          }
+        }
+      }
+    },
+    "privacy.export.preparing": {
+      "comment": "Export in progress",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing the file…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Förbereder filen…"
+          }
+        }
+      }
+    },
+    "privacy.export.share": {
+      "comment": "Opens the share sheet",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share the file"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dela filen"
+          }
+        }
+      }
+    },
+    "privacy.media.confirm": {
+      "comment": "Destructive confirm button",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete media"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera media"
+          }
+        }
+      }
+    },
+    "privacy.media.done": {
+      "comment": "After media deletion",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Media deleted."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Media raderad."
+          }
+        }
+      }
+    },
+    "privacy.media.failed": {
+      "comment": "Media deletion failed",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleting media did not finish. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raderingen av media blev inte klar. Försök igen."
+          }
+        }
+      }
+    },
+    "privacy.media.none": {
+      "comment": "Nothing to delete",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There was no media to delete."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det fanns ingen media att radera."
+          }
+        }
+      }
+    },
+    "privacy.media.start": {
+      "comment": "Opens the media delete confirmation",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete media only…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera bara media…"
+          }
+        }
+      }
+    },
+    "privacy.media.text": {
+      "comment": "What media deletion removes",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removes saved clips and images. Sessions, shots and numbers stay."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tar bort sparade klipp och bilder. Pass, slag och siffror finns kvar."
+          }
+        }
+      }
+    },
+    "privacy.media.title": {
+      "comment": "Media delete title",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete saved clips and images?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera sparade klipp och bilder?"
+          }
+        }
+      }
+    },
     "progress.analysis": {
       "comment": "Progress tab segment",
       "localizations": {

@@ -90,4 +90,26 @@ public struct BagEnvelope: Codable, Sendable, Equatable {
 }
 
 /// Everything the app needs from persistence in one type (the in-memory fake and the SQLite store both conform).
-public typealias PersistenceStore = CalibrationRepository & ClubRepository & LedgerRepository & SessionRepository & ShotRepository
+/// What a deletion removed, for the confirmation shown afterwards.
+public struct DeletionSummary: Sendable, Equatable {
+    public let sessions: Int
+    public let shots: Int
+    public let calibrations: Int
+    public let bagDeleted: Bool
+
+    public init(sessions: Int, shots: Int, calibrations: Int, bagDeleted: Bool) {
+        self.sessions = sessions
+        self.shots = shots
+        self.calibrations = calibrations
+        self.bagDeleted = bagDeleted
+    }
+}
+
+/// F21: delete all local practice data. Sessions, shots, calibrations and the bag go; the usage ledger stays, by design and
+/// disclosed to the golfer, so that deleting data cannot reset the free allowance. Purchases are Apple's and are not touched here.
+public protocol PrivacyRepository: Sendable {
+    func deleteAllPracticeData() async throws -> DeletionSummary
+}
+
+public typealias PersistenceStore = CalibrationRepository & ClubRepository & LedgerRepository & PrivacyRepository & SessionRepository
+    & ShotRepository

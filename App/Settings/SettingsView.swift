@@ -132,13 +132,7 @@ struct SettingsView: View {
     }
 
     private var privacySection: some View {
-        Section {
-            Label { Text("settings.privacy.text") } icon: { Image(systemName: "lock.iphone") }
-                .accessibilityIdentifier("settings.privacy.text")
-        } header: {
-            Text("settings.privacy", comment: "Section header: privacy").foregroundStyle(Tokens.textSecondary.color)
-        }
-        .listRowBackground(Tokens.surface.color)
+        PrivacyDataSection()
     }
 
     private var voiceSection: some View {

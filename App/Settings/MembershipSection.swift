@@ -35,6 +35,8 @@ struct MembershipSection: View {
                 Text("allowance.see.plans").frame(minHeight: Spacing.minTarget, alignment: .leading)
             }
             .accessibilityIdentifier("settings.plans")
+            // The presentation hangs on one row: on the Section it would apply to every row.
+            .sheet(isPresented: $showingPlans) { PaywallView() }
             Button { Task { await commerce.redeemOfferCode() } } label: {
                 Text("membership.redeem").frame(minHeight: Spacing.minTarget, alignment: .leading)
             }
@@ -48,7 +50,6 @@ struct MembershipSection: View {
                 .foregroundStyle(Tokens.textSecondary.color)
         }
         .listRowBackground(Tokens.surface.color)
-        .sheet(isPresented: $showingPlans) { PaywallView() }
     }
 
     @ViewBuilder

@@ -68,3 +68,7 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-14 | Redemption unlocks only what StoreKit later reports as verified, never the sheet's result | The sheet cannot tell us whether a code was valid; the store can. |
 | 2026-10-14 | "Complimentary" is shown only from verified offer metadata (free offer code); otherwise neutral "Pro" | F19a: do not guess sponsorship. |
 | 2026-10-14 | No in-app revoke or disable of redeemed access | F19a: Apple codes cannot be revoked after redemption; a local toggle would be false. |
+| 2026-10-15 | Deleting practice data keeps the usage ledger and says so before it happens | F21/F19: deleting data must not reset the free allowance; disclosure is mandatory. |
+| 2026-10-15 | Deletion is followed by VACUUM and a truncating WAL checkpoint | A normal DELETE leaves the text in free pages and in the log; a test searches the files for it. |
+| 2026-10-15 | The network audit is a static check in the gate until capture exists | No real traffic exists to capture yet; the static check fails the build on any networking API or third-party package. |
+| 2026-10-15 | The diagnostic bundle is built on request, previewed in full, and shared only through the system share sheet | F21: no automatic sending; the golfer sees the content first. |

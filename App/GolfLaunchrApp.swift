@@ -18,6 +18,7 @@ struct GolfLaunchrApp: App {
     @State private var analysis: AnalysisStore
     @State private var allowance: AllowanceStore
     @State private var commerce: CommerceStore
+    @State private var privacy: PrivacyStore
 
     init() {
         let arguments = CommandLine.arguments
@@ -41,7 +42,6 @@ struct GolfLaunchrApp: App {
         #endif
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
-        _analysis = State(initialValue: AnalysisStore(history: stores.history, bag: stores.bag, defaults: Self.analysisDefaults(arguments)))
         _historyStore = State(initialValue: stores.history)
         let allowanceStore = AllowanceStore(backend: stores.backend, defaults: Self.allowanceDefaults(arguments))
         #if DEBUG
@@ -50,6 +50,17 @@ struct GolfLaunchrApp: App {
         let commerceStore = CommerceStore(store: Self.makeStore(arguments), defaults: Self.commerceDefaults(arguments))
         allowanceStore.entitlement = { commerceStore.activeEntitlement }
         _commerce = State(initialValue: commerceStore)
+        let analysisStore = AnalysisStore(history: stores.history, bag: stores.bag, defaults: Self.analysisDefaults(arguments))
+        _analysis = State(initialValue: analysisStore)
+        _privacy = State(initialValue: PrivacyStore(
+            backend: stores.backend, media: Self.makeMedia(testFile: testFile),
+            afterDeletion: {
+                await stores.history.refresh()
+                await stores.bag.reloadAfterDeletion()
+                analysisStore.resetAfterDeletion()
+                await allowanceStore.refresh()
+            }
+        ))
         _allowance = State(initialValue: allowanceStore)
         let voiceController = VoiceController(
             settings: settingsStore, synthesizer: Self.makeSynthesizer(arguments), locale: { settingsStore.effectiveLocale }
@@ -127,6 +138,17 @@ struct GolfLaunchrApp: App {
             UserDefaults.standard.removeObject(forKey: CommerceStore.entitlementKey)
         }
         return .standard
+    }
+
+    /// Media (clips, images) live beside the database; UI tests keep theirs next to the throwaway database.
+    private static func makeMedia(testFile: String?) -> MediaDirectory? {
+        let root: URL? = if let testFile {
+            URL(fileURLWithPath: testFile).deletingLastPathComponent().appendingPathComponent("media-files", isDirectory: true)
+        } else {
+            try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .appendingPathComponent("GolfLaunchr", isDirectory: true).appendingPathComponent("Media", isDirectory: true)
+        }
+        return root.flatMap { try? MediaDirectory(root: $0) }
     }
 
     /// The device-local allowance state; UI tests that reset settings also start a fresh allowance.
@@ -213,6 +235,7 @@ struct GolfLaunchrApp: App {
                 .environment(analysis)
                 .environment(allowance)
                 .environment(commerce)
+                .environment(privacy)
         }
     }
 }

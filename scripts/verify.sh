@@ -23,6 +23,9 @@ step "l10n parity"
 scripts/l10n-check.sh >>"$LOG" 2>&1 || { cat "$LOG" | tail -20; fail "l10n-check"; }
 scripts/l10n-usage-check.sh >>"$LOG" 2>&1 || { tail -20 "$LOG"; fail "l10n-usage-check"; }
 
+step "no-upload audit"
+scripts/check-no-upload.sh >>"$LOG" 2>&1 || { tail -20 "$LOG"; fail "check-no-upload"; }
+
 step "xcodegen"
 xcodegen generate >>"$LOG" 2>&1 || fail "xcodegen"
 
