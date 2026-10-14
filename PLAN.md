@@ -49,6 +49,7 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 
 ## Phase 3 - Measurement and flight (G2) - WP03; depends on Phase 1 evidence
 - [ ] 3.1 (O) Plan measurement method from G1 findings: geometry, calibration math, uncertainty approach (`docs/plans/G2-measurement.md`)
+  - Detector part proposed 2026-10-15: `docs/plans/G2-detector-coreml.md` (ball and club detection with a custom Core ML model; approved by the owner 2026-10-15, all suggestions accepted).
 - [ ] 3.2 F03 Calibration + ball-lock state machine (`Capture`/`Measurement` packages), versioned calibration records, invalidation on movement/format change
 - [ ] 3.3 F04 Strike detection, single accepted shot, rejection reasons, state machine from spec 07
 - [ ] 3.4 Measurement pipeline: ball speed, launch angles with uncertainty, provenance labels; unavailable metrics stay unavailable (F06)

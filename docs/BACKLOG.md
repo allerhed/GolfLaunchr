@@ -16,6 +16,10 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | B6 | **Approve the proposed P1 revision** (clean impact window instead of whole-window gap-free) and the other G1 thresholds in `docs/plans/G1-capture-spike.md` section 6 | You | The pass criteria must be agreed before data is judged | EVIDENCE 1.3a closed |
 | B7 | Answer the bay questions: TrackMan model/software version, may session exports be copied out and used, how many golfers can take part, any outdoor range access | You | Plan Q6, Q7; data-use terms | G1 plan section 13 |
 | B8 | Decide the **exposure sweep presets** to bring (1/1000, 1/2000, 1/4000 at ISO ceiling) and which lens first (wide has ~1.5 stops more light than ultra-wide) | Both | The decisive unknown is bay light | EVIDENCE 1.3a |
+| B9 | **Detector training data at the bay** (plan `docs/plans/G2-detector-coreml.md` section 9): keep the full impact window of every strike at each exposure of the sweep; note golfer pseudonym, club, handedness and the TrackMan row ID per strike; the TrackMan export must include ball speed, launch angle and direction, spin, club speed, attack angle, club path and smash factor; one series with a marked ball if the owner agrees (plan Q9) | Both | Paired data is the only way to measure accuracy, and the model must learn the blur we will actually use |
+| B10 | At the bay: 10 minutes of negatives (practice swings, ball placement, walking past) and 2 minutes of the empty hitting area as background plates | You | False-trigger baseline and compositing plates |
+| B11 | **Measure the camera-to-ball distance with a tape** at every setup and type it into the harness (D1 said 0.75 m, the ball size says about 0.35 m) | You | The manifest distance was a default, not a measurement |
+| B12 | **Golfer consent** for using their clips to train the detector (local only, no upload); wording to be approved (detector plan Q3) | You | Training on people's video needs consent |
 
 ## 2. At the bay (script in `docs/plans/G1-capture-spike.md`, sections 3, 12 and the "Limited bay access" protocol)
 
@@ -93,6 +97,8 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | H5 | Policy: a device clock set far ahead plus one shot locks free grants until real time catches up (clock-rollback safety); no backend to arbitrate. Accept, or add an account/backend later | Owner |
 | E21 | Listen for live StoreKit transaction updates (renewals, refunds while the app is open); today entitlement is refreshed at launch and on return to the app | Dev |
 | E22 | Extend the accessibility audit (4.8) to the plans, Membership, delete and diagnostics screens | Dev |
+| E23 | Add `clubPath` to the metric catalogue (`MetricKey`, unit radians, right positive = in-to-out for a right-handed golfer, mirrored by handedness), formatting, en/sv strings, export; approved in the detector plan Q8 | Claude, when the club work (M7) starts |
+| H6 | Freedom-to-operate review of the single-device launch monitor patents found in the detector research (US 12728313, US 9697613 and related) before release | Owner |
 
 ## 7. Gates still NOT RUN
 
