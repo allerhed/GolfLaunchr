@@ -43,7 +43,13 @@ struct GolfLaunchrApp: App {
         let stores = Self.makeStores(testFile: testFile, seedDemo: seedDemo)
         _bagStore = State(initialValue: stores.bag)
         _historyStore = State(initialValue: stores.history)
-        let allowanceStore = AllowanceStore(backend: stores.backend, defaults: Self.allowanceDefaults(arguments))
+        var allowanceBackend: (any LedgerRepository)? = stores.backend
+        #if DEBUG
+            if arguments.contains("-uiTestAllowanceFail") {
+                allowanceBackend = nil
+            } // the balance cannot be read
+        #endif
+        let allowanceStore = AllowanceStore(backend: allowanceBackend, defaults: Self.allowanceDefaults(arguments))
         #if DEBUG
             allowanceStore.extraEntries = Self.debugLedger(arguments)
         #endif
@@ -58,6 +64,7 @@ struct GolfLaunchrApp: App {
                 await stores.history.refresh()
                 await stores.bag.reloadAfterDeletion()
                 analysisStore.resetAfterDeletion()
+                settingsStore.lastClubID = nil
                 await allowanceStore.refresh()
             }
         ))

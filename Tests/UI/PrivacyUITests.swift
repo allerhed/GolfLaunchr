@@ -122,4 +122,23 @@ final class PrivacyUITests: XCTestCase {
         XCTAssertTrue(any(app, "delete.keeps").label.contains("Apple hanterar dem"))
         XCTAssertTrue(app.buttons["delete.confirm"].label.contains("Radera allt"))
     }
+
+    /// QA 6.7: after deleting everything the app is usable at once: practice starts with the reseeded bag.
+    func testPracticeStartsAfterDeletingEverything() {
+        let app = launch("en")
+        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 12))
+        openSettings(app)
+        reveal(app, "settings.deleteAll").tap()
+        XCTAssertTrue(app.buttons["delete.confirm"].waitForExistence(timeout: 8))
+        app.buttons["delete.confirm"].tap()
+        XCTAssertTrue(any(app, "settings.deleteAll.status").waitForExistence(timeout: 12))
+        app.buttons["settings.done"].tap()
+        let start = app.buttons["home.start"]
+        XCTAssertTrue(start.waitForExistence(timeout: 8))
+        start.tap()
+        XCTAssertTrue(
+            app.buttons["practice.end"].waitForExistence(timeout: 12) || any(app, "practice.capture").exists,
+            "the practice screen opened"
+        )
+    }
 }

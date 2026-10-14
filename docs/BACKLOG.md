@@ -89,6 +89,10 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | H2 | Real-device accessibility: VoiceOver walk-through, largest text without string doubling, Reduce Motion, Settings picker values that may truncate | Owner / bay visit |
 | H3 | Plans screen: host terms and privacy pages (10.4) and replace the standard-licence link; set real App Store Connect prices (6.1) | Owner |
 | H4 | Approve the retention wording (what is kept after deletion: the usage count) and the trial identity policy (no account, device-local, reinstall resets); App Privacy answers | Owner |
+| E20 | 5.3 must reserve allowance at arming (`AllowanceEngine.decide`) and settle the ledger row at commit (`settle`) in the same transaction as the shot; until then only debug demo shots write ledger rows | Dev, with 5.3 |
+| H5 | Policy: a device clock set far ahead plus one shot locks free grants until real time catches up (clock-rollback safety); no backend to arbitrate. Accept, or add an account/backend later | Owner |
+| E21 | Listen for live StoreKit transaction updates (renewals, refunds while the app is open); today entitlement is refreshed at launch and on return to the app | Dev |
+| E22 | Extend the accessibility audit (4.8) to the plans, Membership, delete and diagnostics screens | Dev |
 
 ## 7. Gates still NOT RUN
 

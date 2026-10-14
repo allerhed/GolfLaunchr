@@ -94,8 +94,12 @@ struct PracticeView: View {
                 cards
                 shotList
             }
-            if !allowance.canArm, allowance.snapshot != nil {
-                noAllowanceNote
+            if !allowance.canArm {
+                if allowance.snapshot != nil {
+                    noAllowanceNote
+                } else if allowance.loadFailed {
+                    allowanceUnavailableNote
+                }
             }
             controls
         }
@@ -245,6 +249,20 @@ struct PracticeView: View {
             .accessibilityIdentifier("practice.plans")
         }
         .sheet(isPresented: $showingPlans) { PaywallView() }
+    }
+
+    /// The balance could not be read, so nothing arms; say why and offer a retry instead of a silently dead button.
+    private var allowanceUnavailableNote: some View {
+        HStack(spacing: Spacing.m) {
+            Label { Text("practice.allowanceUnavailable") } icon: { Image(systemName: "exclamationmark.triangle.fill") }
+                .font(.subheadline.weight(.semibold))
+                .accessibilityIdentifier("practice.allowanceUnavailable")
+            Button { Task { await allowance.refresh() } } label: {
+                Text("paywall.retry").frame(minHeight: Spacing.minTarget)
+            }
+            .accessibilityIdentifier("practice.allowance.retry")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var controls: some View {

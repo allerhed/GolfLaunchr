@@ -41,11 +41,15 @@ final class CommerceStore {
     private let defaults: UserDefaults
     private let now: () -> Date
     static let entitlementKey = "commerce.entitlement"
+    static let latestSeenKey = "commerce.latestSeen"
+    /// The latest time ever seen here. A clock set back never makes an expired entitlement valid again.
+    private var latestSeen: Date
 
     init(store: (any StoreProviding)?, defaults: UserDefaults = .standard, now: @escaping () -> Date = Date.init) {
         self.store = store
         self.defaults = defaults
         self.now = now
+        latestSeen = (defaults.object(forKey: Self.latestSeenKey) as? Date) ?? .distantPast
         if let data = defaults.data(forKey: Self.entitlementKey) {
             entitlement = try? JSONDecoder().decode(Entitlement.self, from: data)
         }
@@ -53,7 +57,17 @@ final class CommerceStore {
 
     /// The entitlement if it is valid right now: not revoked, before its known expiry, inside the offline revalidation window.
     var activeEntitlement: Entitlement? {
-        entitlement.flatMap { $0.isActive(now: now()) ? $0 : nil }
+        let clock = max(now(), latestSeen)
+        return entitlement.flatMap { $0.isActive(now: clock) ? $0 : nil }
+    }
+
+    /// Remembers the latest time seen, so a clock set back cannot revive expired access.
+    private func observeClock() {
+        let current = now()
+        if current > latestSeen {
+            latestSeen = current
+            defaults.set(current, forKey: Self.latestSeenKey)
+        }
     }
 
     var isBusy: Bool {
@@ -89,6 +103,7 @@ final class CommerceStore {
 
     func buy(_ productID: String) async {
         guard let store, !isBusy else { return }
+        observeClock()
         purchase = .purchasing(productID)
         switch await store.purchase(productID) {
         case let .success(entitlement):
@@ -120,6 +135,7 @@ final class CommerceStore {
     /// Run at launch and when the store reports a change. A verified answer replaces the cache (including "none": a refund or
     /// revocation takes effect at once); an unreachable store leaves the cache to age out inside its offline window.
     func refreshEntitlement() async {
+        observeClock()
         guard let store else { return }
         do {
             try await setEntitlement(store.currentEntitlement())

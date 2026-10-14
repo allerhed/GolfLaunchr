@@ -14,7 +14,7 @@ final class AllowanceUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
-    func launch(_ lang: String, spent: Int?) -> XCUIApplication {
+    func launch(_ lang: String, spent: Int?, failing: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         var args = [
             "-AppleLanguages", "(\(lang))", "-AppleLocale", lang == "sv" ? "sv_SE" : "en_GB", "-uiTestResetSettings",
@@ -23,6 +23,9 @@ final class AllowanceUITests: XCTestCase {
         ]
         if let spent {
             args += ["-uiTestAllowanceSpent", "\(spent)"]
+        }
+        if failing {
+            args.append("-uiTestAllowanceFail")
         }
         app.launchArguments = args
         app.launch()
@@ -82,5 +85,21 @@ final class AllowanceUITests: XCTestCase {
         start.tap()
         XCTAssertTrue(app.descendants(matching: .any)["practice.capture"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.descendants(matching: .any)["practice.noAllowance"].exists)
+    }
+
+    /// QA 6.7: an unreadable balance must not leave a silently dead Arm button.
+    func testUnreadableBalanceSaysSoAndOffersARetry() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let app = launch("en", spent: nil, failing: true)
+        let start = app.buttons["home.start"]
+        XCTAssertTrue(start.waitForExistence(timeout: 12))
+        for _ in 0 ..< 3 where start.frame.minY < 60 {
+            app.swipeDown()
+        }
+        start.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["practice.capture"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.descendants(matching: .any)["practice.allowanceUnavailable"].firstMatch.waitForExistence(timeout: 8))
+        XCTAssertTrue(app.buttons["practice.allowance.retry"].exists)
+        XCTAssertFalse(app.buttons["practice.arm"].isEnabled)
     }
 }

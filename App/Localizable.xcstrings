@@ -4436,6 +4436,23 @@
         }
       }
     },
+    "practice.allowanceUnavailable": {
+      "comment": "Practice: the free-shot balance could not be read, so nothing arms",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your free-shot balance could not be read, so shooting is paused."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ditt saldo av gratis slag kunde inte läsas, så inspelningen är pausad."
+          }
+        }
+      }
+    },
     "practice.arm": {
       "comment": "Button",
       "localizations": {

@@ -95,7 +95,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
 - [x] 6.5 F21 Privacy: delete all/media-only, export-before-delete, redacted diagnostics bundle, no-upload network audit; owner approves retention wording
   - Done 2026-10-15 in the simulator. Owner still approves the retention wording and the trial-identity policy (backlog H4). Evidence: `docs/EVIDENCE.md` 6.5.
 - [ ] 6.6 Sandbox + TestFlight purchase tests on device (new, active, expired, refund, overlap); attach evidence
-- [ ] 6.7 **Milestone QA** (O)
+- [x] 6.7 **Milestone QA** (O)
+  - Done 2026-10-15 as a self-review (not independent) on the simulator; 6.6 device and sandbox tests are still open (yours). Evidence: `docs/EVIDENCE.md` 6.7.
 
 ## Phase 7 - Mode breadth (G4) - WP06
 - [ ] 7.1 F11 Target drill

@@ -315,4 +315,25 @@ struct CommerceStoreTests {
         await after.refreshEntitlement()
         #expect(after.activeEntitlement == nil, "back to the Free balance after the term")
     }
+
+    @Test func aClockSetBackNeverRevivesExpiredAccess() async {
+        let fake = FakeStore()
+        let d = defaults()
+        let verified = Entitlement(
+            kind: .paid,
+            expiresAt: t0.addingTimeInterval(10 * 86400),
+            lastVerifiedAt: t0.addingTimeInterval(11 * 86400),
+            revoked: false
+        )
+        await fake.set(current: .success(verified))
+        let late = make(fake, defaults: d, now: { t0.addingTimeInterval(11 * 86400) })
+        await late.refreshEntitlement()
+        #expect(late.activeEntitlement == nil, "expired")
+        await fake.set(current: .failure(FakeStore.Offline()))
+        let rolledBack = make(fake, defaults: d, now: { t0.addingTimeInterval(5 * 86400) })
+        // The cached entitlement was cleared by nothing here, so put it back as an offline cache would hold it.
+        await fake.set(outcomes: [.success(verified)])
+        await rolledBack.buy(ProductIDs.annual)
+        #expect(rolledBack.activeEntitlement == nil, "the day-5 clock is behind the day-11 sighting: still expired")
+    }
 }
