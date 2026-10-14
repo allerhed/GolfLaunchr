@@ -2991,6 +2991,210 @@
         }
       }
     },
+    "membership.complimentary": {
+      "comment": "Membership status with a free partner offer",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro access — Complimentary"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro-åtkomst — Kostnadsfri"
+          }
+        }
+      }
+    },
+    "membership.ends": {
+      "comment": "Followed by the date",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Access ends"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Åtkomsten upphör"
+          }
+        }
+      }
+    },
+    "membership.free": {
+      "comment": "Membership status without Pro",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free plan"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratisplan"
+          }
+        }
+      }
+    },
+    "membership.header": {
+      "comment": "Section header",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Membership"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medlemskap"
+          }
+        }
+      }
+    },
+    "membership.noCharge": {
+      "comment": "Complimentary access ends without a charge",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No charge when this access ends."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingen debitering när denna åtkomst upphör."
+          }
+        }
+      }
+    },
+    "membership.pro": {
+      "comment": "Membership status with paid Pro",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GolfLaunchr Pro"
+          }
+        }
+      }
+    },
+    "membership.redeem": {
+      "comment": "Opens Apple's redemption sheet",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redeem offer code"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lös in erbjudandekod"
+          }
+        }
+      }
+    },
+    "membership.redeem.activated": {
+      "comment": "Redemption verified",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro access is active."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro-åtkomsten är aktiv."
+          }
+        }
+      }
+    },
+    "membership.redeem.checking": {
+      "comment": "After the redemption sheet closes",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking your access…"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontrollerar din åtkomst…"
+          }
+        }
+      }
+    },
+    "membership.redeem.footer": {
+      "comment": "Warning before redeeming",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already subscribed? Review Apple's offer terms and your subscription settings before applying a code. A code never cancels or refunds an existing subscription."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prenumererar du redan? Läs Apples villkor för erbjudanden och dina prenumerationsinställningar innan du använder en kod. En kod avbryter eller återbetalar aldrig en befintlig prenumeration."
+          }
+        }
+      }
+    },
+    "membership.redeem.notActivated": {
+      "comment": "Redemption not verified",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing was unlocked. If you applied a code, it can take a moment: try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inget har låsts upp. Om du angav en kod kan det ta en stund: försök igen."
+          }
+        }
+      }
+    },
+    "membership.redeem.unavailable": {
+      "comment": "Redemption sheet unavailable",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code sheet could not be opened. Try again."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kodrutan kunde inte öppnas. Försök igen."
+          }
+        }
+      }
+    },
     "metric.apex": {
       "comment": "Metric name: Apex",
       "localizations": {

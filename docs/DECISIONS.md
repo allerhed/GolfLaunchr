@@ -65,3 +65,6 @@ Product defaults live in [spec/03-decisions.md](spec/03-decisions.md). This file
 | 2026-10-14 | A verified "no entitlement" from the store clears access at once; an unreachable store keeps the cache for seven days | F19: no paid grace after a known revocation, and offline use inside the documented window. |
 | 2026-10-14 | The local StoreKit file lives in `Config/`, outside the app bundle | A test fixture must never ship in the app. |
 | 2026-10-14 | Terms link is Apple's standard licence until the owner hosts their own | Avoids a dead or invented URL; recorded in the backlog. |
+| 2026-10-14 | Redemption unlocks only what StoreKit later reports as verified, never the sheet's result | The sheet cannot tell us whether a code was valid; the store can. |
+| 2026-10-14 | "Complimentary" is shown only from verified offer metadata (free offer code); otherwise neutral "Pro" | F19a: do not guess sponsorship. |
+| 2026-10-14 | No in-app revoke or disable of redeemed access | F19a: Apple codes cannot be revoked after redemption; a local toggle would be false. |

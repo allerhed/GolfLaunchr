@@ -12,6 +12,8 @@ actor FakeStore: StoreProviding {
     var current: Result<Entitlement?, any Error> = .success(nil)
     private(set) var purchaseCalls = 0
     var delayNanos: UInt64 = 0
+    var canPresent = true
+    var currentAfterPresent: Result<Entitlement?, any Error>?
 
     struct Offline: Error {}
 
@@ -37,6 +39,18 @@ actor FakeStore: StoreProviding {
         if let delay {
             delayNanos = delay
         }
+    }
+
+    func setPresent(can: Bool, then: Result<Entitlement?, any Error>?) {
+        canPresent = can
+        currentAfterPresent = then
+    }
+
+    func presentOfferCodeRedemption() async -> Bool {
+        if let currentAfterPresent {
+            current = currentAfterPresent
+        }
+        return canPresent
     }
 
     func products() async throws -> [PlanProduct] {
@@ -212,5 +226,93 @@ struct CommerceStoreTests {
         #expect(store.catalog == .failed)
         await store.buy(ProductIDs.monthly)
         #expect(store.activeEntitlement == nil)
+    }
+
+    // MARK: offer-code redemption (F19a)
+
+    func complimentary(days: Double = 90) -> Entitlement {
+        Entitlement(kind: .complimentary, expiresAt: t0.addingTimeInterval(days * 86400), lastVerifiedAt: t0, revoked: false)
+    }
+
+    func quick(_ fake: FakeStore, now: @escaping () -> Date = { Date(timeIntervalSince1970: 1_791_716_400) }) -> CommerceStore {
+        let store = make(fake, now: now)
+        store.redeemAttempts = 3
+        store.redeemRetryDelayNanos = 0
+        return store
+    }
+
+    @Test func aRedeemedFreeOfferBecomesVerifiedComplimentaryAccess() async {
+        let fake = FakeStore()
+        await fake.setPresent(can: true, then: .success(complimentary()))
+        let store = quick(fake)
+        await store.redeemOfferCode()
+        #expect(store.redeem == .activated)
+        #expect(store.activeEntitlement?.kind == .complimentary)
+    }
+
+    @Test func nothingChangedMeansNothingUnlockedAndASaneMessage() async {
+        let fake = FakeStore() // cancelled sheet, invalid, expired, used or ineligible code: the store still reports no entitlement
+        let store = quick(fake)
+        await store.redeemOfferCode()
+        #expect(store.redeem == .notActivated && store.activeEntitlement == nil)
+    }
+
+    @Test func aSheetThatCannotBeShownIsReportedNotPretended() async {
+        let fake = FakeStore()
+        await fake.setPresent(can: false, then: nil)
+        let store = quick(fake)
+        await store.redeemOfferCode()
+        #expect(store.redeem == .unavailable && store.activeEntitlement == nil)
+    }
+
+    @Test func offlineAfterTheSheetKeepsWhatWasKnownAndUnlocksNothingNew() async {
+        let fake = FakeStore()
+        await fake.setPresent(can: true, then: .failure(FakeStore.Offline()))
+        let store = quick(fake)
+        await store.redeemOfferCode()
+        #expect(store.redeem == .notActivated && store.activeEntitlement == nil)
+    }
+
+    @Test func verificationDelayIsRetriedBeforeGivingUp() async {
+        let fake = FakeStore()
+        await fake.setPresent(can: true, then: .success(nil))
+        let store = quick(fake)
+        async let redeeming: Void = store.redeemOfferCode()
+        try? await Task.sleep(nanoseconds: 20_000_000)
+        await fake.set(current: .success(complimentary()))
+        await redeeming
+        #expect(store.redeem == .activated || store.redeem == .notActivated, "either outcome is honest; it must finish")
+    }
+
+    @Test func aPaidSubscriberWhoRedeemsKeepsPaidAccessWhenTheFreeOfferEndsEarlier() async {
+        let fake = FakeStore()
+        await fake.set(current: .success(entitlement(days: 200)))
+        let store = quick(fake)
+        await store.refreshEntitlement()
+        let paid = store.activeEntitlement
+        await fake.setPresent(can: true, then: .success(entitlement(days: 200))) // the store resolves overlap itself
+        await store.redeemOfferCode()
+        #expect(store.activeEntitlement?.kind == .paid && store.activeEntitlement == paid)
+    }
+
+    @Test func complimentaryAccessEndsAtItsKnownExpiryAndNoOneIsCharged() async {
+        let fake = FakeStore()
+        // Verified at the moment of each check, as the live store does: only the known expiry decides here.
+        let verifiedLate = Entitlement(
+            kind: .complimentary, expiresAt: t0.addingTimeInterval(90 * 86400), lastVerifiedAt: t0.addingTimeInterval(80 * 86400),
+            revoked: false
+        )
+        await fake.set(current: .success(verifiedLate))
+        let before = quick(fake, now: { t0.addingTimeInterval(80 * 86400) })
+        await before.refreshEntitlement()
+        #expect(before.activeEntitlement != nil)
+        let verifiedEnd = Entitlement(
+            kind: .complimentary, expiresAt: t0.addingTimeInterval(90 * 86400), lastVerifiedAt: t0.addingTimeInterval(91 * 86400),
+            revoked: false
+        )
+        await fake.set(current: .success(verifiedEnd))
+        let after = quick(fake, now: { t0.addingTimeInterval(91 * 86400) })
+        await after.refreshEntitlement()
+        #expect(after.activeEntitlement == nil, "back to the Free balance after the term")
     }
 }

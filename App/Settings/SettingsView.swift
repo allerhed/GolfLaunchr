@@ -223,6 +223,7 @@ struct SettingsView: View {
                 .listRowBackground(Tokens.surface.color)
                 voiceSection
                 atmosphereSection
+                MembershipSection()
                 privacySection
             }
             .scrollContentBackground(.hidden)

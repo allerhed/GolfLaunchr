@@ -18,6 +18,10 @@ final class CommerceStore {
         case pending, cancelled, failed, succeeded
     }
 
+    enum Redeem: Equatable {
+        case idle, presenting, checking, activated, notActivated, unavailable
+    }
+
     enum RestoreState: Equatable {
         case idle, restoring, failed
         case restored(found: Bool)
@@ -26,6 +30,10 @@ final class CommerceStore {
     private(set) var catalog = Catalog.idle
     private(set) var purchase = Purchase.idle
     private(set) var restoreState = RestoreState.idle
+    private(set) var redeem = Redeem.idle
+    /// After the redemption sheet closes the store can take a moment to report the new access: ask a few times.
+    var redeemAttempts = 4
+    var redeemRetryDelayNanos: UInt64 = 2_000_000_000
     /// The last verified entitlement, kept for offline use. Whether it still counts is decided by `activeEntitlement`.
     private(set) var entitlement: Entitlement?
 
@@ -52,7 +60,7 @@ final class CommerceStore {
         if case .purchasing = purchase {
             return true
         }
-        return restoreState == .restoring
+        return restoreState == .restoring || redeem == .presenting || redeem == .checking
     }
 
     private func setEntitlement(_ value: Entitlement?) {
@@ -118,6 +126,35 @@ final class CommerceStore {
         } catch {
             return
         }
+    }
+
+    /// Apple's own sheet takes the code; this only opens it and then asks the store what is verified. A cancelled, invalid, expired,
+    /// used or ineligible code leaves the verified entitlement unchanged, so nothing is unlocked on the sheet's say-so.
+    func redeemOfferCode() async {
+        guard let store, !isBusy else {
+            if store == nil {
+                redeem = .unavailable
+            }
+            return
+        }
+        redeem = .presenting
+        guard await store.presentOfferCodeRedemption() else {
+            redeem = .unavailable
+            return
+        }
+        redeem = .checking
+        let before = activeEntitlement
+        for attempt in 0 ..< redeemAttempts {
+            if attempt > 0, redeemRetryDelayNanos > 0 {
+                try? await Task.sleep(nanoseconds: redeemRetryDelayNanos)
+            }
+            await refreshEntitlement()
+            if let now = activeEntitlement, now != before {
+                redeem = .activated
+                return
+            }
+        }
+        redeem = .notActivated
     }
 
     func dismissOutcome() {

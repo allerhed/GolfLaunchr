@@ -94,10 +94,13 @@ struct HomeView: View {
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("home.allowance")
-                Button { navigation.showingPlans = true } label: {
-                    Text("allowance.see.plans").frame(minHeight: Spacing.minTarget, alignment: .leading)
+                // No upgrade prompt while verified Pro access is valid.
+                if !snap.isPro {
+                    Button { navigation.showingPlans = true } label: {
+                        Text("allowance.see.plans").frame(minHeight: Spacing.minTarget, alignment: .leading)
+                    }
+                    .accessibilityIdentifier("home.plans")
                 }
-                .accessibilityIdentifier("home.plans")
             }
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(Tokens.textPrimary.color)

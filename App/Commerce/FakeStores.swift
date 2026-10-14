@@ -4,8 +4,9 @@
 
     /// Debug-only store for UI tests (`-uiTestStore ok|loadFail|pending|cancel|fail`): no StoreKit, no network, no charge.
     final class ScriptedStore: StoreProviding, @unchecked Sendable {
-        enum Scenario: String { case ok, loadFail, pending, cancel, fail }
+        enum Scenario: String { case ok, loadFail, pending, cancel, fail, redeem }
         let scenario: Scenario
+        private var redeemed = false
         init(_ scenario: Scenario) {
             self.scenario = scenario
         }
@@ -30,7 +31,7 @@
                 ))
             case .pending: .pending
             case .cancel: .cancelled
-            case .fail, .loadFail: .failed
+            case .fail, .loadFail, .redeem: .failed
             }
         }
 
@@ -39,7 +40,21 @@
         }
 
         func currentEntitlement() async throws -> Entitlement? {
-            nil
+            guard redeemed else { return nil }
+            return Entitlement(
+                kind: .complimentary,
+                expiresAt: Date().addingTimeInterval(90 * 86400),
+                lastVerifiedAt: Date(),
+                revoked: false
+            )
+        }
+
+        /// `redeem` scenario: the sheet "accepts" a free offer code. Every other scenario closes it with nothing redeemed.
+        func presentOfferCodeRedemption() async -> Bool {
+            if scenario == .redeem {
+                redeemed = true
+            }
+            return true
         }
     }
 #endif

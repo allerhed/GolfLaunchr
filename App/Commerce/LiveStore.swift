@@ -1,6 +1,7 @@
 import Allowance
 import Foundation
 import StoreKit
+import UIKit
 
 /// StoreKit 2. Only verified transactions count; an unverified one is never granted.
 struct LiveStore: StoreProviding {
@@ -58,12 +59,31 @@ struct LiveStore: StoreProviding {
     }
 
     func currentEntitlement() async throws -> Entitlement? {
-        var found: [(expiresAt: Date, revoked: Bool)] = []
+        var found: [TransactionFact] = []
         for await result in Transaction.currentEntitlements {
             guard case let .verified(transaction) = result, ProductIDs.all.contains(transaction.productID),
                   let expires = transaction.expirationDate else { continue }
-            found.append((expires, transaction.revocationDate != nil))
+            // Only verified offer metadata marks complimentary access: a free offer code. Anything else is shown as plain Pro.
+            let free = transaction.offer?.type == .code && transaction.offer?.paymentMode == .freeTrial
+            found.append(TransactionFact(
+                expiresAt: expires,
+                revoked: transaction.revocationDate != nil,
+                kind: free ? .complimentary : .paid
+            ))
         }
         return Entitlement.resolve(from: found, verifiedAt: Date())
+    }
+
+    @MainActor
+    func presentOfferCodeRedemption() async -> Bool {
+        let scene = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }
+        guard let scene else { return false }
+        do {
+            try await AppStore.presentOfferCodeRedeemSheet(in: scene)
+            return true
+        } catch {
+            return false
+        }
     }
 }

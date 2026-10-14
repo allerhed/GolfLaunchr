@@ -90,7 +90,8 @@ Research-grade; physical iPhone required. Opus plans each experiment; Sonnet bui
   - Done 2026-10-13 (rules, tests, Home line and arming gate on the simulator). The StoreKit entitlement (6.3) and real ledger writes from capture (5.3) are NOT built. Evidence: `docs/EVIDENCE.md` 6.2.
 - [x] 6.3 F19 StoreKit 2: products, purchase/restore/manage, verified entitlements, offline revalidation window, paywall + plan comparison + exhausted screens
   - Done 2026-10-14 against the local StoreKit configuration in the simulator. Sandbox/TestFlight purchases, App Store Connect products and a real refund are NOT RUN (6.1, 6.6). Evidence: `docs/EVIDENCE.md` 6.3.
-- [ ] 6.4 F19a Offer-code redemption UI + complimentary display + partner runbook (`docs/PARTNER_ACCESS.md`); **You** create offers in App Store Connect
+- [x] 6.4 F19a Offer-code redemption UI + complimentary display + partner runbook (`docs/PARTNER_ACCESS.md`); **You** create offers in App Store Connect
+  - Done 2026-10-14 for the app side and the runbook (`docs/PARTNER_ACCESS.md`). Creating offers in App Store Connect and every sandbox/device redemption test remain yours / NOT RUN. Evidence: `docs/EVIDENCE.md` 6.4.
 - [ ] 6.5 F21 Privacy: delete all/media-only, export-before-delete, redacted diagnostics bundle, no-upload network audit; owner approves retention wording
 - [ ] 6.6 Sandbox + TestFlight purchase tests on device (new, active, expired, refund, overlap); attach evidence
 - [ ] 6.7 **Milestone QA** (O)

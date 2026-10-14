@@ -17,16 +17,48 @@ struct CommerceTests {
 
     @Test func overlappingTransactionsGiveOneEntitlementUntilTheLatestExpiry() throws {
         let a = now.addingTimeInterval(10 * 86400), b = now.addingTimeInterval(300 * 86400)
-        let e = try #require(Entitlement.resolve(from: [(a, false), (b, false)], verifiedAt: now))
+        let e = try #require(Entitlement.resolve(
+            from: [TransactionFact(expiresAt: a, revoked: false, kind: .paid), TransactionFact(expiresAt: b, revoked: false, kind: .paid)],
+            verifiedAt: now
+        ))
         #expect(e.expiresAt == b && !e.revoked && e.kind == .paid)
     }
 
     @Test func revokedTransactionsNeverCountAndNoneMeansNoEntitlement() {
         let a = now.addingTimeInterval(86400)
-        #expect(Entitlement.resolve(from: [(a, true)], verifiedAt: now) == nil)
+        #expect(Entitlement.resolve(from: [TransactionFact(expiresAt: a, revoked: true, kind: .paid)], verifiedAt: now) == nil)
         #expect(Entitlement.resolve(from: [], verifiedAt: now) == nil)
-        let e = Entitlement.resolve(from: [(a, true), (a.addingTimeInterval(86400), false)], verifiedAt: now)
+        let e = Entitlement.resolve(
+            from: [TransactionFact(expiresAt: a, revoked: true, kind: .paid), TransactionFact(
+                expiresAt: a.addingTimeInterval(86400),
+                revoked: false,
+                kind: .paid
+            )],
+            verifiedAt: now
+        )
         #expect(e?.expiresAt == a.addingTimeInterval(86400))
+    }
+
+    @Test func theLongestLastingTransactionDecidesTheKind() throws {
+        let soon = now.addingTimeInterval(10 * 86400), later = now.addingTimeInterval(90 * 86400)
+        let free = try #require(Entitlement.resolve(
+            from: [TransactionFact(expiresAt: soon, revoked: false, kind: .paid), TransactionFact(
+                expiresAt: later,
+                revoked: false,
+                kind: .complimentary
+            )],
+            verifiedAt: now
+        ))
+        #expect(free.kind == .complimentary && free.expiresAt == later)
+        let paid = try #require(Entitlement.resolve(
+            from: [TransactionFact(expiresAt: later, revoked: false, kind: .paid), TransactionFact(
+                expiresAt: soon,
+                revoked: false,
+                kind: .complimentary
+            )],
+            verifiedAt: now
+        ))
+        #expect(paid.kind == .paid, "a paid subscription that outlasts the free offer stays a paid entitlement")
     }
 
     @Test func savingIsComputedFromTheStorePricesAndRoundedToOneDecimal() {

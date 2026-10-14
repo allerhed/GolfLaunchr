@@ -54,17 +54,33 @@ public protocol StoreProviding: Sendable {
     func restore() async throws -> Entitlement?
     /// The verified entitlement the store currently knows about (nil = none). Throws when the store cannot be reached.
     func currentEntitlement() async throws -> Entitlement?
+    /// Opens Apple's offer-code redemption sheet and returns when it is closed. False if it could not be shown.
+    func presentOfferCodeRedemption() async -> Bool
+}
+
+/// One verified, current transaction as far as access goes.
+public struct TransactionFact: Sendable, Equatable {
+    public let expiresAt: Date
+    public let revoked: Bool
+    public let kind: AllowanceKind
+
+    public init(expiresAt: Date, revoked: Bool, kind: AllowanceKind) {
+        self.expiresAt = expiresAt
+        self.revoked = revoked
+        self.kind = kind
+    }
 }
 
 public extension Entitlement {
-    /// Picks the verified, unrevoked transaction that lasts longest. Several overlapping transactions (monthly then annual)
-    /// never add up or double-grant: it is one entitlement until the latest expiry.
+    /// Picks the verified, unrevoked transaction that lasts longest, and takes its kind (an access granted by a free offer code is
+    /// `.complimentary`). Several overlapping transactions (monthly then annual) never add up or double-grant: it is one
+    /// entitlement until the latest expiry.
     static func resolve(
-        from transactions: [(expiresAt: Date, revoked: Bool)], verifiedAt: Date, kind: AllowanceKind = .paid
+        from transactions: [TransactionFact], verifiedAt: Date
     ) -> Entitlement? {
         let live = transactions.filter { !$0.revoked }
-        guard let latest = live.map(\.expiresAt).max() else { return nil }
-        return Entitlement(kind: kind, expiresAt: latest, lastVerifiedAt: verifiedAt, revoked: false)
+        guard let latest = live.max(by: { $0.expiresAt < $1.expiresAt }) else { return nil }
+        return Entitlement(kind: latest.kind, expiresAt: latest.expiresAt, lastVerifiedAt: verifiedAt, revoked: false)
     }
 }
 
