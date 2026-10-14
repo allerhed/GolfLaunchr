@@ -52,6 +52,19 @@ targets:
         CFBundleLocalizations: [en, sv]
         # English fallback; the localised texts are in App/en.lproj and App/sv.lproj (InfoPlist.strings).
         NSCameraUsageDescription: GolfLaunchr uses the camera to see and measure your golf shots. Video stays on your iPhone.
+    # Debug builds only: let Finder (iPhone > Files) copy the capture harness clips from Documents/G1 over a cable.
+    # Release never gets these keys (checked in scripts/check-harness-separation.sh).
+    postBuildScripts:
+      - name: Debug-only file sharing for harness clips
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "$CONFIGURATION" = "Debug" ]; then
+            PLIST="$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+            for KEY in UIFileSharingEnabled LSSupportsOpeningDocumentsInPlace; do
+              /usr/libexec/PlistBuddy -c "Delete :$KEY" "$PLIST" 2>/dev/null || true
+              /usr/libexec/PlistBuddy -c "Add :$KEY bool true" "$PLIST"
+            done
+          fi
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.allerhed.golflaunchr
@@ -71,6 +84,10 @@ targets:
       - { package: Persistence, product: PersistenceTestSupport }
     settings:
       base: { GENERATE_INFOPLIST_FILE: YES }
+      # Unit tests of the Debug-only capture harness compile only where the harness exists.
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) CAPTURE_HARNESS"
   GolfLaunchrUITests:
     type: bundle.ui-testing
     platform: iOS

@@ -20,6 +20,7 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | B10 | At the bay: 10 minutes of negatives (practice swings, ball placement, walking past) and 2 minutes of the empty hitting area as background plates | You | False-trigger baseline and compositing plates |
 | B11 | **Measure the camera-to-ball distance with a tape** at every setup and type it into the harness (D1 said 0.75 m, the ball size says about 0.35 m) | You | The manifest distance was a default, not a measurement |
 | B12 | **Golfer consent** for using their clips to train the detector (local only, no upload); wording to be approved (detector plan Q3) | You | Training on people's video needs consent |
+| B13 | **Garage weekend 17-18 Oct with the borrowed Garmin R10**: follow `docs/protocols/GolfLaunchr-garage-R10-protocol.pdf`, bring back the clip folders, R10 CSVs per block, log sheets and setup photos | You | First real training data and a rough first comparison; the formal reference stays the TrackMan bay |
 
 ## 2. At the bay (script in `docs/plans/G1-capture-spike.md`, sections 3, 12 and the "Limited bay access" protocol)
 

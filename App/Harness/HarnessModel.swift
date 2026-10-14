@@ -62,12 +62,19 @@
         var exposurePlanText: String?
         var handedness = "right"
         var club = "7 iron"
-        var lighting = "indoor bright"
-        var location = "bay"
+        var lighting = "garage LED"
+        var location = "garage"
         var distanceText = "0.75"
         var heightText = "0.2"
         var golferID = "g1"
         var message: String?
+        /// Garage/bay session fields: one block = one session on the reference monitor.
+        var block = "B1"
+        var recordingKind = RecordingKind.strike
+        var ball = "white"
+        var referenceInstrument = "Garmin Approach R10"
+        var sequenceCounters: [String: Int] = [:]
+        var lastSavedLabel: String?
 
         var measuredFPS: Double?
         var droppedTotal = 0
@@ -310,10 +317,20 @@
             setup.cameraHeightM = NumberInput.parse(heightText, locale: .current)
             var shot = ShotInfo(club: club, lighting: lighting, location: location, trigger: trigger.rawValue)
             shot.golferID = golferID
-            let manifest = builder.build(
+            shot.block = block
+            shot.recordingKind = recordingKind.rawValue
+            shot.ball = ball
+            let sequence = nextSequence(block: block, kind: recordingKind)
+            shot.sequenceInBlock = sequence
+            var manifest = builder.build(
                 window: clip.window, dropped: clip.dropped, telemetry: clip.telemetry, createdUTC: created, clipID: id,
                 deviceOrientation: Self.orientationName(), callbackTiming: metrics?.snapshot().timing, setup: setup, shot: shot
             )
+            if !referenceInstrument.isEmpty {
+                var reference = ReferenceInfo(instrument: referenceInstrument)
+                reference.sessionID = block
+                manifest.reference = reference
+            }
             do {
                 let dir = try Self.clipDirectory()
                 let movie = dir.appendingPathComponent("\(stem).mov")
@@ -330,41 +347,15 @@
                     ),
                     at: 0
                 )
-                message = "Saved \(stem) (\(clip.window.frames.count) frames, \(clip.window.clockStats.missingFrames) missing)"
+                logRow(manifest, stem: stem)
+                confirmSaved()
+                lastSavedLabel = "\(block) \(recordingKind.rawValue) #\(sequence)"
+                message = "Saved \(block) \(recordingKind.rawValue) #\(sequence): \(stem) (\(clip.window.frames.count) frames, "
+                    + "\(clip.window.clockStats.missingFrames) missing)"
             } catch {
                 message = "Save failed: \(error)"
             }
             updateFreeSpace()
-        }
-
-        /// Physical orientation name; capture must be landscape (spec F22).
-        static func orientationName() -> String {
-            switch UIDevice.current.orientation {
-            case .landscapeLeft: "landscapeLeft"
-            case .landscapeRight: "landscapeRight"
-            case .portrait: "portrait"
-            case .portraitUpsideDown: "portraitUpsideDown"
-            case .faceUp: "faceUp"
-            case .faceDown: "faceDown"
-            default: "unknown"
-            }
-        }
-
-        static func clipDirectory() throws -> URL {
-            let docs = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let dir = docs.appendingPathComponent("G1", isDirectory: true)
-            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-            return dir
-        }
-
-        static func deviceInfo() -> DeviceInfo {
-            var size = 0
-            sysctlbyname("hw.machine", nil, &size, nil, 0)
-            var bytes = [CChar](repeating: 0, count: max(size, 1))
-            sysctlbyname("hw.machine", &bytes, &size, nil, 0)
-            let machine = String(cString: bytes)
-            let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
-            return DeviceInfo(machine: machine, osVersion: ProcessInfo.processInfo.operatingSystemVersionString, appBuild: build)
         }
     }
 #endif

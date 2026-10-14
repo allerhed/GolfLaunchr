@@ -140,6 +140,12 @@ public struct ShotInfo: Codable, Sendable, Equatable {
     public var golferID: String?
     public var outcomeNotes: String?
     public var trigger: String
+    /// Recording block (one block = one reference-monitor session), e.g. "B3". Pairing key with the reference export.
+    public var block: String?
+    /// strike, negative, background or scale: what this clip is for.
+    public var recordingKind: String?
+    /// 1-based position of this clip among the block's clips of the same kind.
+    public var sequenceInBlock: Int?
 
     public init(club: String, lighting: String, location: String, trigger: String) {
         self.club = club

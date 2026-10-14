@@ -336,10 +336,21 @@ final class HarnessUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["harness.banner"].label.contains("Not shipped"))
         XCTAssertTrue(app.navigationBars["DEBUG HARNESS"].exists)
         XCTAssertTrue(app.staticTexts["harness.phase"].label.contains("No camera"))
-        let start = app.buttons["harness.start"]
-        for _ in 0 ..< 6 where !start.exists {
-            app.swipeUp()
+        // The garage session fields (block, recording kind, next block) are part of the harness form. Drag inside the harness form
+        // itself (lower part of the screen): the Settings list behind the full-screen harness is still in the hierarchy.
+        func scrollForm() {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+        }
+        let nextBlock = app.buttons["harness.nextBlock"]
+        for _ in 0 ..< 10 where !nextBlock.exists {
+            scrollForm()
         } // lazy form: scroll the row into the hierarchy
+        XCTAssertTrue(nextBlock.exists, "session fields for garage/bay recording")
+        let start = app.buttons["harness.start"]
+        for _ in 0 ..< 12 where !start.exists {
+            scrollForm()
+        }
         XCTAssertTrue(start.exists)
         XCTAssertFalse(start.isEnabled, "cannot start without a camera format")
         XCTAssertTrue(app.staticTexts["harness.previewState"].exists)

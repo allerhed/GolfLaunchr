@@ -23,4 +23,8 @@ D=$(hits "$DEBUG_APP"); R=$(hits "$REL_APP")
 echo "harness strings: Debug=$D Release=$R"
 [ "$D" -gt 0 ] || { echo "FAIL: positive control found nothing in Debug (check is vacuous)"; exit 1; }
 [ "$R" -eq 0 ] || { echo "FAIL: Release contains harness code"; exit 1; }
+# Finder file sharing (for copying harness clips) is Debug-only too.
+share() { /usr/libexec/PlistBuddy -c "Print :UIFileSharingEnabled" "$1/Info.plist" 2>/dev/null || echo absent; }
+[ "$(share "$DEBUG_APP")" = "true" ] || { echo "FAIL: Debug build lacks Finder file sharing for harness clips"; exit 1; }
+[ "$(share "$REL_APP")" = "absent" ] || { echo "FAIL: Release enables Finder file sharing"; exit 1; }
 echo "harness separation OK"

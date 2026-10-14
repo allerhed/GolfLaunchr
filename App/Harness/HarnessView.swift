@@ -49,12 +49,32 @@
                 Color.black
                 if model.previewSession != nil {
                     CameraPreview(session: model.previewSession)
+                    sessionOverlay
                 } else {
                     Text(verbatim: model.phase == .noCamera ? "No camera available" : "Preview starts with Start")
                         .foregroundStyle(.white)
                         .accessibilityIdentifier("harness.previewState")
                 }
             }
+        }
+
+        /// Big enough to read from the hitting position: which block and shot the next clip will be, and what was last saved.
+        private var sessionOverlay: some View {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(verbatim: "\(model.block) \(model.recordingKind.rawValue) next #\(model.upcomingSequence)")
+                    .font(.title2.bold().monospacedDigit())
+                Text(verbatim: "\(model.club) · \(model.exposurePreset.rawValue) · \(model.ball)").font(.headline)
+                if let last = model.lastSavedLabel {
+                    Text(verbatim: "Saved \(last)").font(.headline).foregroundStyle(.green)
+                }
+            }
+            .padding(8)
+            .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 8))
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(8)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("harness.sessionOverlay")
         }
 
         private var controls: some View {
@@ -93,6 +113,29 @@
                         Text(verbatim: "Motion threshold \(Int(model.motionThreshold))")
                     }
                     .disabled(model.phase == .running)
+                }
+                Section(header: Text(verbatim: "Session (garage / bay with a reference monitor)")) {
+                    field("Block", $model.block)
+                    Button { model.block = Self.nextBlock(after: model.block) } label: { Text(verbatim: "Next block") }
+                        .accessibilityIdentifier("harness.nextBlock")
+                    Picker(selection: $model.recordingKind) {
+                        ForEach(RecordingKind.allCases) { Text(verbatim: $0.rawValue).tag($0) }
+                    } label: { Text(verbatim: "Recording") }
+                        .pickerStyle(.segmented)
+                        .accessibilityIdentifier("harness.kind")
+                    Picker(selection: $model.ball) {
+                        Text(verbatim: "white").tag("white")
+                        Text(verbatim: "marked").tag("marked")
+                        Text(verbatim: "yellow").tag("yellow")
+                    } label: { Text(verbatim: "Ball") }
+                        .pickerStyle(.segmented)
+                    field("Reference monitor", $model.referenceInstrument)
+                    if !model.clips.isEmpty {
+                        Button { model.markLast("void: false trigger") } label: { Text(verbatim: "Last clip: false trigger (void)") }
+                            .accessibilityIdentifier("harness.voidLast")
+                        Button { model.markLast("reference missed") } label: { Text(verbatim: "Last clip: reference monitor missed it") }
+                        Button { model.markLast("mis-hit") } label: { Text(verbatim: "Last clip: mis-hit") }
+                    }
                 }
                 Section(header: Text(verbatim: "Setup (recorded in the manifest)")) {
                     Picker(selection: $model.handedness) {
@@ -146,6 +189,13 @@
                     }
                 }
             }
+        }
+
+        /// "B3" -> "B4"; anything without a trailing number gets "-2".
+        static func nextBlock(after block: String) -> String {
+            let digits = block.reversed().prefix { $0.isNumber }
+            guard !digits.isEmpty, let n = Int(String(digits.reversed())) else { return block + "-2" }
+            return String(block.dropLast(digits.count)) + String(n + 1)
         }
 
         @ViewBuilder private var statusRow: some View {

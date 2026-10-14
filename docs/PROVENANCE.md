@@ -26,6 +26,7 @@ GolfLaunchr is an independently designed and implemented iPhone golf practice ap
 |---|---|
 | XcodeGen | Generates the gitignored `.xcodeproj` from `project.yml` |
 | SwiftLint, SwiftFormat | Lint and format gate in `scripts/verify.sh` |
+| Python with reportlab (BSD licence), development only | Builds the printable garage test protocol PDF from `docs/protocols/make_garage_protocol.py`; nothing of it ships in the app |
 
 ## Third-party assets (images, fonts, sounds, course data, datasets)
 
