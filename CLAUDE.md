@@ -36,7 +36,11 @@ Session default is Sonnet. Delegate with the Agent tool:
 | `ios-implementer` | sonnet | Implement one plan item until `scripts/verify.sh` passes. |
 | `l10n-reviewer` | sonnet | en/sv completeness and Swedish terminology (spec F25 glossary). |
 | `qa-reviewer` | opus | Independent milestone review: reproduces everything, never trusts implementer summaries. |
-Flow: `planner` -> `swift-test-writer` -> `ios-implementer` -> (milestone) `qa-reviewer`. Skill `new-feature` runs it. Small fixes: do directly, still follow Definition of Done. Give agents the plan path and feature IDs, not pasted spec text.
+| `product-manager` | opus | Frames features (problem, smallest shippable version, acceptance), picks the next PLAN.md item, accepts or rejects finished work, guards claims. No code. |
+| `lead-engineer` | opus | Reviews plan designs and diffs: package boundaries, concurrency, performance, test quality, dependencies. Approves or rejects with concrete fixes. |
+| `ciso` | opus | Maniacal security and privacy audit (network, secrets, storage, logging, permissions, purchases, release hygiene, supply chain). BLOCKER findings stop the change. Read-only. |
+| `customer` | sonnet | Real golfer personas (sv/en, beginner to low handicap, left/right-handed): user stories when framing, hands-on simulator review of flows and copy. No code. |
+Flow: (`product-manager` + `customer` frame) -> `planner` -> (`lead-engineer` + `ciso` review the plan when it touches design, data, network, purchases or permissions) -> `swift-test-writer` -> `ios-implementer` -> (`lead-engineer` reviews the diff) -> (milestone) `qa-reviewer` + `ciso` + `customer` -> `product-manager` accepts. Skill `new-feature` runs it. Small fixes: do directly, still follow Definition of Done. Give agents the plan path and feature IDs, not pasted spec text.
 
 ## Definition of Done (mandatory)
 Never report a UI change or function as complete because an edit succeeded or the build compiles. Verify it as a human reviewer would:
