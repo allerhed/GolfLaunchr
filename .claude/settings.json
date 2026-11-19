@@ -1,5 +1,17 @@
 {
   "model": "sonnet",
+  "extraKnownMarketplaces": {
+    "claudecoe": {
+      "source": {
+        "source": "github",
+        "repo": "allerhed/ClaudeCOE"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "coe@claudecoe": true,
+    "coe-ios@claudecoe": true
+  },
   "permissions": {
     "allow": [
       "Bash(scripts/*)",

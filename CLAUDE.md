@@ -28,19 +28,21 @@ Scripts auto-set `DEVELOPER_DIR` to Xcode.app (xcode-select points at CLT). Defa
 - Fixtures/demo data only in test or clearly labelled demo paths; no synthetic events in production code.
 
 ## Agents (model routing: Opus thinks, Sonnet types)
-Session default is Sonnet. Delegate with the Agent tool:
+Since 2026-11-19 the agents and skills come from the owner's ClaudeCOE kit (plugins `coe` and `coe-ios`, enabled in `.claude/settings.json`): agents are `coe:<role>`, verification is `/coe-ios:verify-ios`, screen-vs-mockup comparison is `/coe-ios:ui-check`. Everything GolfLaunchr-specific they need is in `.claude/coe.md`. Only `planner` and the `new-feature` pipeline stay local. Change the kit in ClaudeCOE, never by copying agent files into this repo.
+
+Session default is Sonnet. Delegate with the Agent tool (models marked * are passed as an override by `new-feature`):
 | Agent | Model | Use for |
 |---|---|---|
-| `planner` | opus | Turn feature ID(s) into `docs/plans/*.md`: scope, files, contracts, test cases, mockup refs. Only role allowed to change spec contracts/schemas. |
-| `swift-test-writer` | sonnet | Write failing tests from acceptance criteria first (TDD). |
-| `ios-implementer` | sonnet | Implement one plan item until `scripts/verify.sh` passes. |
-| `l10n-reviewer` | sonnet | en/sv completeness and Swedish terminology (spec F25 glossary). |
-| `qa-reviewer` | opus | Independent milestone review: reproduces everything, never trusts implementer summaries. |
-| `product-manager` | opus | Frames features (problem, smallest shippable version, acceptance), picks the next PLAN.md item, accepts or rejects finished work, guards claims. No code. |
-| `lead-engineer` | opus | Reviews plan designs and diffs: package boundaries, concurrency, performance, test quality, dependencies. Approves or rejects with concrete fixes. |
-| `ciso` | opus | Maniacal security and privacy audit (network, secrets, storage, logging, permissions, purchases, release hygiene, supply chain). BLOCKER findings stop the change. Read-only. |
-| `customer` | sonnet | Real golfer personas (sv/en, beginner to low handicap, left/right-handed): user stories when framing, hands-on simulator review of flows and copy. No code. |
-Flow: (`product-manager` + `customer` frame) -> `planner` -> (`lead-engineer` + `ciso` review the plan when it touches design, data, network, purchases or permissions) -> `swift-test-writer` -> `ios-implementer` -> (`lead-engineer` reviews the diff) -> (milestone) `qa-reviewer` + `ciso` + `customer` -> `product-manager` accepts. Skill `new-feature` runs it. Small fixes: do directly, still follow Definition of Done. Give agents the plan path and feature IDs, not pasted spec text.
+| `planner` (local) | opus | Turn feature ID(s) into `docs/plans/*.md`: scope, files, contracts, test cases, mockup refs. Only role allowed to change spec contracts/schemas. |
+| `coe:test-writer` | sonnet | Write failing tests from acceptance criteria first (TDD). |
+| `coe:implementer` | sonnet | Implement one plan item until `scripts/verify.sh` passes. |
+| `coe:l10n-reviewer` | sonnet* | en/sv completeness and Swedish terminology (spec F25 glossary). |
+| `coe:qa-reviewer` | opus* | Independent milestone review: reproduces everything, never trusts implementer summaries. |
+| `coe:product-manager` | opus* | Frames features (problem, smallest shippable version, acceptance), picks the next PLAN.md item, accepts or rejects finished work, guards claims. No code. |
+| `coe:lead-engineer` | opus | Reviews plan designs and diffs: package boundaries, concurrency, performance, test quality, dependencies. Approves or rejects with concrete fixes. |
+| `coe:ciso` | opus | Maniacal security and privacy audit (network, secrets, storage, logging, permissions, purchases, release hygiene, supply chain). BLOCKER findings stop the change. Read-only. |
+| `coe:customer` | sonnet | Real golfer personas (sv/en, beginner to low handicap, left/right-handed): user stories when framing, hands-on simulator review of flows and copy. No code. |
+Flow: (`coe:product-manager` + `coe:customer` frame) -> `planner` -> (`coe:lead-engineer` + `coe:ciso` review the plan when it touches design, data, network, purchases or permissions) -> `coe:test-writer` -> `coe:implementer` -> (`coe:lead-engineer` reviews the diff) -> (milestone) `coe:qa-reviewer` + `coe:ciso` + `coe:customer` -> `coe:product-manager` accepts. Skill `/new-feature` runs it (this repo does not use `/coe:chunk`). Small fixes: do directly, still follow Definition of Done (`/coe-ios:verify-ios`). Give agents the plan path and feature IDs, not pasted spec text.
 
 ## Definition of Done (mandatory)
 Never report a UI change or function as complete because an edit succeeded or the build compiles. Verify it as a human reviewer would:

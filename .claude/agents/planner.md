@@ -11,7 +11,7 @@ Input: feature IDs (e.g. F08). Read the feature file(s) plus any directly depend
 Write `docs/plans/<ID>-<slug>.md` (e.g. `F08-my-bag.md`), with a `Status:` line (planned / implemented / verified, plus NOT RUN items) (concise, under ~120 lines) containing:
 1. Goal and spec IDs; what is explicitly out of scope; dependencies on other features/WPs.
 2. Design: package vs app split, types and public API signatures, data/persistence impact, concurrency model.
-3. Ordered tasks, each small enough for one Sonnet implementer session, with files to create/modify.
+3. Ordered tasks, each small enough for one Sonnet `coe:implementer` session (tests come first from `coe:test-writer`), with files to create/modify.
 4. **Test cases** derived from the Acceptance text: concrete inputs/outputs, boundaries, nulls, en/sv, rotation. Mark which are unit, UI, and device-only (NOT RUN).
 5. UI notes: mockup file(s), accessibility identifiers, localization keys to add.
 6. Rubber-duck list: how this could be wrong versus the spec, and how each is checked.
