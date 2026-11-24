@@ -112,6 +112,10 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E32 | **"Why some numbers are unavailable" explainer** (en/sv) so missing metrics read as honesty (F06/F21 copy); owner approves wording | Claude + Owner |
 | E33 | **Blur-tolerant ball model** as the answer to dim rooms: train and evaluate on the whole exposure sweep (1/1000-1/4000 s and auto) with streak-centre labels, so moderate light still gives a usable track; report ball-speed error per exposure (detector plan sections 2, 3, 6) | Claude, with detector M4 |
 | E34 | **Test the iPhone torch as fill light** during capture (torch on at 240 fps, measured lux at the ball from 0.75-1 m, effect on exposure, flicker, thermal) | Both, garage or bay |
+| E35 | **Publish the light conditions each metric was validated in** (lux range, light type, shutter) in the G2 report and `docs/CLAIMS.md` envelope, instead of a vague "needs enough light" (LiPAR lighting findings, review section 6) | Claude, with G2 (3.7) |
+| E36 | **Lighting tips in setup and help (en/sv)**: aim for roughly 500-1000 lux of diffused light on the mat, not into the lens; block low sun through doors and windows; one plain white ball; tie each tip to the light check of E28 and verify the numbers against our own exposure data before shipping (F02, F21 help) | Claude |
+| E37 | **Colour temperature in the exposure tests**: guides disagree (warm 2700-3000 K vs cool 5000-6500 K); record lamp type and colour temperature per block in the garage/bay sessions and compare detection and ISO shortfall, so our advice comes from data | Both, garage or bay |
+| E38 | **Train on dim real-room footage on purpose**: include auto-exposure and dim-garage clips (not only bright, short-shutter ones) in the detector training and validation sets, labelled by measured light, so the model and its reported envelope cover real practice rooms (detector plan section 6) | Claude, with detector M2-M4 |
 
 ## 7. Gates still NOT RUN
 
