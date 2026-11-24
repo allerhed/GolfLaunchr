@@ -100,6 +100,9 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E22 | Extend the accessibility audit (4.8) to the plans, Membership, delete and diagnostics screens | Dev |
 | E23 | Add `clubPath` to the metric catalogue (`MetricKey`, unit radians, right positive = in-to-out for a right-handed golfer, mirrored by handedness), formatting, en/sv strings, export; approved in the detector plan Q8 | Claude, when the club work (M7) starts |
 | H6 | Freedom-to-operate review of the single-device launch monitor patents found in the detector research (US 12728313, US 9697613 and related) before release | Owner |
+| P1 | **Proposal (owner decides):** adopt LiPAR review items A1 (AR/LiDAR-measured setup geometry spike), A2 (uncertainty per number), A3 (verdict vs own club average), A5 (lighting guidance step) into PLAN after the bay visit; see `docs/research/lipar-golf-pm-review.md` | Owner |
+| P2 | **Proposal:** A4 wedge test preset on F11, A6 ~2 s latency stretch goal, A8 shareable shot card (local image); "Why some numbers are unavailable" explainer (en/sv) | Owner |
+| H7 | Watch LiPAR Golf's "patents pending" filings as part of the H6 freedom-to-operate review | Owner |
 
 ## 7. Gates still NOT RUN
 
