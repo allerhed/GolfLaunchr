@@ -100,9 +100,18 @@ Everything that is **NOT RUN** or waiting on a person, a device or an owner deci
 | E22 | Extend the accessibility audit (4.8) to the plans, Membership, delete and diagnostics screens | Dev |
 | E23 | Add `clubPath` to the metric catalogue (`MetricKey`, unit radians, right positive = in-to-out for a right-handed golfer, mirrored by handedness), formatting, en/sv strings, export; approved in the detector plan Q8 | Claude, when the club work (M7) starts |
 | H6 | Freedom-to-operate review of the single-device launch monitor patents found in the detector research (US 12728313, US 9697613 and related) before release | Owner |
-| P1 | **Proposal (owner decides):** adopt LiPAR review items A1 (AR/LiDAR-measured setup geometry spike), A2 (uncertainty per number), A3 (verdict vs own club average), A5 (lighting guidance step) into PLAN after the bay visit; see `docs/research/lipar-golf-pm-review.md` | Owner |
-| P2 | **Proposal:** A4 wedge test preset on F11, A6 ~2 s latency stretch goal, A8 shareable shot card (local image); "Why some numbers are unavailable" explainer (en/sv) | Owner |
 | H7 | Watch LiPAR Golf's "patents pending" filings as part of the H6 freedom-to-operate review | Owner |
+| E24 | **AR/LiDAR-measured setup geometry** (LiPAR review A1): 1-week spike on the owner's phone measuring camera-to-ball distance, ground plane and aim with ARKit before capture starts (AR and the 240 fps session cannot run together: setup step, then hand over; invalidate on movement). Optional on Pro models; the manual path (ball size + typed distance, labelled) stays certified | Claude, after the bay visit |
+| E25 | **Uncertainty per number** (A2): show ± with each value in results and shot detail, taken only from our own G2 validation errors, never invented (F06, plan 3.4) | Claude, design now, values after G2 |
+| E26 | **Verdict vs the golfer's own club average** (A3): neutral line on the result card ("longer than your 7-iron average") once that club has at least 5 validated shots (F10a) | Claude, after 5.3 |
+| E27 | **Wedge test preset** on the target drill (A4): five random targets in the wedge range, spoken (F11, F07); distance-only scoring | Claude, after G2 validates wedge carry |
+| E28 | **Lighting as a first-class setup step** (A5): light check in setup with a plain fix per failed check (add light, move the phone, flicker), a "why this capture was rejected" screen, and keeping the club/swing data when the ball flight could not be seen (F02, F04) | Claude, now |
+| E29 | **Latency stretch goal ~2 s** from impact to result (A6); the gate stays p95 ≤ 3 s (F23); not advertised | Claude, after 5.5 |
+| E30 | **Supported-device list from tested profiles only** (A7): no device floor copied from competitors; list generated from passing G1/9.2 profiles (F01) | Claude, when G1 closes |
+| E31 | **Shareable shot card** (A8): local image with validated, provenance-labelled values only (F16/F17 share image) | Claude, after 5.2 |
+| E32 | **"Why some numbers are unavailable" explainer** (en/sv) so missing metrics read as honesty (F06/F21 copy); owner approves wording | Claude + Owner |
+| E33 | **Blur-tolerant ball model** as the answer to dim rooms: train and evaluate on the whole exposure sweep (1/1000-1/4000 s and auto) with streak-centre labels, so moderate light still gives a usable track; report ball-speed error per exposure (detector plan sections 2, 3, 6) | Claude, with detector M4 |
+| E34 | **Test the iPhone torch as fill light** during capture (torch on at 240 fps, measured lux at the ball from 0.75-1 m, effect on exposure, flicker, thermal) | Both, garage or bay |
 
 ## 7. Gates still NOT RUN
 

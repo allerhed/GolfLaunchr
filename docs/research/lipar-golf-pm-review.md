@@ -66,3 +66,22 @@ Deferred: **shot shape** (draw/fade/slice) needs spin axis or a validated horizo
 4. **Breadth perception gap.** Approve a short "Why some numbers are unavailable" explainer (F06/F21 copy, en/sv) so missing metrics read as honesty.
 5. **Spin and club metrics.** Stay on the detector plan's metric policy (3a); do not chase 13 numbers.
 6. **Scope.** Park games, coaching and social. Put A1, A2, A3 and A5 into PLAN after the bay visit; A4, A6 and A8 into the backlog.
+
+## 6. How LiPAR handles bad indoor lighting (investigated 2026-11-24)
+
+Sources read: [how it works](https://www.lipargolf.com/how-it-works), [support](https://www.lipargolf.com/support), [launch monitor](https://www.lipargolf.com/launch-monitor), [home](https://www.lipargolf.com/), [App Store listing and release notes](https://apps.apple.com/us/app/lipar-golf-monitor/id6789924935). All vendor statements; nothing tested.
+
+**What they say:** light is the user's job. The only guidance is that high frame rates need light and that a dim garage bay is the most common cause of a poor capture. Accuracy "depends on lighting" among other factors. They say their model was trained on beta users' shots in their own garages and bays. Release notes mention better swing detection in bright outdoor light and, for putting, better ball finding indoors with a plain white ball. When the ball flight cannot be seen, newer versions keep the swing data instead of asking for a reshoot (older versions asked the golfer to hit again).
+
+**What they do not say:** no light levels, no light check in setup, no dim-light warning or quality indicator, no exposure, shutter, ISO, torch, HDR or flicker handling, no 120 fps fallback, no lamp advice. No App Store review mentions light.
+
+**Reading (inference, not stated):** they appear not to solve dim light in the camera at all. They capture at 240 fps, put the burden on the room, and rely on a model trained on real garage footage, which probably tolerates some motion blur, plus graceful degradation when the ball is not seen.
+
+**What we take from it (backlog E28, E33, E34):**
+1. Make light visible and actionable in setup (E28): we already measure what they do not (applied exposure, ISO shortfall, flicker); turn it into a plain check with a fix per problem and an honest reason when a capture is rejected.
+2. Do not depend only on very short shutters (E33): train and evaluate the ball model on the whole exposure sweep with blur-streak labels (detector plan), and report accuracy per exposure so the supported envelope states the light it needs.
+3. Degrade gracefully (E28): keep the club and swing evidence when the ball flight is unreadable, with a typed reason, never a guessed number.
+4. Try cheap fill light (E34): measure whether the iPhone's own torch adds useful light at 0.75-1 m without flicker or heat problems.
+5. Keep our stricter stance: publish the light conditions each metric was validated in, rather than a generic "needs enough light".
+
+Third-party lighting guides for indoor launch monitors (not LiPAR-specific) suggest roughly 500-1000 lux, diffused light on the mat rather than into the lens, and blocking low sun through doors and windows; their colour-temperature advice disagrees: [Golf Simulator Advisor](https://golfsimulatoradvisor.com/golf-simulator-lighting-interference-accuracy/), [GolfRepublic](https://golfrepublic.org/do-golf-launch-monitors-need-special-lighting-indoors/), [Golfbays](https://golfbays.co.uk/blogs/news/golf-simulator-lighting). Our own numbers matter more: at 1/2000 s a 45 m/s ball still smears 22 mm, and D1's indoor auto exposure was 1/253 s.
